@@ -7,7 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
-add_executable(Tetris_model main.cpp)
+add_executable(Tetris_model
+        main.cpp
+        Block.h
+        Color.h
+        RotateDirection.h
+        MoveDirection.h
+        Tetromino.h)
 
 include(GNUInstallDirs)
 install(TARGETS Tetris_model

@@ -17,3 +17,12 @@ Les consignes de ce projet sont disponibles dans le fichier pdf suivant: [tetris
 ### Modélisation Métier
 
 La modélisation métier du jeu Tetris se trouve dans le répertoire [/model](./model/).
+
+## Documentation
+
+Une documentation des différentes classes et méthodes est fournie dans les fichiers d'en-tête. Elle peut être générée au format HTML en utilisant l'outil [Doxygen](https://www.doxygen.nl/). Entrez la commande suivante à la racine du dépôt pour générer la documentation:
+
+```console
+$ doxygen
+```
+

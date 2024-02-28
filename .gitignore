@@ -55,6 +55,10 @@ cmake_install.cmake
 
 CMakeCache.txt
 
+# pas de dossier doc
+
+doc/
+
 # pas de html
 
 *.htm
