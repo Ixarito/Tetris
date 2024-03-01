@@ -3,12 +3,12 @@
 
 namespace tetris::model {
 
-    /**
-     * Represents the color of a block in the Tetris game
-     */
-    enum class Color : char{
-        BLUE, GREEN, YELLOW, ORANGE, RED
-    };
+	/**
+	 * Represents the color of a block in the Tetris game
+	 */
+	enum class Color : char{
+		BLUE, GREEN, YELLOW, ORANGE, RED
+	};
 
 } // namespace tetris::model
 

@@ -26,3 +26,4 @@ Une documentation des différentes classes et méthodes est fournie dans les fic
 $ doxygen
 ```
 
+Celle-ci se trouvera dans le dossier /doc .
