@@ -63,13 +63,13 @@ namespace tetris::model{
 		 * Gives the current score
 		 * @return the current score
 		 */
-		inline long long int getScore() const;
+		inline const long long int & getScore() const;
 
 		/**
 		 * Gives the current level
 		 * @return the current level
 		 */
-		inline int getLevel() const;
+		inline const int & getLevel() const;
 
 		/**
 		 * @}
