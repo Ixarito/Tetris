@@ -26,7 +26,7 @@ namespace tetris::model{
 		Line(size_t length);
 
 		/**
-		 * Places a block in the line
+		 * Places a Block in the line
 		 * @param position the position where the block is going to be placed
 		 * @param block the block to placed
 		 * @sa tetris::model::Line::operator[]()
@@ -34,7 +34,7 @@ namespace tetris::model{
 		void set(size_t position, Block & block);
 
 		/**
-		 * Gives the block at the given position
+		 * Gives the Block at the given position
 		 * @param position the position of the block to get
 		 * @return a reference to the block at the given position
 		 * @sa tetris::model::Line::operator[]()
@@ -42,7 +42,7 @@ namespace tetris::model{
 		Block & get(size_t position);
 
 		/**
-		 * Gives the block at the given position
+		 * Gives the Block at the given position
 		 * @param position the position of the block to get
 		 * @return a constant reference to the block at the given position
 		 * @sa tetris::model::Line::operator[]()
@@ -61,14 +61,14 @@ namespace tetris::model{
 		void clear();
 
 		/**
-		 * Gives the block at the given position
+		 * Gives the Block at the given position
 		 * @param position the position of the block to access
 		 * @return a reference to the block at the given position
 		 */
 		Block & operator[](size_t position);
 
 		/**
-		 * Gives the block at the given position
+		 * Gives the Block at the given position
 		 * @param position the position of the block to access
 		 * @return a constant reference to the block at the given position
 		 */
@@ -81,14 +81,14 @@ namespace tetris::model{
 		 */
 
 		/**
-		 * Returns an iterator to the first block of the line
-		 * @return an iterator to the first block
+		 * Returns an iterator to the first Block of the line
+		 * @return an iterator to the first Block
 		 */
 		decltype(_content.cbegin()) inline cbegin() const;
 
 		/**
-		 * Returns an iterator to the element following the last block of the line
-		 * @return an iterator to the element following the last block
+		 * Returns an iterator to the element following the last Block of the line
+		 * @return an iterator to the element following the last Block
 		 */
 		decltype(_content.cend()) inline cend() const;
 

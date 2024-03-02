@@ -16,8 +16,7 @@ namespace tetris::model{
 		std::vector<Tetromino> _list;
 		decltype(_list.begin()) _next;
 
-		Bag();
-		void shuffle();
+		// TODO: implements constructor & method shuffle() in .cpp file
 	public:
 
 		/**
