@@ -16,6 +16,7 @@ add_executable(Tetris_model
 		Tetromino.h
 		Line.h
 		Bag.h
+		Grid.h
 )
 
 include(GNUInstallDirs)
