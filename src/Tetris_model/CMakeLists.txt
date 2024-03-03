@@ -11,13 +11,12 @@ add_executable(Tetris_model
 		main.cpp
 		Block.h
 		Color.h
-		RotateDirection.h
-		MoveDirection.h
+		RotateDirection.h MoveDirection.h
 		Tetromino.h
 		Line.h
 		Bag.h
 		Grid.h
-		Game.h
+		Game.h GameTypeLines.h GameTypeScore.h GameTypeTime.h
 )
 
 include(GNUInstallDirs)

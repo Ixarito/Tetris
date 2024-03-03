@@ -13,6 +13,7 @@ namespace tetris::model{
 	 */
 	class Line{
 		std::vector<Block> _content;
+
 	public:
 		/**
 		 * The length of the line

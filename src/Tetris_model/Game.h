@@ -2,7 +2,6 @@
 #define TETRIS_MODEL_GAME_H
 
 #include <vector>
-#include <utility>
 #include "Grid.h"
 #include "Bag.h"
 
@@ -25,7 +24,7 @@ namespace tetris::model{
 	public:
 
 		/**
-		 * Creates a new game part of the Tetris game
+		 * Creates a game part of the Tetris game
 		 * @param shapes the shapes of tetrominoes to play during the game
 		 * @param level if specified, the game will start at a higher level of difficulty
 		 * @param nbAlreadyPlacedBlocks if specified, the game Grid will be filled with randomly placed blocks at the bottom
