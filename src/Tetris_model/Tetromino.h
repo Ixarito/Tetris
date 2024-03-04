@@ -2,6 +2,7 @@
 #define TETRIS_MODEL_TETROMINO_H
 
 #include <vector>
+#include <optional>
 #include "Block.h"
 #include "RotateDirection.h"
 
@@ -13,7 +14,8 @@ namespace tetris::model{
 	 * @sa tetris::model::Block
 	 */
 	class Tetromino{
-		std::vector<std::vector<Block>> _shape;
+
+		std::vector<std::vector<std::optional<Block>>> _shape;
 
 	public:
 		/**
@@ -33,7 +35,7 @@ namespace tetris::model{
 		 * @param shape the shape that represents the tetromino
 		 * @param color the color of the blocks that form the tetromino
 		 */
-		Tetromino(Shape_type shape, Color color);
+		Tetromino(Shape_type & shape, Color color);
 
 
 		/**
@@ -42,7 +44,7 @@ namespace tetris::model{
 		 * @param ctorCmpnts the pair of component for the constructor
 		 * @sa tetris::model::Tetromino::ConstructorComponents_type
 		 */
-		inline Tetromino(ConstructorComponents_type ctorCmpnts);
+		Tetromino(ConstructorComponents_type ctorCmpnts);
 
 		/**
 		 * Gives the Block at the given position

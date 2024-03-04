@@ -9,21 +9,25 @@ namespace tetris::model {
 	 * Represents a block
 	 */
 	class Block {
-	public:
-		/**
+        /**
 		 * The color fo the block
 		 * @sa tetris::model::Color
 		 */
-		const Color color;
+        Color color;
+    public:
+        /**
+         * Gives the color of the block
+         */
+        const Color & getColor() const;
 
-		/**
+    public:
+        /**
 		 * Constructs a block
 		 * @param color the color of the block
 		 */
-		inline explicit Block(Color color);
+        explicit Block(Color color);
 	};
 
-	Block::Block(Color color) : color{color} {}
 
 } // namespace tetris::model
 
