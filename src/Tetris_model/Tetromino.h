@@ -35,7 +35,7 @@ namespace tetris::model{
 		 * @param shape the shape that represents the tetromino
 		 * @param color the color of the blocks that form the tetromino
 		 */
-		Tetromino(Shape_type & shape, Color color);
+		Tetromino(Shape_type shape, Color color);
 
 
 		/**

@@ -20,6 +20,7 @@ add_executable(Tetris_model
         Block.cpp
 		Tetromino.cpp
 		Line.cpp
+		util/maxVectorSize.hpp
 )
 
 include(GNUInstallDirs)
