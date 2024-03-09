@@ -42,46 +42,32 @@ namespace tetris::model {
     }
 
 
+    //source : https://www.javatpoint.com/rotate-matrix-by-90-degrees-in-java
     void Tetromino::rotate(RotateDirection direction) {
         size_t size = _shape.size();
-        if (direction == RotateDirection::CW) {
-            // Clockwise rotation
-            for (int i = 0; i < size; ++i) {
-                for (int j = 0; j < i; ++j) {
-                    std::optional<Block> temp = _shape[i][j];
-                    _shape[i][j] = _shape[j][i];
-                    _shape[j][i] = temp;
+        std::vector<std::vector<std::optional<Block>>> tempShape(size, std::vector<std::optional<Block>>(size));
+
+        if (direction == RotateDirection::CCW) {
+            for (size_t i = 0; i < size; ++i) {
+                for (size_t j = 0; j < size; ++j) {
+                    tempShape[size - j - 1][i] = _shape[i][j];
                 }
             }
-            for (int i = 0; i < size; ++i) {
-                for (int j = 0; j < size / 2; ++j) {
-                    std::optional<Block> temp = _shape[i][j];
-                    _shape[i][j] = _shape[i][size - j - 1];
-                    _shape[i][size - j - 1] = temp;
-                }
-            }
-        } else if (direction == RotateDirection::CCW) {
-            // Counter-clockwise rotation
-            for (int i = 0; i < size; ++i) {
-                for (int j = 0; j < size - i; ++j) {
-                    std::optional<Block> temp = _shape[i][j];
-                    _shape[i][j] = _shape[size - j - 1][size - i - 1];
-                    _shape[size - j - 1][size - i - 1] = temp;
-                }
-            }
-            for (int j = 0; j < size / 2; ++j) {
-                for (int i = 0; i < size; ++i) {
-                    std::optional<Block> temp = _shape[j][i];
-                    _shape[j][i] = _shape[size - j - 1][i];
-                    _shape[size - j - 1][i] = temp;
+        } else if (direction == RotateDirection::CW) {
+            for (size_t i = 0; i < size; ++i) {
+                for (size_t j = 0; j < size; ++j) {
+                    tempShape[j][size - i - 1] = _shape[i][j];
                 }
             }
         }
+
+        _shape = tempShape;
     }
 
 
     size_t Tetromino::getHeight() const {
         int height{0};
+
         int vectorHeight {static_cast<int>(_shape.size())}; //used for optimise the loop
         for (int y{0}; y < _shape[0].size(); ++y) {
             int tempHeight{0};
@@ -94,13 +80,17 @@ namespace tetris::model {
                 height = tempHeight;
             }
         }
+
         return height;
     }
+
+
 
 
     size_t Tetromino::getWidth() const {
         int width{0};
         int vectorWidth {static_cast<int>(_shape[0].size())}; //used for optimise the loop
+
         for (int x{0}; x < _shape.size(); ++x) {
             int tempWidth{0};
             for (int y{0}; y < vectorWidth; ++y) {
@@ -112,10 +102,11 @@ namespace tetris::model {
                 width = tempWidth;
             }
         }
+
         return width;
     }
 
-    //test
+    //Only a test - to delete after
     void Tetromino::print() const {
         for (const auto& row : _shape) {
             for (const auto& block : row) {
