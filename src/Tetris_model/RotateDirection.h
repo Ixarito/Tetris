@@ -5,9 +5,11 @@ namespace tetris::model {
 
 	/**
 	 * Represents a direction of rotation for a Tetromino in the Tetris game
+	 * CW : Clockwise
+	 * CCW : Counter-Clockwise
 	 */
 	enum class RotateDirection : char{
-		LEFT, RIGHT
+		CCW, CW
 	};
 
 } // namespace tetris::model

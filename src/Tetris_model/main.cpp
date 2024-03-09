@@ -1,9 +1,29 @@
 #include <iostream>
+#include "Tetromino.h"
+#include "Block.h"
 
-using namespace std;
+int main() {
+    tetris::model::Tetromino::Shape_type shape = {
+            {true, false, true, false},
+            {false, false, true, false},
+            {false, true, true, false},
+            {false, false, true, false}
+    };
 
-int main()
-{
-	cout << "Projet DEV4 - 60453 & 60073 : Tetris" << endl;
-	return 0;
+    tetris::model::Tetromino t(shape, tetris::model::Color::RED);
+    std::cout << "Tetromino created" << std::endl;
+    t.print();
+    std::cout << "\nRotating CCW" << std::endl;
+    t.rotate(tetris::model::RotateDirection::CCW);
+    t.print();
+    std::cout << "\nRotating CW" << std::endl;
+    t.rotate(tetris::model::RotateDirection::CW);
+    t.print();
+
+
+    std::cout << "\nHeight: " << t.getHeight() << std::endl;
+    std::cout << "Width: " << t.getWidth() << std::endl;
+
+
+    return 0;
 }

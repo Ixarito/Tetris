@@ -6,7 +6,7 @@
 namespace tetris::util {
 
 	/**
-	 * Gives the maximum size of a vector of vectors
+	 * Gisves the maximum size of a vector of vector
 	 * @tparam T any type
 	 * @param matrix the 2d vector to examine
 	 * @return the maximum size of a vector in the given matrix

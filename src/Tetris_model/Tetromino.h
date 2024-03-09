@@ -53,7 +53,7 @@ namespace tetris::model{
 		 * @return the block at the given position
 		 * @note returns a copy of the Block as it may persist after the tetromino has been destroyed
 		 */
-		const Block get(size_t x, size_t y) const;
+        Block get(size_t x, size_t y) const;
 
 		/**
 		 * Determines if a position is occupied by a Block in the tetromino shape
@@ -81,7 +81,14 @@ namespace tetris::model{
 		 */
 		size_t getHeight() const;
 
-	};
+
+
+        //test
+        void print() const;
+
+
+
+    };
 
 } // namespace tetris::model
 
