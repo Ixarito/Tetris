@@ -134,7 +134,7 @@ CMakeLists.txt.user*
 *.Release
 
 # CMake
-cmake*
+cmake-*
 
 # Python byte code
 *.pyc
