@@ -1,43 +1,57 @@
-/**
 #include "Line.h"
 
 namespace tetris::model{
 
 
 
-        Line::Line(size_t length) : length(length) {}
+    Line::Line(size_t length) : _content(length)  length(length) {}
 
 
-        void set(size_t position, Block & block){}
-
-
-        Block & get(size_t position){}
-
-
-        const Block & Line::get(size_t position){
+        void Line::set(size_t position, Block & block){
+            if (position >= this->length) {
+                throw "invalid position";
+            }
+            this->_content[position] = block;
         }
 
 
-        bool isFull(){}
+        Block & Line::get(size_t position){
+            if (position >= this->length) {
+                throw "invalid position";
+            }
+            return this->_content[position];
+        }
+
+        const Block & Line::get(size_t position) const {
+            if (position >= this->length) {
+                throw "invalid position";
+            }
+            return this->_content[position];
+        }
 
 
-        void clear(){}
+        bool Line::isFull() const{
+            for(Block block : this->_content){
+
+            }
+        }
 
 
-        Block & operator[](size_t position){}
+        void Line::clear(){}
 
 
-        const Block & operator[](size_t position){}
+        Block & Line::operator[](size_t position){}
+
+
+        const Block & Line::operator[](size_t position){}
 
 
 
-        Line::decltype(_content.cbegin()) inline cbegin(){}
+        Line::decltype(_content.cbegin()) inline Line::cbegin(){}
 
 
-        decltype(_content.cend()) inline cend(){}
+        decltype(_content.cend()) inline Line::cend(){}
 
 
 
 } // namespace tetris::model
-
-**/
