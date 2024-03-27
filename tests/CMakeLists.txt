@@ -17,7 +17,7 @@ endif()
 add_subdirectory(googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-include_directories(../src/Tetris_model)
+include_directories(../src/model)
 
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
