@@ -2,6 +2,7 @@
 #define TETRIS_MODEL_LINE_H
 
 #include <vector>
+#include <optional>
 #include "Block.h"
 
 namespace tetris::model{
@@ -12,7 +13,7 @@ namespace tetris::model{
 	 * @sa tetris::model::Grid
 	 */
 	class Line{
-		std::vector<Block> _content;
+		std::vector<std::optional<Block>> _content;
 
 	public:
 		/**
@@ -85,13 +86,13 @@ namespace tetris::model{
 		 * Returns an iterator to the first Block of the line
 		 * @return an iterator to the first Block
 		 */
-		decltype(_content.cbegin()) inline cbegin() const;
+        std::vector<std::optional<Block>>::const_iterator inline cbegin() const;
 
 		/**
 		 * Returns an iterator to the element following the last Block of the line
 		 * @return an iterator to the element following the last Block
 		 */
-		decltype(_content.cend()) inline cend() const;
+        std::vector<std::optional<Block>>::const_iterator inline cend() const;
 
 		/**
 		 * @}
