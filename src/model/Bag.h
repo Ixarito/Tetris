@@ -11,19 +11,22 @@ namespace tetris::model{
 	 * @sa tetris::model::Tetromino
 	 */
 	class Bag{
-		static Bag _instance;
-
 		std::vector<Tetromino> _list;
-		decltype(_list.begin()) _next;
+		size_t _next;
 
-		// TODO: implements constructor & method shuffle() in .cpp file
+		Bag();
+
+		// TODO: implements method shuffle() in .cpp file
 	public:
+
+		Bag(Bag &) = delete;
+		Bag operator=(Bag &) = delete;
 
 		/**
 		 * Gives access to the instance of bag
 		 * @return the instance of bag
 		 */
-		static inline Bag getInstance();
+		static Bag & getInstance();
 
 		/**
 		 * Gives the next tetromino to play
