@@ -82,7 +82,6 @@ namespace tetris::model{
 		size_t getHeight() const;
 
 
-
         //test
         void print() const;
 

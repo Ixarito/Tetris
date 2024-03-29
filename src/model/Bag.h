@@ -15,8 +15,6 @@ namespace tetris::model{
 		size_t _next;
 
 		Bag();
-
-		// TODO: implements method shuffle() in .cpp file
 	public:
 
 		Bag(Bag &) = delete;

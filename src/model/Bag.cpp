@@ -1,10 +1,11 @@
 #include <iostream>
 #include "Bag.h"
+#include <algorithm>
+#include <random>
 
 namespace tetris::model{
 
-	Bag::Bag(){
-	}
+	Bag::Bag(): _next {0}{}
 
 
 	Bag & Bag::getInstance(){
@@ -18,12 +19,16 @@ namespace tetris::model{
 
 	Tetromino Bag::getNext() {
 		auto next = _list[_next];
-		_list[1];
 		_next = (_next + 1) % _list.size();
+		if(_next == 0){
+			std::random_device rd;
+			std::mt19937 g(rd());
+			std::ranges::shuffle(_list, g);
+		}
 		return next;
 	}
 
-	const Tetromino &Bag::peekNext() const {
+	const Tetromino & Bag::peekNext() const {
 		return _list[_next];
 	}
 
