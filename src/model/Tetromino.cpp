@@ -33,6 +33,7 @@ namespace tetris::model {
 
 
     Block Tetromino::get(size_t x, size_t y) const {
+		if(!isOccupied(x, y)) throw "No block at this position. To avoid this error, use the isOccupied() method";
         return _shape[x][y].value();
     }
 
@@ -66,12 +67,12 @@ namespace tetris::model {
 
 
     size_t Tetromino::getHeight() const {
-        int height{0};
+        size_t height{0};
 
-        int vectorHeight {static_cast<int>(_shape.size())}; //used for optimise the loop
-        for (int y{0}; y < _shape[0].size(); ++y) {
-            int tempHeight{0};
-            for (int x{0}; x < vectorHeight; ++x) {
+        size_t vectorHeight {_shape.size()}; //used for optimise the loop
+        for (size_t y{0}; y < _shape[0].size(); ++y) {
+            size_t tempHeight{0};
+            for (size_t x{0}; x < vectorHeight; ++x) {
                 if (_shape[x][y].has_value()) {
                     tempHeight++;
                 }
@@ -84,16 +85,13 @@ namespace tetris::model {
         return height;
     }
 
-
-
-
     size_t Tetromino::getWidth() const {
-        int width{0};
-        int vectorWidth {static_cast<int>(_shape[0].size())}; //used for optimise the loop
+        size_t width{0};
+        size_t vectorWidth {_shape[0].size()}; //used for optimise the loop
 
-        for (int x{0}; x < _shape.size(); ++x) {
-            int tempWidth{0};
-            for (int y{0}; y < vectorWidth; ++y) {
+        for (size_t x{0}; x < _shape.size(); ++x) {
+            size_t tempWidth{0};
+            for (size_t y{0}; y < vectorWidth; ++y) {
                 if (_shape[x][y].has_value()) {
                     tempWidth++;
                 }
