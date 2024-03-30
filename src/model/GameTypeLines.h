@@ -17,13 +17,10 @@ namespace tetris::model{
 		/**
 		 * Creates a game part of the Tetris game with the type line.
 		 * With this type, the game ends when a specific number of lines is reached
-		 * @param shapes the shapes of tetrominoes to play during the game
+		 * @param gameParams the parameters of the basic Game
 		 * @param linesToReach the number of lines to reach to declare the game won
-		 * @param level if specified, the game will start at a higher level of difficulty
-		 * @param nbAlreadyPlacedBlocks if specified, the game Grid will be filled with randomly placed blocks at the bottom
-		 * @sa tetris::model::Grid::Grid()
 		 */
-		GameTypeLines(std::vector<Tetromino::ConstructorComponents_type> shapes, int linesToReach, int level = 0, int nbAlreadyPlacedBlocks = 0);
+		GameTypeLines(const GameParameters & gameParams, int linesToReach);
 
 		/**
 		 * Determines if the game is won

@@ -2,7 +2,7 @@
 
 namespace tetris::model{
 
-	Game::Game(GameParameters params):
+	Game::Game(const GameParameters & params):
 		_grid(params.gridWidth, params.gridHeight, params.nbAlreadyPlacedBlocks),
 		_bag{Bag::getInstance()},
 		_level{params.level},

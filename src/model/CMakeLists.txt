@@ -26,6 +26,7 @@ set(SOURCES
 		util/maxVectorSize.hpp
 		Bag.cpp
 		Game.cpp
+		GameTypes.cpp
 )
 
 # Créer une bibliothèque statique

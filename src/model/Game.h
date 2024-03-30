@@ -58,7 +58,7 @@ namespace tetris::model{
 		 * @param params the parameters of the Game
 		 * @sa tetris::model::GameParameters
 		 */
-		Game(GameParameters params);
+		Game(const GameParameters & params);
 
 		/**
 		 * @name Victory checks

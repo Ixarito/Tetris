@@ -2,6 +2,7 @@
 #define TETRIS_MODEL_GAMETYPETIME_H
 
 #include "Game.h"
+#include <chrono>
 
 namespace tetris::model{
 
@@ -9,8 +10,8 @@ namespace tetris::model{
 	 * Represents a specific type of Game, the game ends after a certain time
 	 */
 	class GameTypeTime: public Game{
-		 time_t _startTime;
-		 time_t _duration;
+		std::chrono::steady_clock::time_point _startTime{};
+		 long long _duration{};
 
 		 // TODO: modify class if Game can be paused
 	public:
@@ -18,13 +19,10 @@ namespace tetris::model{
 		/**
 		 * Creates a game part of the Tetris game with the type time.
 		 * With this type, the game ends after a certain time
-		 * @param shapes the shapes of tetrominoes to play during the game
+		 * @param gameParams the parameters of the basic Game
 		 * @param duration the time in seconds that the game will last
-		 * @param level if specified, the game will start at a higher level of difficulty
-		 * @param nbAlreadyPlacedBlocks if specified, the game Grid will be filled with randomly placed blocks at the bottom
-		 * @sa tetris::model::Grid::Grid()
 		 */
-		GameTypeTime(std::vector<Tetromino::ConstructorComponents_type> shapes, time_t duration, int level = 0, int nbAlreadyPlacedBlocks = 0);
+		GameTypeTime(const GameParameters & gameParams, long long duration);
 
 		/**
 		 * Determines if the game is won
