@@ -30,7 +30,7 @@ namespace tetris::model{
 		/**
 		 * Places a Block in the line
 		 * @param position the position where the block is going to be placed
-		 * @param block the block to placed
+		 * @param block the block to place
 		 * @sa tetris::model::Line::operator[]()
 		 */
 		void set(size_t position, Block & block);
@@ -86,13 +86,25 @@ namespace tetris::model{
 		 * Returns an iterator to the first Block of the line
 		 * @return an iterator to the first Block
 		 */
-        std::vector<std::optional<Block>>::const_iterator inline cbegin() const;
+		auto begin() const -> decltype(_content.begin());
+
+		/**
+		 * Returns an iterator to the first Block of the line
+		 * @return an iterator to the first Block
+		 */
+		auto cbegin() const -> decltype(_content.cbegin());
 
 		/**
 		 * Returns an iterator to the element following the last Block of the line
 		 * @return an iterator to the element following the last Block
 		 */
-        std::vector<std::optional<Block>>::const_iterator inline cend() const;
+		auto end() const -> decltype(_content.end());
+
+		/**
+		 * Returns an iterator to the element following the last Block of the line
+		 * @return an iterator to the element following the last Block
+		 */
+		auto cend() const -> decltype(_content.cend());
 
 		/**
 		 * @}

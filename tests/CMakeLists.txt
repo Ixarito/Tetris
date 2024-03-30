@@ -23,7 +23,8 @@ include_directories(../src/model)
 
 add_executable(tests main.cpp BagTest.cpp
         TetrominoTestUtils.hpp
-        BlockTestUtils.hpp)
+        BlockTestUtils.hpp
+        LineTest.cpp)
 
 # Lier les bibliothèques Google Test et Tetris_model
 target_link_libraries(tests gtest gtest_main Tetris_model)

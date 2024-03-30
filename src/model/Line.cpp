@@ -1,75 +1,83 @@
+#include <stdexcept>
 #include "Line.h"
 
 namespace tetris::model {
 
 
-    Line::Line(size_t length) : _content(), length(length) {}
+	Line::Line(size_t length) : _content(length), length(length) {}
 
 
-    void Line::set(size_t position, Block &block) {
-        if (position >= this->length) {
-            throw "invalid position";
-        }
-        this->_content[position] = block;
-    }
+	void Line::set(size_t position, Block &block) {
+		if (position >= length) {
+			throw std::out_of_range("invalid position");
+		}
+		_content[position] = block;
+	}
 
 
-    Block &Line::get(size_t position) {
-        if (position >= this->length) {
-            throw "invalid position";
-        }
-        return this->_content[position].value();
-    }
+	Block &Line::get(size_t position) {
+		if (position >= length) {
+			throw std::out_of_range("invalid position");
+		}
+		return _content[position].value();
+	}
 
-    const Block &Line::get(size_t position) const {
-        if (position >= this->length) {
-            throw "invalid position";
-        }
-        return this->_content[position].value();
-    }
-
-
-    bool Line::isFull() const {
-        for (std::optional<Block> block: this->_content) {
-            if (!block.has_value()) {
-                return false;
-            }
-            return true;
-        }
-    }
+	const Block &Line::get(size_t position) const {
+		if (position >= length) {
+			throw std::out_of_range("invalid position");
+		}
+		return _content[position].value();
+	}
 
 
-    void Line::clear() {
-        for (std::optional<Block> block : this->_content){
-            block.reset();
-        }
-    }
+	bool Line::isFull() const {
+		for (auto block: _content) {
+			if (!block.has_value()) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 
-    Block &Line::operator[](size_t position) {
-        if (position >= this->length) {
-            throw "invalid position";
-        }
-        return _content[position].value();
-    }
+	void Line::clear() {
+		for (auto block : _content){
+			block.reset();
+		}
+	}
 
 
-    const Block &Line::operator[](size_t position) const{
-        if (position >= this->length) {
-            throw "invalid position";
-        }
-        return _content[position].value();
-    }
+	Block &Line::operator[](size_t position) {
+		if (position >= length) {
+			throw std::out_of_range("invalid position");
+		}
+		return *_content[position];
+	}
 
 
-    std::vector<std::optional<Block>>::const_iterator inline Line::cbegin() const{
-        return _content.cbegin();
-    }
+	const Block &Line::operator[](size_t position) const{
+		if (position >= length) {
+			throw std::out_of_range("invalid position");
+		}
+		return *_content[position];
+	}
 
 
-    std::vector<std::optional<Block>>::const_iterator inline Line::cend() const{
-        return _content.cend();
-    }
+	auto Line::begin() const -> decltype(_content.begin()) {
+		return _content.begin();
+	}
+
+	auto Line::cbegin() const -> decltype(_content.cbegin()) {
+		return _content.cbegin();
+	}
+
+	auto Line::end() const -> decltype(_content.end()) {
+		return _content.end();
+	}
+
+	auto Line::cend() const -> decltype(_content.cend()) {
+		return _content.cend();
+	}
 
 
 } // namespace tetris::model

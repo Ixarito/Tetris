@@ -22,7 +22,7 @@ namespace tetris::model {
 
 
     Block Tetromino::get(size_t x, size_t y) const {
-		if(!isOccupied(x, y)) throw "No block at this position. To avoid this error, use the isOccupied() method";
+		if(!isOccupied(x, y)) throw std::logic_error("No block at this position. To avoid this error, use the isOccupied() method");
         return _shape[x][y].value();
     }
 
