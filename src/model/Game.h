@@ -8,11 +8,41 @@
 namespace tetris::model{
 
 	/**
+	 * Parameters of a Game
+	 */
+	struct GameParameters{
+		/**
+		 * The shapes of tetrominoes to play during the game
+		 * @sa tetris::model::Tetromino::ConstructorComponents_type
+		 */
+		std::vector<Tetromino::ConstructorComponents_type> shapes;
+		/**
+		 * If specified, the game will start at a higher level of difficulty
+		 */
+		int level = 0;
+		/**
+		 * The width of the game Grid. Default is 10
+		 * @sa tetris::model::Grid::Grid()
+		 */
+		size_t gridWidth = 10;
+		/**
+		 * The height of the game Grid. Default is 20
+		 * @sa tetris::model::Grid::Grid()
+		 */
+		size_t gridHeight = 20;
+		/**
+		 * If specified, the game Grid will be filled with randomly placed blocks at the bottom
+		 * @sa tetris::model::Grid::Grid()
+		 */
+		int nbAlreadyPlacedBlocks = 0;
+	};
+
+	/**
 	 * Represents a game part of the Tetris game
 	 */
 	class Game{
 		Grid _grid;
-		Bag _bag;
+		Bag & _bag;
 		int _level;
 
 	protected:
@@ -25,12 +55,10 @@ namespace tetris::model{
 
 		/**
 		 * Creates a game part of the Tetris game
-		 * @param shapes the shapes of tetrominoes to play during the game
-		 * @param level if specified, the game will start at a higher level of difficulty
-		 * @param nbAlreadyPlacedBlocks if specified, the game Grid will be filled with randomly placed blocks at the bottom
-		 * @sa tetris::model::Grid::Grid()
+		 * @param params the parameters of the Game
+		 * @sa tetris::model::GameParameters
 		 */
-		Game(std::vector<Tetromino::ConstructorComponents_type> shapes, int level = 0, int nbAlreadyPlacedBlocks = 0);
+		Game(GameParameters params);
 
 		/**
 		 * @name Victory checks
@@ -62,7 +90,7 @@ namespace tetris::model{
 		 * Gives the current score
 		 * @return the current score
 		 */
-		inline const long long int & getScore() const;
+		inline const unsigned long long int & getScore() const;
 
 		/**
 		 * Gives the current level
@@ -80,32 +108,32 @@ namespace tetris::model{
 		/**
 		 * Performs the action move the current tetromino down
 		 */
-		void goDown() const;
+		void goDown();
 
 		/**
 		 * Performs the action move the current tetromino to the left
 		 */
-		void goLeft() const;
+		void goLeft();
 
 		/**
 		 * Performs the action move the current tetromino to the right
 		 */
-		void goRight() const;
+		void goRight();
 
 		/**
-		 * Performs the action rotate the current tetromino to the left
+		 * Performs the action rotate the current tetromino clockwise
 		 */
-		void rotateLeft() const;
+		void rotateClockwise();
 
 		/**
-		 * Performs the action rotate the current tetromino to the right
+		 * Performs the action rotate the current tetromino counterclockwise
 		 */
-		void rotateRight() const;
+		void rotateCounterclockwise();
 
 		/**
 		 * Performs the action drop the current tetromino
 		 */
-		void drop() const;
+		void drop();
 
 		};
 

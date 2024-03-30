@@ -44,7 +44,7 @@ namespace tetris::model{
 		 * @param ctorCmpnts the pair of component for the constructor
 		 * @sa tetris::model::Tetromino::ConstructorComponents_type
 		 */
-		Tetromino(ConstructorComponents_type ctorCmpnts);
+		Tetromino(ConstructorComponents_type & ctorCmpnts);
 
 		/**
 		 * Gives the Block at the given position

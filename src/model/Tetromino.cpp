@@ -17,19 +17,8 @@ namespace tetris::model {
         }
     }
 
-    Tetromino::Tetromino(ConstructorComponents_type ctorCmpnts) :
-            _shape(util::maxVectorSize(ctorCmpnts.first),
-                   std::vector<std::optional<Block>>(util::maxVectorSize(ctorCmpnts.first)))
-    //              ^ Make the largest matrix to store the shape even when rotated
-    {
-        for (size_t i{0}; i < ctorCmpnts.first.size(); ++i) {
-            for (size_t j{0}; j < ctorCmpnts.first[i].size(); ++j) {
-                if (ctorCmpnts.first[i][j]) {
-                    this->_shape[i][j] = Block(ctorCmpnts.second);
-                }
-            }
-        }
-    }
+    Tetromino::Tetromino(ConstructorComponents_type & ctorCmpnts) : Tetromino(ctorCmpnts.first, ctorCmpnts.second)
+	{}
 
 
     Block Tetromino::get(size_t x, size_t y) const {
