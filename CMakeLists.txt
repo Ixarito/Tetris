@@ -6,4 +6,6 @@ add_subdirectory(src/model)
 
 add_subdirectory(src/view/console)
 
+add_subdirectory(src/controller/console)
+
 add_subdirectory(tests)
