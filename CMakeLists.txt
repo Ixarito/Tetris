@@ -4,4 +4,6 @@ project(Tetris)
 
 add_subdirectory(src/model)
 
+add_subdirectory(src/view/console)
+
 add_subdirectory(tests)

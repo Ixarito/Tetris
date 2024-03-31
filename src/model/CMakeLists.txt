@@ -31,8 +31,3 @@ set(SOURCES
 
 # Créer une bibliothèque statique
 add_library(Tetris_model STATIC ${SOURCES})
-
-install(TARGETS Tetris_model
-		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
