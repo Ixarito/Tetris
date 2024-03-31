@@ -15,7 +15,7 @@ namespace tetris::model{
 	 */
 	class Grid{
 		std::deque<Line *> _lines;
-		Tetromino _current;
+		std::optional<Tetromino> _current; // curent is empty at the construct of Grid
 		size_t _currentCol;
 		size_t _currentRow;
 
@@ -87,7 +87,7 @@ namespace tetris::model{
 		 * @param direction the direction to rotate the tetromino
 		 * @sa tetris::model::Tetromino::rotate()
 		 */
-		inline void rotateCurrent(const RotateDirection & direction);
+		void rotateCurrent(const RotateDirection & direction);
 
 		/**
 		 * Drops the current Tetromino while possible

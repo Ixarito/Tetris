@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Game.h"
 
 namespace tetris::model{
@@ -10,9 +11,13 @@ namespace tetris::model{
 	{
 		if(params.shapes.empty()) throw "Please specify tetrominoes to play";
 
-		for(auto tetromino: params.shapes){
+		for(auto & tetromino : params.shapes){
 			_bag.add(tetromino);
+			std::cout << "ça marche ici" << std::endl;
 		}
+
+		/// TODO
+		_grid.insert(_bag.getNext());
 	}
 
 	bool Game::isGameOver() const{

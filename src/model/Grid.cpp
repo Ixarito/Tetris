@@ -5,7 +5,7 @@
 namespace tetris::model {
 
 	Grid::Grid(const size_t & width, const size_t & height, const int & nbAlreadyPlacedBlock):
-	_lines{}, _current(Tetromino::random()), _currentCol{}, _currentRow{}, width{width}, height{height}
+	_lines{}, _current{}, _currentCol{}, _currentRow{}, width{width}, height{height}
 	{
 		for(size_t i {0}; i < height; i++){
 			_lines.push_back(new Line(width));
@@ -20,13 +20,15 @@ namespace tetris::model {
 	}
 
 	bool Grid::canMove(const MoveDirection & direction) {
+
+
 		switch (direction) {
 			case MoveDirection::LEFT:
 				return _currentCol > 0;
 			case MoveDirection::RIGHT:
-				return _currentCol + _current.getWidth() < width;
+				return _currentCol + _current->getWidth() < width;
 			case MoveDirection::DOWN:
-				return _currentRow + _current.getHeight() < height;
+				return _currentRow + _current->getHeight() < height;
 			default:
 				throw std::domain_error("End of switch reached for MoveDirection values");
 		}
@@ -41,7 +43,7 @@ namespace tetris::model {
 
 	bool Grid::insert(Tetromino tetromino) { // TODO: bool ?
 		_current = tetromino;
-		_currentCol = width/2;
+		_currentCol = width/2 - tetromino.getWidth()/2;
 		_currentRow = 0;
 	}
 
@@ -61,7 +63,7 @@ namespace tetris::model {
 	}
 
 	void Grid::rotateCurrent(const RotateDirection & direction) {
-		_current.rotate(direction);
+		_current->rotate(direction);
 	}
 
 	int Grid::dropCurrent() {

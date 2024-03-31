@@ -35,6 +35,8 @@ namespace tetris::model {
     //source : https://www.javatpoint.com/rotate-matrix-by-90-degrees-in-java
     void Tetromino::rotate(const RotateDirection & direction) {
         size_t size = _shape.size();
+
+		std::cout << size << std::endl;
         std::vector<std::vector<std::optional<Block>>> tempShape(size, std::vector<std::optional<Block>>(size));
 
         if (direction == RotateDirection::CCW) {
