@@ -1,6 +1,7 @@
 #ifndef TETRIS_MODEL_GRID_H
 #define TETRIS_MODEL_GRID_H
 
+#include <deque>
 #include "Line.h"
 #include "Tetromino.h"
 #include "MoveDirection.h"
@@ -13,7 +14,7 @@ namespace tetris::model{
 	 * @sa tetris::model::Line
 	 */
 	class Grid{
-		Line * _lines;
+		std::deque<Line *> _lines;
 		Tetromino _current;
 		size_t _currentCol;
 		size_t _currentRow;
@@ -129,28 +130,28 @@ namespace tetris::model{
 		 * @return a pointer to a constant line
 		 * @sa tetris::model::Line::cbegin()
 		 */
-		Line * begin() const;
+		auto begin() const -> decltype(_lines.begin());
 
 		/**
 		 * Returns a pointer to the first Line of the grid
 		 * @return a pointer to a constant line
 		 * @sa tetris::model::Line::cbegin()
 		 */
-		const Line * cbegin() const;
+		auto cbegin() const -> decltype(_lines.cbegin());
 
 		/**
 		 * Returns a pointer to the element following the last Line of the grid
 		 * @return a pointer to the element following the last constant line
 		 * @sa tetris::model::Line::cend()
 		 */
-		Line * end() const;
+		auto end() const -> decltype(_lines.end());
 
 		/**
 		 * Returns a pointer to the element following the last Line of the grid
 		 * @return a pointer to the element following the last constant line
 		 * @sa tetris::model::Line::cend()
 		 */
-		const Line * cend() const;
+		auto cend() const -> decltype(_lines.cend());
 
 		/**
 		 * @}

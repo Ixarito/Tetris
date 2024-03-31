@@ -5,14 +5,18 @@
 namespace tetris::model {
 
 	Grid::Grid(const size_t & width, const size_t & height, const int & nbAlreadyPlacedBlock):
-	_current(Tetromino::random()), _currentCol{}, _currentRow{}, width{width}, height{height}
+	_lines{}, _current(Tetromino::random()), _currentCol{}, _currentRow{}, width{width}, height{height}
 	{
-		auto lineTab {new Line*[height]};
-		_lines = *lineTab;
+		for(size_t i {0}; i < height; i++){
+			_lines.push_back(new Line(width));
+		}
 	}
 
 	Grid::~Grid() {
-		delete[] _lines;
+		for(auto lp: _lines){
+			delete lp;
+			lp = nullptr;
+		}
 	}
 
 	bool Grid::canMove(const MoveDirection & direction) {
@@ -23,6 +27,8 @@ namespace tetris::model {
 				return _currentCol + _current.getWidth() < width;
 			case MoveDirection::DOWN:
 				return _currentRow + _current.getHeight() < height;
+			default:
+				throw std::domain_error("End of switch reached for MoveDirection values");
 		}
 	}
 
@@ -30,10 +36,10 @@ namespace tetris::model {
 		if(row >= height){
 			throw std::out_of_range(util::OORmessage(row, height));
 		}
-		return _lines[row][col];
+		return (*_lines[row])[col];
 	}
 
-	bool Grid::insert(Tetromino tetromino) {
+	bool Grid::insert(Tetromino tetromino) { // TODO: bool ?
 		_current = tetromino;
 		_currentCol = width/2;
 		_currentRow = 0;
@@ -70,7 +76,7 @@ namespace tetris::model {
 	std::vector<size_t> Grid::getFullLines() {
 		std::vector<size_t> fullLines;
 		for (size_t i = 0; i < height; i++) {
-			if (_lines[i].isFull()) {
+			if (_lines[i]->isFull()) {
 				fullLines.push_back(i);
 			}
 		}
@@ -78,34 +84,41 @@ namespace tetris::model {
 	}
 
 	void Grid::removeLine(const size_t & position) {
-		for (size_t i = position; i > 0; i--) {
-			std::swap(_lines[i], _lines[i-1]);
+		if(position >= height){
+			throw std::out_of_range(util::OORmessage(position, height));
 		}
 
-		_lines[0] = emptyLine;
+		// remove line from the deque
+		auto it = _lines.begin() + position;
+		Line* target = *it;
+		_lines.erase(it);
+
+		// clear line and reinsert in top of the grid
+		target->clear();
+		_lines.push_front(target);
 	}
 
 	const Line & Grid::operator[](const size_t & position) const {
 		if(position >= height){
 			throw std::out_of_range(util::OORmessage(position, height));
 		}
-		return _lines[position];
+		return *_lines[position];
 	}
 
-	Line * Grid::begin() const {
-		return _lines;
+	auto Grid::begin() const -> decltype(_lines.begin()){
+		return _lines.begin();
 	}
 
-	const Line * Grid::cbegin() const {
-		return _lines;
+	auto Grid::cbegin() const -> decltype(_lines.cbegin()){
+		return _lines.cbegin();
 	}
 
-	Line * Grid::end() const {
-		return _lines + height;
+	auto Grid::end() const -> decltype(_lines.end()){
+		return _lines.end();
 	}
 
-	const Line * Grid::cend() const {
-		return _lines + height;
+	auto Grid::cend() const -> decltype(_lines.cend()){
+		return _lines.cend();
 	}
 
 } // namespace tetris::model
