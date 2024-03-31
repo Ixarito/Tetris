@@ -27,6 +27,8 @@ set(SOURCES
 		Bag.cpp
 		Game.cpp
 		GameTypes.cpp
+		Grid.cpp
+		util/outOfRangeMessage.hpp
 )
 
 # Créer une bibliothèque statique

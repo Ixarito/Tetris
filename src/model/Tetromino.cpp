@@ -4,7 +4,7 @@
 
 namespace tetris::model {
 
-    Tetromino::Tetromino(Shape_type shape, Color color) :
+    Tetromino::Tetromino(const Shape_type & shape, const Color & color) :
             _shape(util::maxVectorSize(shape), std::vector<std::optional<Block>>(util::maxVectorSize(shape)))
     // 				    ^ Make the largest matrix to store the shape even when rotated
     {
@@ -17,23 +17,23 @@ namespace tetris::model {
         }
     }
 
-    Tetromino::Tetromino(ConstructorComponents_type & ctorCmpnts) : Tetromino(ctorCmpnts.first, ctorCmpnts.second)
+    Tetromino::Tetromino(const ConstructorComponents_type & ctorCmpnts) : Tetromino(ctorCmpnts.first, ctorCmpnts.second)
 	{}
 
 
-    Block Tetromino::get(size_t x, size_t y) const {
+    Block Tetromino::get(const size_t & x, const size_t & y) const {
 		if(!isOccupied(x, y)) throw std::logic_error("No block at this position. To avoid this error, use the isOccupied() method");
         return _shape[x][y].value();
     }
 
 
-    bool Tetromino::isOccupied(size_t x, size_t y) const {
+    bool Tetromino::isOccupied(const size_t & x, const size_t & y) const {
         return _shape[x][y].has_value();
     }
 
 
     //source : https://www.javatpoint.com/rotate-matrix-by-90-degrees-in-java
-    void Tetromino::rotate(RotateDirection direction) {
+    void Tetromino::rotate(const RotateDirection & direction) {
         size_t size = _shape.size();
         std::vector<std::vector<std::optional<Block>>> tempShape(size, std::vector<std::optional<Block>>(size));
 

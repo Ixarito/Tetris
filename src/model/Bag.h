@@ -43,7 +43,7 @@ namespace tetris::model{
 		 * @param tetromino a tetromino to add
 		 * @sa tetris::model::Tetromino
 		 */
-		void add(Tetromino tetromino);
+		void add(const Tetromino & tetromino);
 	};
 
 } // namespace tetris::model

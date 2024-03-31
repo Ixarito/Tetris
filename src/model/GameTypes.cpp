@@ -7,7 +7,7 @@ namespace tetris::model{
 
 	// --- Type Line --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-	GameTypeLines::GameTypeLines(const GameParameters & gameParams, int linesToReach):
+	GameTypeLines::GameTypeLines(const GameParameters & gameParams, const int & linesToReach):
 		Game(gameParams), _linesToReach{linesToReach}, _nbClearedLines{}
 	{}
 
@@ -18,7 +18,7 @@ namespace tetris::model{
 
 	// --- Type Score --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-	GameTypeScore::GameTypeScore(const GameParameters & gameParams, unsigned long long int scoreToReach):
+	GameTypeScore::GameTypeScore(const GameParameters & gameParams, const unsigned long long int & scoreToReach):
 		Game(gameParams), _scoreToReach{scoreToReach}
 	{}
 
@@ -29,7 +29,7 @@ namespace tetris::model{
 
 	// --- Type Time --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-	GameTypeTime::GameTypeTime(const GameParameters & gameParams, long long duration):
+	GameTypeTime::GameTypeTime(const GameParameters & gameParams, const long long & duration):
 		Game(gameParams), _startTime{std::chrono::steady_clock::now()}, _duration{duration}
 	{}
 

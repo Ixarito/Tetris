@@ -25,7 +25,7 @@ namespace tetris::model{
 		 * Constructs a Line
 		 * @param length the length of the line
 		 */
-		Line(size_t length);
+		Line(const size_t & length);
 
 		/**
 		 * Places a Block in the line
@@ -33,7 +33,7 @@ namespace tetris::model{
 		 * @param block the block to place
 		 * @sa tetris::model::Line::operator[]()
 		 */
-		void set(size_t position, Block & block);
+		void set(const size_t & position, const Block & block);
 
 		/**
 		 * Gives the Block at the given position
@@ -41,7 +41,7 @@ namespace tetris::model{
 		 * @return a reference to the block at the given position
 		 * @sa tetris::model::Line::operator[]()
 		 */
-		Block & get(size_t position);
+		Block & get(const size_t & position);
 
 		/**
 		 * Gives the Block at the given position
@@ -49,7 +49,7 @@ namespace tetris::model{
 		 * @return a constant reference to the block at the given position
 		 * @sa tetris::model::Line::operator[]()
 		 */
-		const Block & get(size_t position) const;
+		const Block & get(const size_t & position) const;
 
 		/**
 		 * Determines if the line is full of blocks
@@ -67,14 +67,14 @@ namespace tetris::model{
 		 * @param position the position of the block to access
 		 * @return a reference to the block at the given position
 		 */
-		Block & operator[](size_t position);
+		Block & operator[](const size_t & position);
 
 		/**
 		 * Gives the Block at the given position
 		 * @param position the position of the block to access
 		 * @return a constant reference to the block at the given position
 		 */
-		const Block & operator[](size_t position) const;
+		const Block & operator[](const size_t & position) const;
 
 
 		/**

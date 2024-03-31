@@ -11,7 +11,7 @@ namespace tetris::model{
 	 */
 	class GameTypeTime: public Game{
 		std::chrono::steady_clock::time_point _startTime{};
-		 long long _duration{};
+		const long long _duration{};
 
 		 // TODO: modify class if Game can be paused
 	public:
@@ -22,7 +22,7 @@ namespace tetris::model{
 		 * @param gameParams the parameters of the basic Game
 		 * @param duration the time in seconds that the game will last
 		 */
-		GameTypeTime(const GameParameters & gameParams, long long duration);
+		GameTypeTime(const GameParameters & gameParams, const long long & duration);
 
 		/**
 		 * Determines if the game is won

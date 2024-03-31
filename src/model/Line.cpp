@@ -1,30 +1,31 @@
 #include <stdexcept>
 #include "Line.h"
+#include "util/outOfRangeMessage.hpp"
 
 namespace tetris::model {
 
 
-	Line::Line(size_t length) : _content(length), length(length) {}
+	Line::Line(const size_t & length) : _content(length), length{length} {}
 
 
-	void Line::set(size_t position, Block &block) {
+	void Line::set(const size_t & position, const Block &block) {
 		if (position >= length) {
-			throw std::out_of_range("invalid position");
+			throw std::out_of_range(util::OORmessage(position, length));
 		}
 		_content[position] = block;
 	}
 
 
-	Block &Line::get(size_t position) {
+	Block &Line::get(const size_t & position) {
 		if (position >= length) {
-			throw std::out_of_range("invalid position");
+			throw std::out_of_range(util::OORmessage(position, length));
 		}
 		return _content[position].value();
 	}
 
-	const Block &Line::get(size_t position) const {
+	const Block &Line::get(const size_t & position) const {
 		if (position >= length) {
-			throw std::out_of_range("invalid position");
+			throw std::out_of_range(util::OORmessage(position, length));
 		}
 		return _content[position].value();
 	}
@@ -47,17 +48,17 @@ namespace tetris::model {
 	}
 
 
-	Block &Line::operator[](size_t position) {
+	Block &Line::operator[](const size_t & position) {
 		if (position >= length) {
-			throw std::out_of_range("invalid position");
+			throw std::out_of_range(util::OORmessage(position, length));
 		}
 		return *_content[position];
 	}
 
 
-	const Block &Line::operator[](size_t position) const{
+	const Block &Line::operator[](const size_t & position) const{
 		if (position >= length) {
-			throw std::out_of_range("invalid position");
+			throw std::out_of_range(util::OORmessage(position, length));
 		}
 		return *_content[position];
 	}

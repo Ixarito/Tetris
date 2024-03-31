@@ -19,7 +19,7 @@ namespace tetris::model{
 		 * @param gameParams the parameters of the basic Game
 		 * @param scoreToReach the score to reach to declare the game won
 		 */
-		GameTypeScore(const GameParameters & gameParams, unsigned long long int scoreToReach);
+		GameTypeScore(const GameParameters & gameParams, const unsigned long long int & scoreToReach);
 
 		/**
 		 * Determines if the game is won

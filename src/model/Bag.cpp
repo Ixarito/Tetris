@@ -13,7 +13,7 @@ namespace tetris::model{
 		return instance;
 	}
 
-	void Bag::add(Tetromino tetromino){
+	void Bag::add(const Tetromino & tetromino){
 		_list.push_back(tetromino);
 	}
 

@@ -18,6 +18,8 @@ namespace tetris::model{
 		size_t _currentCol;
 		size_t _currentRow;
 
+		bool canMove(const MoveDirection & direction);
+
 		// TODO: implement method placeCurrent() in .cpp file
 	public:
 		/**
@@ -39,7 +41,7 @@ namespace tetris::model{
 		 * @param height the height of the grid (the number of lines)
 		 * @param nbAlreadyPlacedBlock if specified, will randomly place in the bottom of the grid as many blocks as the given number
 		 */
-		explicit Grid(size_t width, size_t height, int nbAlreadyPlacedBlock = 0);
+		explicit Grid(const size_t & width, const size_t & height, const int & nbAlreadyPlacedBlock = 0);
 
 		/**
 		 * Destructs the grid
@@ -62,7 +64,7 @@ namespace tetris::model{
 		 * @param col the column of the block to get
 		 * @return a constant reference to the block
 		 */
-		const Block & get(size_t row, size_t col) const;
+		const Block & get(const size_t & row, const size_t & col) const;
 
 		/**
 		 * Inserts a Tetromino at the top of the grid
@@ -76,7 +78,7 @@ namespace tetris::model{
 		 * Has no effect if there is no current tetromino currently in the grid
 		 * @param direction the direction to move the tetromino
 		 */
-		void moveCurrent(MoveDirection direction);
+		void moveCurrent(const MoveDirection & direction);
 
 		/**
 		 * Rotate the current Tetromino in the given direction.
@@ -84,7 +86,7 @@ namespace tetris::model{
 		 * @param direction the direction to rotate the tetromino
 		 * @sa tetris::model::Tetromino::rotate()
 		 */
-		inline void rotateCurrent(RotateDirection direction);
+		inline void rotateCurrent(const RotateDirection & direction);
 
 		/**
 		 * Drops the current Tetromino while possible
@@ -105,7 +107,7 @@ namespace tetris::model{
 		 * @param position the position of the line
 		 * @sa tetris::model::Grid::getFullLines()
 		 */
-		void removeLine(size_t position);
+		void removeLine(const size_t & position);
 
 		/**
 		 * Gives the Line at the given position
@@ -114,7 +116,7 @@ namespace tetris::model{
 		 * @sa tetris::model::Line
 		 * @sa tetris::model::Line::operator[]()
 		 */
-		const Line & operator[](size_t position) const;
+		const Line & operator[](const size_t & position) const;
 
 
 		/**
@@ -127,14 +129,28 @@ namespace tetris::model{
 		 * @return a pointer to a constant line
 		 * @sa tetris::model::Line::cbegin()
 		 */
-		inline const Line * cbegin() const;
+		Line * begin() const;
+
+		/**
+		 * Returns a pointer to the first Line of the grid
+		 * @return a pointer to a constant line
+		 * @sa tetris::model::Line::cbegin()
+		 */
+		const Line * cbegin() const;
 
 		/**
 		 * Returns a pointer to the element following the last Line of the grid
 		 * @return a pointer to the element following the last constant line
 		 * @sa tetris::model::Line::cend()
 		 */
-		inline const Line * cend() const;
+		Line * end() const;
+
+		/**
+		 * Returns a pointer to the element following the last Line of the grid
+		 * @return a pointer to the element following the last constant line
+		 * @sa tetris::model::Line::cend()
+		 */
+		const Line * cend() const;
 
 		/**
 		 * @}

@@ -35,7 +35,7 @@ namespace tetris::model{
 		 * @param shape the shape that represents the tetromino
 		 * @param color the color of the blocks that form the tetromino
 		 */
-		Tetromino(Shape_type shape, Color color);
+		Tetromino(const Shape_type & shape, const Color & color);
 
 
 		/**
@@ -44,7 +44,7 @@ namespace tetris::model{
 		 * @param ctorCmpnts the pair of component for the constructor
 		 * @sa tetris::model::Tetromino::ConstructorComponents_type
 		 */
-		Tetromino(ConstructorComponents_type & ctorCmpnts);
+		Tetromino(const ConstructorComponents_type & ctorCmpnts);
 
 		/**
 		 * Gives the Block at the given position
@@ -53,7 +53,7 @@ namespace tetris::model{
 		 * @return the block at the given position
 		 * @note returns a copy of the Block as it may persist after the tetromino has been destroyed
 		 */
-        Block get(size_t x, size_t y) const;
+        Block get(const size_t & x, const size_t & y) const;
 
 		/**
 		 * Determines if a position is occupied by a Block in the tetromino shape
@@ -61,13 +61,13 @@ namespace tetris::model{
 		 * @param y the y position in the tetromino shape
 		 * @return true if the position is occupied by a Block, false otherwise
 		 */
-		bool isOccupied(size_t x, size_t y) const;
+		bool isOccupied(const size_t & x, const size_t & y) const;
 
 		/**
 		 * Rotates the tetromino in the given direction
 		 * @param direction the direction of rotation
 		 */
-		void rotate(RotateDirection direction);
+		void rotate(const RotateDirection & direction);
 
 		/**
 		 * Gives the current tetromino width
