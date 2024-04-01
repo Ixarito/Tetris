@@ -19,51 +19,56 @@ namespace tetris::model {
     }
 
     bool Grid::canMove(const MoveDirection &direction) {
-        switch (direction) {
-            case MoveDirection::LEFT:
-                for (int x = 0; x < _current->getWidth(); x++) {
-                    for (int y = 0; y < _current->getHeight(); y++) {
-                        if (_current->isOccupied(x, y)) {
-                            if (_currentCol + x <= 0) {
-                                return false;
-                            }
-                            if (_lines[_currentRow + y]->isOccupied(_currentCol + x - 1)) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                return true;
-            case MoveDirection::RIGHT:
-                for (int x = 0; x < _current->getWidth(); x++) {
-                    for (int y = 0; y < _current->getHeight(); y++) {
-                        if (_current->isOccupied(x, y)) {
-                            if (_currentCol + x >= width - 1) {
-                                return false;
-                            }
-                            if (_lines[_currentRow + y]->isOccupied(_currentCol + x + 1)) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                return true;
-            case MoveDirection::DOWN:
-                for (int x = 0; x < _current->getWidth(); x++) {
-                    for (int y = 0; y < _current->getHeight(); y++) {
-                        if (_current->isOccupied(x, y)) {
-                            if (_currentRow + y >= height - 1) {
-                                return false;
-                            }
-                            if (_lines[_currentRow + y + 1]->isOccupied(_currentCol + x)) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                return true;
-        }
+		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+
+		for (size_t x = 0; x < _current->getWidth(); x++) {
+			for (size_t y = 0; y < _current->getHeight(); y++) {
+				if (_current->isOccupied(x, y)) {
+					switch (direction) {
+						case MoveDirection::LEFT:
+							if (_currentCol + x <= 0) {
+								return false;
+							}
+							if (_lines[_currentRow + y]->isOccupied(_currentCol + x - 1)) {
+								return false;
+							}
+						case MoveDirection::RIGHT:
+							if (_currentCol + x >= width - 1) {
+								return false;
+							}
+							if (_lines[_currentRow + y]->isOccupied(_currentCol + x + 1)) {
+								return false;
+							}
+						case MoveDirection::DOWN:
+							if (_currentRow + y >= height - 1) {
+								return false;
+							}
+							if (_lines[_currentRow + y + 1]->isOccupied(_currentCol + x)) {
+								return false;
+							}
+					}
+				}
+			}
+		}
+		return true;
     }
+
+	void Grid::placeCurrent() {
+		// insert current tetromino in the real grid
+
+		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+
+		auto tetroWidth {_current->getWidth()};
+		auto tetroHeight {_current->getHeight()};
+
+		for (size_t x = 0; x < tetroWidth; x++) {
+			for (size_t y = 0; y < tetroHeight; y++) {
+				if (_current->isOccupied(x, y)) {
+					_lines[_currentRow + y]->set(_currentCol + x, _current->get(x, y));
+				}
+			}
+		}
+	}
 
     const Block &Grid::get(const size_t &row, const size_t &col) const {
         if (row >= height) {
@@ -80,6 +85,8 @@ namespace tetris::model {
     }
 
     void Grid::moveCurrent(const MoveDirection &direction) {
+		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+
         if (canMove(direction)) {
             switch (direction) {
                 case MoveDirection::LEFT:
@@ -96,6 +103,8 @@ namespace tetris::model {
     }
 
     void Grid::rotateCurrent(const RotateDirection &direction) {
+		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+
         _current->rotate(direction);
     }
 
@@ -105,7 +114,10 @@ namespace tetris::model {
             moveCurrent(MoveDirection::DOWN);
             count++;
         }
-        return count;
+
+		placeCurrent();
+
+		return count;
     }
 
     std::vector<size_t> Grid::getFullLines() {
@@ -139,21 +151,21 @@ namespace tetris::model {
             gridView.push_back(*line);
         }
 
-		// getWidth et Height is long method so declare before
-		auto tetroWidth {_current->getWidth()};
-		auto tetroHeight {_current->getHeight()};
+		if(_current.has_value()){
+			// getWidth et Height are long methods so declare before
+			auto tetroWidth {_current->getWidth()};
+			auto tetroHeight {_current->getHeight()};
 
-        for (int x = 0; x < tetroWidth; x++) {
-            for (int y = 0; y < tetroHeight; y++) {
-                if (_current->isOccupied(x, y)) {
-                    gridView[_currentRow + y].set(_currentCol + x, _current->get(x, y));
-                }
-            }
-        }
-
+			for (size_t x = 0; x < tetroWidth; x++) {
+				for (size_t y = 0; y < tetroHeight; y++) {
+					if (_current->isOccupied(x, y)) {
+						gridView[_currentRow + y].set(_currentCol + x, _current->get(x, y));
+					}
+				}
+			}
+		}
         return gridView;
     }
-
 
 
     const Line &Grid::operator[](const size_t &position) const {

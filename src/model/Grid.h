@@ -20,6 +20,7 @@ namespace tetris::model{
 		size_t _currentRow;
 
 		bool canMove(const MoveDirection & direction);
+		void placeCurrent();
 
 		// TODO: implement method placeCurrent() in .cpp file
 	public:

@@ -58,7 +58,7 @@ namespace tetris::model{
 		 * @param params the parameters of the Game
 		 * @sa tetris::model::GameParameters
 		 */
-		Game(const GameParameters & params);
+		explicit Game(const GameParameters & params);
 
 		/**
 		 * @name Victory checks
@@ -99,6 +99,12 @@ namespace tetris::model{
 		inline const int & getLevel() const;
 
 		/**
+		 * Gives a view of the current state of the game Grid
+		 * @return a view to the current state of the Grid
+		 */
+		std::vector<Line> getGridView() const;
+
+		/**
 		 * @}
 		 *
 		 * @name Actions
@@ -124,8 +130,6 @@ namespace tetris::model{
 		 * Performs the action rotate the current tetromino clockwise
 		 */
 		void rotateClockwise();
-
-        std::vector<Line> getGridView() const;
 
 		/**
 		 * Performs the action rotate the current tetromino counterclockwise

@@ -15,7 +15,7 @@ namespace tetris::model{
 			_bag.add(tetromino);
 		}
 
-		/// TODO
+		/// TODO don't do that
 		_grid.insert(_bag.getNext());
 	}
 
@@ -60,7 +60,8 @@ namespace tetris::model{
 	}
 
 	void Game::drop(){
-		_grid.dropCurrent();
+		score += _grid.dropCurrent();
+		_grid.insert(_bag.getNext());
 	}
 
 } // namespace tetris::model
