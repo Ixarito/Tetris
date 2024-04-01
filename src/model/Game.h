@@ -141,7 +141,13 @@ namespace tetris::model{
 		 */
 		void drop();
 
-		};
+        /** Attach the current Tetromino to the grid
+         * @return true if it attach the tetromino, false if it can't
+         */
+        bool attachCurrent();
+    };
+
+
 
 		/**
 		 * @}

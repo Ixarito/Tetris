@@ -64,6 +64,10 @@ namespace tetris::model{
 		_grid.insert(_bag.getNext());
 	}
 
+    bool Game::attachCurrent(){
+        return _grid.attachCurrent();
+    }
+
 } // namespace tetris::model
 
 

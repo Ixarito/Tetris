@@ -126,6 +126,10 @@ namespace tetris::model{
 		 */
 		const Line & operator[](const size_t & position) const;
 
+        /** Attach the current Tetromino to the grid
+         * @return true if it attach the tetromino, false if it can't
+         */
+        bool attachCurrent();
 
 		/**
 		 * @name Iterators
