@@ -62,6 +62,13 @@ namespace tetris::model{
 		 */
 		void clear();
 
+        /**
+         * Determines if a position is occupied by a Block in the line
+         * @param position the position to check
+         * @return true if the position is occupied by a Block, false otherwise
+         */
+        bool isOccupied(const size_t & position) const;
+
 		/**
 		 * Gives the Block at the given position
 		 * @param position the position of the block to access

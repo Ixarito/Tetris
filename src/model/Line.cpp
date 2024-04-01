@@ -47,6 +47,9 @@ namespace tetris::model {
 		}
 	}
 
+    bool Line::isOccupied(const size_t & position) const {
+        return _content[position].has_value();
+    }
 
 	Block &Line::operator[](const size_t & position) {
 		if (position >= length) {

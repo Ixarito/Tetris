@@ -7,4 +7,11 @@ namespace tetris::view::console{
 	void displayMessage(const std::string &message) {
 		cout << message << endl;
 	}
+
+
+
+
+
+
+
 } // namespace tetris::view::console

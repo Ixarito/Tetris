@@ -17,8 +17,7 @@ namespace tetris::model {
         }
     }
 
-    Tetromino::Tetromino(const ConstructorComponents_type & ctorCmpnts) : Tetromino(ctorCmpnts.first, ctorCmpnts.second)
-	{}
+    Tetromino::Tetromino(const ConstructorComponents_type & ctorCmpnts) : Tetromino(ctorCmpnts.first, ctorCmpnts.second) {}
 
 
     Block Tetromino::get(const size_t & x, const size_t & y) const {

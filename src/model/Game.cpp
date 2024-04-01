@@ -13,7 +13,6 @@ namespace tetris::model{
 
 		for(auto & tetromino : params.shapes){
 			_bag.add(tetromino);
-			std::cout << "ça marche ici" << std::endl;
 		}
 
 		/// TODO
