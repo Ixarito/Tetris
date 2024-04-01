@@ -110,6 +110,12 @@ namespace tetris::model{
 		 */
 		void removeLine(const size_t & position);
 
+        /**
+         * Gives the grid of the game with the current tetromino
+         * @return the grid
+         */
+        std::vector<std::vector<std::optional<model::Block>>> getGridView() const;
+
 		/**
 		 * Gives the Line at the given position
 		 * @param position the position of the line to get
