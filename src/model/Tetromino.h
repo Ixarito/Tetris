@@ -85,8 +85,6 @@ namespace tetris::model{
         //test
         void print() const;
 
-
-
     };
 
 } // namespace tetris::model

@@ -22,12 +22,12 @@ namespace tetris::model {
 
     Block Tetromino::get(const size_t & x, const size_t & y) const {
 		if(!isOccupied(x, y)) throw std::logic_error("No block at this position. To avoid this error, use the isOccupied() method");
-        return _shape[x][y].value();
+        return _shape[y][x].value();
     }
 
 
     bool Tetromino::isOccupied(const size_t & x, const size_t & y) const {
-        return _shape[x][y].has_value();
+        return _shape[y][x].has_value();
     }
 
 
@@ -56,14 +56,14 @@ namespace tetris::model {
 
 
     size_t Tetromino::getHeight() const {
-        size_t height{0};
+        size_t height{};
+        size_t vectorWidth {_shape[0].size()}; // used for optimise the loop
 
-        size_t vectorHeight {_shape.size()}; //used for optimise the loop
-        for (size_t y{0}; y < _shape[0].size(); ++y) {
-            size_t tempHeight{0};
-            for (size_t x{0}; x < vectorHeight; ++x) {
-                if (_shape[x][y].has_value()) {
-                    tempHeight++;
+        for (size_t x{}; x < vectorWidth; ++x) {
+            size_t tempHeight{};
+            for (size_t y{}; y < _shape.size(); ++y) {
+                if (_shape[y][x].has_value()) {
+                    tempHeight = y + 1;
                 }
             }
             if (tempHeight > height) {
@@ -75,14 +75,14 @@ namespace tetris::model {
     }
 
     size_t Tetromino::getWidth() const {
-        size_t width{0};
-        size_t vectorWidth {_shape[0].size()}; //used for optimise the loop
+        size_t width{};
+        size_t vectorWidth {_shape[0].size()}; // used for optimise the loop
 
-        for (size_t x{0}; x < _shape.size(); ++x) {
-            size_t tempWidth{0};
-            for (size_t y{0}; y < vectorWidth; ++y) {
-                if (_shape[x][y].has_value()) {
-                    tempWidth++;
+        for (size_t y{}; y < _shape.size(); ++y) {
+            size_t tempWidth{};
+            for (size_t x{}; x < vectorWidth; ++x) {
+                if (_shape[y][x].has_value()) {
+                    tempWidth = x + 1;
                 }
             }
             if (tempWidth > width) {

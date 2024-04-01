@@ -139,10 +139,14 @@ namespace tetris::model {
             gridView.push_back(*line);
         }
 
-        for (int x = 0; x < _current->getWidth(); x++) {
-            for (int y = 0; y < _current->getHeight(); y++) {
+		// getWidth et Height is long method so declare before
+		auto tetroWidth {_current->getWidth()};
+		auto tetroHeight {_current->getHeight()};
+
+        for (int x = 0; x < tetroWidth; x++) {
+            for (int y = 0; y < tetroHeight; y++) {
                 if (_current->isOccupied(x, y)) {
-                    gridView[_currentCol + x].set(_currentRow + y, _current->get(x, y));
+                    gridView[_currentRow + y].set(_currentCol + x, _current->get(x, y));
                 }
             }
         }
