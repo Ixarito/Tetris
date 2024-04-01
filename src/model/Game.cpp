@@ -35,6 +35,10 @@ namespace tetris::model{
 		return _level;
 	}
 
+    std::vector<Line> Game::getGridView() const {
+        return _grid.getGridView();
+    }
+
 	void Game::goDown(){
 		_grid.moveCurrent(MoveDirection::DOWN);
 	}

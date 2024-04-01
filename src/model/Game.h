@@ -125,6 +125,8 @@ namespace tetris::model{
 		 */
 		void rotateClockwise();
 
+        std::vector<Line> getGridView() const;
+
 		/**
 		 * Performs the action rotate the current tetromino counterclockwise
 		 */

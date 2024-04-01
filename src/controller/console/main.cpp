@@ -2,8 +2,13 @@
 #include "Game.h"
 #include "Bag.h"
 #include "Tetromino.h"
+#include "BasicDisplay.h"
+#include "Block.h"
 
 using namespace tetris;
+
+
+
 
 int main(){
 
@@ -12,22 +17,17 @@ int main(){
 	struct model::GameParameters gp;
 
 	gp.shapes = {{{{true, false, true}, {true, true, true}, {true, false, true}}, model::Color::BLUE}};
+    gp.gridWidth = 10;
+    gp.gridHeight = 20;
+    gp.nbAlreadyPlacedBlocks = 0;
+    gp.level = 1;
+
 
 	model::Game game{gp};
 
-	game.rotateClockwise();
+    view::console::displayGrid(game.getGridView());
 
-//	model::Tetromino t {{{true, false, true}, {true, true, true}, {true, false, true}}, model::Color::BLUE};
-//
-//	t.rotate(model::RotateDirection::CW);
-//
-//	model::Bag & instance {model::Bag::getInstance()};
-//	instance.add({{{true, false, true}, {true, true, true}, {true, false, true}}, model::Color::BLUE});
-//
-//	model::Tetromino tetro = instance.getNext();
-//
-//	tetro.rotate(model::RotateDirection::CW);
-
+    
 
 	return 0;
 }

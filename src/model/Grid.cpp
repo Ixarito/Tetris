@@ -133,24 +133,24 @@ namespace tetris::model {
         _lines.push_front(target);
     }
 
-    std::vector<std::vector<std::optional<model::Block>>> Grid::getGridView() const {
-        std::vector<std::vector<std::optional<model::Block>>> gridView;
-        for (int x = 0; x < width; x++) {
-            std::vector<std::optional<model::Block>> column;
-            for (int y = 0; y < height; y++) {
-                column.emplace_back(get(y, x));
-            }
-            gridView.push_back(column);
+    std::vector<Line> Grid::getGridView() const {
+        std::vector<Line> gridView;
+        for (auto & line : _lines) {
+            gridView.push_back(*line);
         }
+
         for (int x = 0; x < _current->getWidth(); x++) {
             for (int y = 0; y < _current->getHeight(); y++) {
                 if (_current->isOccupied(x, y)) {
-                    gridView[_currentCol + x][_currentRow + y] = _current->get(x, y);
+                    gridView[_currentCol + x].set(_currentRow + y, _current->get(x, y));
                 }
             }
         }
+
         return gridView;
     }
+
+
 
     const Line &Grid::operator[](const size_t &position) const {
         if (position >= height) {

@@ -114,7 +114,7 @@ namespace tetris::model{
          * Gives the grid of the game with the current tetromino
          * @return the grid
          */
-        std::vector<std::vector<std::optional<model::Block>>> getGridView() const;
+        std::vector<Line> getGridView() const;
 
 		/**
 		 * Gives the Line at the given position
