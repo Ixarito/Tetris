@@ -35,11 +35,12 @@ namespace tetris::view::console {
 
     void displayGame(const model::Game & game) {
         auto grid{game.getGridView()};
+        bool isFullLines = true;
+        bool isLevelLine = false;
+        bool isScoreLine = true;
 
-
-        cout << "score : " << game.getScore() << endl;
         for (auto line: grid) {
-            std::cout << GRAY << "                             " << "<!" << RESET;
+            std::cout << GRAY << "\t\t\t\t\t" << "<!" << RESET;
             for (size_t i = 0; i < line.length; i++) {
                 if (line.isOccupied(i)) {
                     // Get the color code for the block
@@ -49,11 +50,15 @@ namespace tetris::view::console {
                     cout << GRAY << " ." << RESET;
                 }
             }
-            cout << GRAY << "!>" << RESET << endl;
+            cout << GRAY << "!>";
+            if (isScoreLine) {
+                cout << "\tscore : " << game.getScore();
+                isScoreLine = false;
+            }
+            cout << RESET << endl;
         }
-        cout << GRAY << "                             " << "<!====================!>" << RESET << endl;
-        cout << GRAY << "                             " << "  \\/\\/\\/\\/\\/\\/\\/\\/\\/\\/" << RESET << endl;
-
+        cout << GRAY << "\t\t\t\t\t" << "<!====================!>" << RESET << endl;
+        cout << GRAY << "\t\t\t\t\t" << "  \\/\\/\\/\\/\\/\\/\\/\\/\\/\\/" << RESET << endl;
     }
 
     void displayGameOver() {
