@@ -7,7 +7,7 @@ namespace tetris::model {
 	 * Represents the color of a block in the Tetris game
 	 */
 	enum class Color : char{
-		BLUE, GREEN, YELLOW, ORANGE, RED
+		BLUE, GREEN, YELLOW, ORANGE, RED, CYAN, PURPLE
 	};
 
 } // namespace tetris::model
