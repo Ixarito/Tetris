@@ -44,6 +44,7 @@ namespace tetris::model{
 		Grid _grid;
 		Bag & _bag;
 		int _level;
+        int _fullLines;
 
 	protected:
 		/**
@@ -103,6 +104,12 @@ namespace tetris::model{
 		 * @return a view to the current state of the Grid
 		 */
 		std::vector<Line> getGridView() const;
+
+        /**
+         * Gives the number of full lines
+         * @return the number of full lines
+         */
+        const int & getFullLines() const;
 
 		/**
 		 * @}

@@ -35,10 +35,9 @@ namespace tetris::view::console {
 
     void displayGame(const model::Game & game) {
         auto grid{game.getGridView()};
-        bool isFullLines = true;
-        bool isLevelLine = false;
-        bool isScoreLine = true;
 
+//        display the Full lines, level, score
+        cout << GRAY << "\t\t\t\t" << "\033[91mFull lines: " << RESET << game.getFullLines() << "\033[92m\tLevel: " << RESET << game.getLevel()  << "\033[94m\tScore: " << RESET << game.getScore() << endl;
         for (auto line: grid) {
             std::cout << GRAY << "\t\t\t\t\t" << "<!" << RESET;
             for (size_t i = 0; i < line.length; i++) {
@@ -51,10 +50,6 @@ namespace tetris::view::console {
                 }
             }
             cout << GRAY << "!>";
-            if (isScoreLine) {
-                cout << "\tscore : " << game.getScore();
-                isScoreLine = false;
-            }
             cout << RESET << endl;
         }
         cout << GRAY << "\t\t\t\t\t" << "<!====================!>" << RESET << endl;

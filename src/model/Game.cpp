@@ -35,6 +35,10 @@ namespace tetris::model{
 		return _level;
 	}
 
+    const int & Game::getFullLines() const{
+        return _fullLines;
+    }
+
     std::vector<Line> Game::getGridView() const {
         return _grid.getGridView();
     }
@@ -43,7 +47,9 @@ namespace tetris::model{
 		_grid.moveCurrent(MoveDirection::DOWN);
         if (!_grid.canMove(MoveDirection::DOWN)){
             _grid.insert(_bag.getNext());
-            score+=_grid.removeFullLines();
+            auto fullLines {_grid.removeFullLines()};
+            score += fullLines;
+            _fullLines += fullLines;
         }
 	}
 
@@ -66,7 +72,9 @@ namespace tetris::model{
 	void Game::drop(){
 		score += _grid.dropCurrent();
 		_grid.insert(_bag.getNext());
-        score+=_grid.removeFullLines();
+        auto fullLines {_grid.removeFullLines()};
+        score += fullLines;
+        _fullLines += fullLines;
 	}
 
 
