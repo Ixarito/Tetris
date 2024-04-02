@@ -32,6 +32,7 @@ namespace tetris::model {
 							if (_lines[_currentRow + y]->isOccupied(_currentCol + x - 1)) {
 								return false;
 							}
+                            break;
 						case MoveDirection::RIGHT:
 							if (_currentCol + x >= width - 1) {
 								return false;
@@ -39,6 +40,7 @@ namespace tetris::model {
 							if (_lines[_currentRow + y]->isOccupied(_currentCol + x + 1)) {
 								return false;
 							}
+                            break;
 						case MoveDirection::DOWN:
 							if (_currentRow + y >= height - 1) {
                                 placeCurrent();
@@ -48,6 +50,7 @@ namespace tetris::model {
                                 placeCurrent();
 								return false;
 							}
+                            break;
 					}
 				}
 			}
@@ -116,7 +119,6 @@ namespace tetris::model {
             moveCurrent(MoveDirection::DOWN);
             count++;
         }
-
 		placeCurrent();
 
 		return count;
