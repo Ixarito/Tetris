@@ -19,6 +19,10 @@ namespace tetris::model{
 		size_t _currentCol;
 		size_t _currentRow;
 
+        /** Attach the current Tetromino to the grid
+         */
+        void placeCurrent();
+
 
 		// TODO: implement method placeCurrent() in .cpp file
 	public:
@@ -130,10 +134,6 @@ namespace tetris::model{
          * @return true if the tetromino can move, false otherwise
          */
         bool canMove(const MoveDirection & direction);
-
-        /** Attach the current Tetromino to the grid
-         */
-        void placeCurrent();
 
 		/**
 		 * @name Iterators

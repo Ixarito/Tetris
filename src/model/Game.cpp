@@ -42,7 +42,6 @@ namespace tetris::model{
 	void Game::goDown(){
 		_grid.moveCurrent(MoveDirection::DOWN);
         if (!_grid.canMove(MoveDirection::DOWN)){
-            placeCurrent();
             _grid.insert(_bag.getNext());
         }
 	}
@@ -65,13 +64,9 @@ namespace tetris::model{
 
 	void Game::drop(){
 		score += _grid.dropCurrent();
-        placeCurrent();
 		_grid.insert(_bag.getNext());
 	}
 
-    void Game::placeCurrent(){
-        _grid.placeCurrent();
-    }
 
 } // namespace tetris::model
 

@@ -42,7 +42,7 @@ int main(){
     game.drop();
 
     game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goDown();game.goLeft();game.goLeft();game.goDown();game.goDown();
-
+    game.goDown();game.goLeft();
 
 
 

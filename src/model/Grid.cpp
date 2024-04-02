@@ -41,9 +41,11 @@ namespace tetris::model {
 							}
 						case MoveDirection::DOWN:
 							if (_currentRow + y >= height - 1) {
+                                placeCurrent();
 								return false;
 							}
 							if (_lines[_currentRow + y + 1]->isOccupied(_currentCol + x)) {
+                                placeCurrent();
 								return false;
 							}
 					}
