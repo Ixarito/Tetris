@@ -67,9 +67,9 @@ namespace tetris::model{
 
 		/**
 		 * Determines if the game is over
-		 * @return true if the game is over, false otherwise
+		 * @return true if the game is still active, false if the game is over
 		 */
-		bool isGameOver() const;
+		bool isGameActive() const;
 
 
 		/**
@@ -90,13 +90,13 @@ namespace tetris::model{
 		 * Gives the current score
 		 * @return the current score
 		 */
-		inline const unsigned long long int & getScore() const;
+		const unsigned long long int & getScore() const;
 
 		/**
 		 * Gives the current level
 		 * @return the current level
 		 */
-		inline const int & getLevel() const;
+        const int & getLevel() const;
 
 		/**
 		 * Gives a view of the current state of the game Grid

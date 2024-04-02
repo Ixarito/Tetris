@@ -94,10 +94,10 @@ int main(){
 
     model::Game game{gp};
 
-    while(true){
+    while(game.isGameActive()){
         char input;
         std::cin.get(input);
-        std::cout << std::string(100, '\n');
+        std::cout << std::string(30, '\n');
         switch (input) {
             case 'm':
                 return 0;
@@ -116,19 +116,20 @@ int main(){
             case 'a':
                 game.rotateCounterclockwise();
                 break;
+
             case '\n':
                 game.goDown();
                 break;
             default:
                 break;
         }
-        view::console::displayGrid(game.getGridView());
+
+        view::console::displayGame(game);
         std::cout << "\n\n" << std::endl;
 
     }
 
-
-
-
+    std::cout << std::string(30, '\n');
+    view::console::displayGameOver();
 
 }

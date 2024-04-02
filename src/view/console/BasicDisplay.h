@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <optional>
-#include "../../model/Line.h"
+#include "../../model/Game.h"
 #include "../../model/Color.h"
 
 
@@ -17,9 +17,9 @@ namespace tetris::view::console{
 	 */
 	void displayMessage(const std::string & message);
 
-    void displayGrid(std::vector<model::Line> grid);
+    void displayGame(const model::Game & game);
 
-    std::string getColorCode(tetris::model::Color color);
+    void displayGameOver();
 
 
 

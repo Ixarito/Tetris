@@ -40,9 +40,18 @@ namespace tetris::model {
 		return true;
 	}
 
+    bool Line::isEmpty() const{
+        for (auto block: _content) {
+            if (block.has_value()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 	void Line::clear() {
-		for (auto block : _content){
+		for (auto & block : _content){
 			block.reset();
 		}
 	}

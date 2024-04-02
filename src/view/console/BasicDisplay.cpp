@@ -1,5 +1,6 @@
 #define RESET   "\033[0m"
 #define GRAY "\033[90m"
+
 #include <iostream>
 #include <vector>
 #include <optional>
@@ -7,10 +8,6 @@
 
 namespace tetris::view::console {
     using namespace std;
-
-    void displayMessage(const std::string &message) {
-        cout << message << endl;
-    }
 
     std::string getColorCode(tetris::model::Color color) {
         switch (color) {
@@ -31,10 +28,18 @@ namespace tetris::view::console {
         }
     }
 
+    void displayMessage(const std::string &message) {
+        cout << message << endl;
+    }
 
-    void displayGrid(std::vector<model::Line> grid) {
-        for (auto line : grid) {
-            std::cout << GRAY << "<!" << RESET;
+
+    void displayGame(const model::Game & game) {
+        auto grid{game.getGridView()};
+
+
+        cout << "score : " << game.getScore() << endl;
+        for (auto line: grid) {
+            std::cout << GRAY << "                             " << "<!" << RESET;
             for (size_t i = 0; i < line.length; i++) {
                 if (line.isOccupied(i)) {
                     // Get the color code for the block
@@ -44,11 +49,22 @@ namespace tetris::view::console {
                     cout << GRAY << " ." << RESET;
                 }
             }
-            cout <<  GRAY <<  "!>" << RESET << endl;
+            cout << GRAY << "!>" << RESET << endl;
         }
-        cout << GRAY << "<!====================!>" << RESET
+        cout << GRAY << "                             " << "<!====================!>" << RESET << endl;
+        cout << GRAY << "                             " << "  \\/\\/\\/\\/\\/\\/\\/\\/\\/\\/" << RESET << endl;
 
-        << endl;
+    }
+
+    void displayGameOver() {
+        cout << "\033[91m" << R"(
+              ____                         ___
+             / ___| __ _ _ __ ___   ___   / _ \__   _____ _ __
+            | |  _ / _` | '_ ` _ \ / _ \ | | | \ \ / / _ \ '__|
+            | |_| | (_| | | | | | |  __/ | |_| |\ V /  __/ |
+             \____|\__,_|_| |_| |_|\___|  \___/  \_/ \___|_|
+
+            )" << RESET << endl;
     }
 
 } // namespace tetris::view::console

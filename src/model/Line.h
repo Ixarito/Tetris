@@ -57,6 +57,12 @@ namespace tetris::model{
 		 */
 		bool isFull() const;
 
+        /**
+		 * Determines if the line is empty of blocks
+		 * @return true if the line is empty, false otherwise
+		 */
+        bool isEmpty() const;
+
 		/**
 		 * Clear the line of all its blocks
 		 */

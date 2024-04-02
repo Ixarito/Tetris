@@ -15,12 +15,12 @@ namespace tetris::model{
 			_bag.add(tetromino);
 		}
 
-		/// TODO don't do that
+		/// TODO don't do that, yes, yes, do that beacause why don't do that !?
 		_grid.insert(_bag.getNext());
 	}
 
-	bool Game::isGameOver() const{
-		return false; // TODO
+	bool Game::isGameActive() const{
+		return _grid.isOnTop();
 	}
 
 	bool Game::isWon() const{
@@ -43,6 +43,7 @@ namespace tetris::model{
 		_grid.moveCurrent(MoveDirection::DOWN);
         if (!_grid.canMove(MoveDirection::DOWN)){
             _grid.insert(_bag.getNext());
+            score+=_grid.removeFullLines();
         }
 	}
 
@@ -65,6 +66,7 @@ namespace tetris::model{
 	void Game::drop(){
 		score += _grid.dropCurrent();
 		_grid.insert(_bag.getNext());
+        score+=_grid.removeFullLines();
 	}
 
 

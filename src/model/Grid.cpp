@@ -122,6 +122,8 @@ namespace tetris::model {
 		return count;
     }
 
+
+
     std::vector<size_t> Grid::getFullLines() {
         std::vector<size_t> fullLines;
         for (size_t i = 0; i < height; i++) {
@@ -169,12 +171,24 @@ namespace tetris::model {
         return gridView;
     }
 
+    size_t Grid::removeFullLines(){
+        auto lines {getFullLines()};
+        for(auto line : lines){
+            removeLine(line);
+        }
+        return lines.size();
+    }
+
 
     const Line &Grid::operator[](const size_t &position) const {
         if (position >= height) {
             throw std::out_of_range(util::OORmessage(position, height));
         }
         return *_lines[position];
+    }
+
+    bool Grid::isOnTop() const {
+        return _lines[0]->isEmpty();
     }
 
     auto Grid::begin() const -> decltype(_lines.begin()) {

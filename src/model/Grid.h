@@ -23,8 +23,22 @@ namespace tetris::model{
          */
         void placeCurrent();
 
+        /**
+		 * Gives the Line numbers that are full of blocks
+		 * @return all the line numbers that are full
+		 * @sa tetris::model::Line::isFull()
+		 */
+        std::vector<size_t> getFullLines();
 
-		// TODO: implement method placeCurrent() in .cpp file
+        /**
+         * Removes the Line at the given position.
+         * Has the effect of lowering all the lines that were above
+         * @param position the position of the line
+         * @sa tetris::model::Grid::getFullLines()
+         */
+        void removeLine(const size_t & position);
+
+
 	public:
 		/**
 		 * The width of the grid.
@@ -98,21 +112,6 @@ namespace tetris::model{
 		 */
 		int dropCurrent();
 
-		/**
-		 * Gives the Line numbers that are full of blocks
-		 * @return all the line numbers that are full
-		 * @sa tetris::model::Line::isFull()
-		 */
-		std::vector<size_t> getFullLines();
-
-		/**
-		 * Removes the Line at the given position.
-		 * Has the effect of lowering all the lines that were above
-		 * @param position the position of the line
-		 * @sa tetris::model::Grid::getFullLines()
-		 */
-		void removeLine(const size_t & position);
-
         /**
          * Gives the grid of the game with the current tetromino
          * @return the grid
@@ -134,6 +133,18 @@ namespace tetris::model{
          * @return true if the tetromino can move, false otherwise
          */
         bool canMove(const MoveDirection & direction);
+
+        /**
+         * Remove all full lines
+         * @return the nuber of lines removed
+         **/
+        size_t removeFullLines();
+
+        /**
+         * Verify if a tetromino touch the top of the grid
+         * @return true if is a tetromino on the top of the grid
+         */
+        bool isOnTop() const;
 
 		/**
 		 * @name Iterators
