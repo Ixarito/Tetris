@@ -39,11 +39,12 @@ namespace tetris::model{
 		const Tetromino & peekNext() const;
 
 		/**
-		 * Adds a tetromino to the bag
-		 * @param tetromino a tetromino to add
+		 * Adds a list of tetrominoes to the bag
+		 * @param tetrominoes a list of tetrominoes to add
 		 * @sa tetris::model::Tetromino
+		 * @sa tetris::model::Tetromino::ConstructorComponents_type
 		 */
-		void add(const Tetromino & tetromino);
+		void addAll(const std::vector<Tetromino::ConstructorComponents_type> & tetrominoes);
 	};
 
 } // namespace tetris::model

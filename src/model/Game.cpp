@@ -11,11 +11,8 @@ namespace tetris::model{
 	{
 		if(params.shapes.empty()) throw "Please specify tetrominoes to play";
 
-		for(auto & tetromino : params.shapes){
-			_bag.add(tetromino);
-		}
+		_bag.addAll(params.shapes);
 
-		/// TODO don't do that, yes, yes, do that beacause why don't do that !?
 		_grid.insert(_bag.getNext());
 	}
 

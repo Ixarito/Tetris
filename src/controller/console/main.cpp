@@ -85,10 +85,6 @@ int main(){
                       {true, true, true},
                       {false, false, false}}}, model::Color::ORANGE}
     };
-    gp.gridWidth = 10;
-    gp.gridHeight = 20;
-    gp.nbAlreadyPlacedBlocks = 0;
-    gp.level = 1;
 
 
 

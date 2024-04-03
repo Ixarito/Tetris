@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Bag.h"
 #include <algorithm>
 #include <random>
@@ -13,8 +12,15 @@ namespace tetris::model{
 		return instance;
 	}
 
-	void Bag::add(const Tetromino & tetromino){
-		_list.push_back(tetromino);
+	void Bag::addAll(const std::vector<Tetromino::ConstructorComponents_type> & tetrominoes){
+
+		for(const auto & tetromino: tetrominoes){
+			_list.push_back(tetromino);
+		}
+
+		std::random_device rd;
+		std::mt19937 g(rd());
+		std::ranges::shuffle(_list, g);
 	}
 
 	Tetromino Bag::getNext() {
