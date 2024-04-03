@@ -30,6 +30,7 @@ set(SOURCES
 		Grid.cpp
 		util/outOfRangeMessage.hpp
 		util/random.hpp
+		Games.h
 )
 
 # Créer une bibliothèque statique

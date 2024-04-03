@@ -1,6 +1,5 @@
 #include "Tetromino.h"
 #include "util/maxVectorSize.hpp"
-#include <iostream>
 
 namespace tetris::model {
 

@@ -67,4 +67,8 @@ namespace tetris::view::console {
             )" << RESET << endl;
     }
 
+	void displayWin() {
+		cout << "you win" << endl;
+	}
+
 } // namespace tetris::view::console

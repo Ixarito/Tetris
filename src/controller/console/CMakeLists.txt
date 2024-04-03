@@ -13,6 +13,8 @@ include_directories(../../view/console)
 add_executable(Tetris_controller_console
         main.cpp
         GameType.h
+        Interactions.cpp
+        Interactions.h
 )
 
 # Lier les bibliothèques Tetris

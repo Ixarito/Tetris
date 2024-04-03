@@ -65,6 +65,11 @@ namespace tetris::model{
 		explicit Game(const GameParameters & params);
 
 		/**
+		 * Destructor of Game
+		 */
+		virtual ~Game() = default;
+
+		/**
 		 * @name Victory checks
 		 * @{
 		 */

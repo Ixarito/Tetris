@@ -1,7 +1,6 @@
 #include "GameTypeLines.h"
 #include "GameTypeScore.h"
 #include "GameTypeTime.h"
-#include <iostream>
 
 namespace tetris::model{
 

@@ -21,6 +21,8 @@ namespace tetris::view::console{
 
     void displayGameOver();
 
+	void displayWin();
+
 
 
 
