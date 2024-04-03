@@ -1,6 +1,9 @@
 #include <stdexcept>
 #include "Grid.h"
 #include "util/outOfRangeMessage.hpp"
+#include "util//random.hpp"
+
+#define PERCENT_RANDOM_BLOCK 75
 
 namespace tetris::model {
 
@@ -9,6 +12,22 @@ namespace tetris::model {
         for (size_t i{0}; i < height; i++) {
             _lines.push_back(new Line(width));
         }
+
+		if(nbAlreadyPlacedBlock){
+			dev3::randomize();
+			auto colorEnumSize = static_cast<char>(Color::_count_);
+			int nbPlacedBlock {};
+
+			for(size_t i {_lines.size()}; i-- && nbPlacedBlock < nbAlreadyPlacedBlock;){
+				for(size_t j {}; j < _lines[i]->length && nbPlacedBlock < nbAlreadyPlacedBlock; j++){
+					if(dev3::random_value(0, 100) < PERCENT_RANDOM_BLOCK){
+						_lines[i]->set(j ,static_cast<Block>(static_cast<Color>(dev3::random_value(0, colorEnumSize))));
+						nbPlacedBlock++;
+					}
+				}
+				if(_lines[i]->isEmpty()) i++; // retry to fill the line if still empty
+			}
+		}
     }
 
     Grid::~Grid() {

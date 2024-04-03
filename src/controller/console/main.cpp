@@ -30,22 +30,15 @@ void enableVirtualTerminalProcessing() {
 
 #include <iostream>
 #include "BasicDisplay.h"
-#include "Game.h"
-#include "Bag.h"
-#include "Tetromino.h"
-#include "BasicDisplay.h"
-#include "Block.h"
 
+//#define NDEBUG
 
 using namespace tetris;
 
-
-
 int main(){
-    enableVirtualTerminalProcessing();
-
-
-
+	#ifndef NDEBUG
+		enableVirtualTerminalProcessing();
+	#endif
 
     struct model::GameParameters gp;
 
