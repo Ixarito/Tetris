@@ -10,7 +10,6 @@ namespace tetris::model{
 	 */
 	class GameTypeLines: public Game{
 		const int _linesToReach;
-		int _nbClearedLines;
 
 	public:
 

@@ -8,11 +8,11 @@ namespace tetris::model{
 	// --- Type Line --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 	GameTypeLines::GameTypeLines(const GameParameters & gameParams, const int & linesToReach):
-		Game(gameParams), _linesToReach{linesToReach}, _nbClearedLines{}
+		Game(gameParams), _linesToReach{linesToReach}
 	{}
 
 	bool GameTypeLines::isWon() const{
-		return _nbClearedLines >= _linesToReach;
+		return nbClearedLines >= _linesToReach;
 	}
 
 

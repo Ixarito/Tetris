@@ -44,13 +44,16 @@ namespace tetris::model{
 		Grid _grid;
 		Bag & _bag;
 		int _level;
-        int _fullLines;
 
 	protected:
 		/**
 		 * The current game score
 		 */
 		unsigned long long int score;
+		/**
+		 * The number of lines cleared since the start of the game
+		 */
+		int nbClearedLines;
 
 	public:
 
@@ -106,10 +109,10 @@ namespace tetris::model{
 		std::vector<Line> getGridView() const;
 
         /**
-         * Gives the number of full lines
-         * @return the number of full lines
+         * Gives the number of lines cleared since the start of the game
+         * @return the number of line cleared
          */
-        const int & getFullLines() const;
+        const int & getNbClearedLines() const;
 
 		/**
 		 * @}

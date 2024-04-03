@@ -7,7 +7,8 @@ namespace tetris::model{
 		_grid(params.gridWidth, params.gridHeight, params.nbAlreadyPlacedBlocks),
 		_bag{Bag::getInstance()},
 		_level{params.level},
-		score{}
+		score{},
+		nbClearedLines{}
 	{
 		if(params.shapes.empty()) throw "Please specify tetrominoes to play";
 
@@ -32,8 +33,8 @@ namespace tetris::model{
 		return _level;
 	}
 
-    const int & Game::getFullLines() const{
-        return _fullLines;
+    const int & Game::getNbClearedLines() const{
+        return nbClearedLines;
     }
 
     std::vector<Line> Game::getGridView() const {
@@ -46,7 +47,8 @@ namespace tetris::model{
             _grid.insert(_bag.getNext());
             auto fullLines {_grid.removeFullLines()};
             score += fullLines;
-            _fullLines += fullLines;
+            nbClearedLines += fullLines;
+			_level = nbClearedLines%10;
         }
 	}
 
@@ -71,7 +73,7 @@ namespace tetris::model{
 		_grid.insert(_bag.getNext());
         auto fullLines {_grid.removeFullLines()};
         score += fullLines;
-        _fullLines += fullLines;
+        nbClearedLines += fullLines;
 	}
 
 
