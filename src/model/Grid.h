@@ -135,6 +135,12 @@ namespace tetris::model{
         bool canMove(const MoveDirection & direction);
 
         /**
+         * Check if the current tetromino can rotate
+         * @return true if the tetromino can rotate, false otherwise
+         */
+        bool canRotate();
+
+        /**
          * Remove all full lines
          * @return the nuber of lines removed
          **/

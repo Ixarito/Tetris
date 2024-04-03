@@ -13,21 +13,21 @@ namespace tetris::model {
             _lines.push_back(new Line(width));
         }
 
-		if(nbAlreadyPlacedBlock){
-			dev3::randomize();
-			auto colorEnumSize = static_cast<char>(Color::_count_);
-			int nbPlacedBlock {};
+        if (nbAlreadyPlacedBlock) {
+            dev3::randomize();
+            auto colorEnumSize = static_cast<char>(Color::_count_);
+            int nbPlacedBlock{};
 
-			for(size_t i {_lines.size()}; i-- && nbPlacedBlock < nbAlreadyPlacedBlock;){
-				for(size_t j {}; j < _lines[i]->length && nbPlacedBlock < nbAlreadyPlacedBlock; j++){
-					if(dev3::random_value(0, 100) < PERCENT_RANDOM_BLOCK){
-						_lines[i]->set(j ,static_cast<Block>(static_cast<Color>(dev3::random_value(0, colorEnumSize))));
-						nbPlacedBlock++;
-					}
-				}
-				if(_lines[i]->isEmpty()) i++; // retry to fill the line if still empty
-			}
-		}
+            for (size_t i{_lines.size()}; i-- && nbPlacedBlock < nbAlreadyPlacedBlock;) {
+                for (size_t j{}; j < _lines[i]->length && nbPlacedBlock < nbAlreadyPlacedBlock; j++) {
+                    if (dev3::random_value(0, 100) < PERCENT_RANDOM_BLOCK) {
+                        _lines[i]->set(j, static_cast<Block>(static_cast<Color>(dev3::random_value(0, colorEnumSize))));
+                        nbPlacedBlock++;
+                    }
+                }
+                if (_lines[i]->isEmpty()) i++; // retry to fill the line if still empty
+            }
+        }
     }
 
     Grid::~Grid() {
@@ -38,61 +38,80 @@ namespace tetris::model {
     }
 
     bool Grid::canMove(const MoveDirection &direction) {
-		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+        if (!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
 
-		for (size_t x = 0; x < _current->getWidth(); x++) {
-			for (size_t y = 0; y < _current->getHeight(); y++) {
-				if (_current->isOccupied(x, y)) {
-					switch (direction) {
-						case MoveDirection::LEFT:
-							if (_currentCol + x <= 0) {
-								return false;
-							}
-							if (_lines[_currentRow + y]->isOccupied(_currentCol + x - 1)) {
-								return false;
-							}
+        for (size_t x = 0; x < _current->getWidth(); x++) {
+            for (size_t y = 0; y < _current->getHeight(); y++) {
+                if (_current->isOccupied(x, y)) {
+                    switch (direction) {
+                        case MoveDirection::LEFT:
+                            if (_currentCol + x <= 0) {
+                                return false;
+                            }
+                            if (_lines[_currentRow + y]->isOccupied(_currentCol + x - 1)) {
+                                return false;
+                            }
                             break;
-						case MoveDirection::RIGHT:
-							if (_currentCol + x >= width - 1) {
-								return false;
-							}
-							if (_lines[_currentRow + y]->isOccupied(_currentCol + x + 1)) {
-								return false;
-							}
+                        case MoveDirection::RIGHT:
+                            if (_currentCol + x >= width - 1) {
+                                return false;
+                            }
+                            if (_lines[_currentRow + y]->isOccupied(_currentCol + x + 1)) {
+                                return false;
+                            }
                             break;
-						case MoveDirection::DOWN:
-							if (_currentRow + y >= height - 1) {
+                        case MoveDirection::DOWN:
+                            if (_currentRow + y >= height - 1) {
                                 placeCurrent();
-								return false;
-							}
-							if (_lines[_currentRow + y + 1]->isOccupied(_currentCol + x)) {
+                                return false;
+                            }
+                            if (_lines[_currentRow + y + 1]->isOccupied(_currentCol + x)) {
                                 placeCurrent();
-								return false;
-							}
+                                return false;
+                            }
                             break;
-					}
-				}
-			}
-		}
-		return true;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
-	void Grid::placeCurrent() {
-		// insert current tetromino in the real grid
+    bool Grid::canRotate() {
+        for (size_t x = 0; x < _current->getWidth(); x++) {
+            for (size_t y = 0; y < _current->getHeight(); y++) {
+                if (_current->isOccupied(x, y)) {
+                    if (_currentCol + x >= width) {
+                        return false;
+                    }
+                    if (_currentCol + x < 0){
+                        return  false;
+                    }
+                    if (_lines[_currentCol + x]->isOccupied(_currentRow + y)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
-		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+    void Grid::placeCurrent() {
+        // insert current tetromino in the real grid
 
-		auto tetroWidth {_current->getWidth()};
-		auto tetroHeight {_current->getHeight()};
+        if (!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
 
-		for (size_t x = 0; x < tetroWidth; x++) {
-			for (size_t y = 0; y < tetroHeight; y++) {
-				if (_current->isOccupied(x, y)) {
-					_lines[_currentRow + y]->set(_currentCol + x, _current->get(x, y));
-				}
-			}
-		}
-	}
+        auto tetroWidth{_current->getWidth()};
+        auto tetroHeight{_current->getHeight()};
+
+        for (size_t x = 0; x < tetroWidth; x++) {
+            for (size_t y = 0; y < tetroHeight; y++) {
+                if (_current->isOccupied(x, y)) {
+                    _lines[_currentRow + y]->set(_currentCol + x, _current->get(x, y));
+                }
+            }
+        }
+    }
 
     const Block &Grid::get(const size_t &row, const size_t &col) const {
         if (row >= height) {
@@ -109,7 +128,7 @@ namespace tetris::model {
     }
 
     void Grid::moveCurrent(const MoveDirection &direction) {
-		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
+        if (!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
 
         if (canMove(direction)) {
             switch (direction) {
@@ -127,9 +146,17 @@ namespace tetris::model {
     }
 
     void Grid::rotateCurrent(const RotateDirection &direction) {
-		if(!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
-
+        if (!_current.has_value()) throw std::logic_error("Grid: _current is not initialized");
         _current->rotate(direction);
+        if (!canRotate()){
+            if (direction==RotateDirection::CCW){
+                _current->rotate(RotateDirection::CW);
+            } else {
+                _current->rotate(RotateDirection::CCW);
+            }
+
+        }
+
     }
 
     int Grid::dropCurrent() {
@@ -138,11 +165,10 @@ namespace tetris::model {
             moveCurrent(MoveDirection::DOWN);
             count++;
         }
-		placeCurrent();
+        placeCurrent();
 
-		return count;
+        return count;
     }
-
 
 
     std::vector<size_t> Grid::getFullLines() {
@@ -172,29 +198,29 @@ namespace tetris::model {
 
     std::vector<Line> Grid::getGridView() const {
         std::vector<Line> gridView;
-        for (auto & line : _lines) {
+        for (auto &line: _lines) {
             gridView.push_back(*line);
         }
 
-		if(_current.has_value()){
-			// getWidth et Height are long methods so declare before
-			auto tetroWidth {_current->getWidth()};
-			auto tetroHeight {_current->getHeight()};
+        if (_current.has_value()) {
+            // getWidth et Height are long methods so declare before
+            auto tetroWidth{_current->getWidth()};
+            auto tetroHeight{_current->getHeight()};
 
-			for (size_t x = 0; x < tetroWidth; x++) {
-				for (size_t y = 0; y < tetroHeight; y++) {
-					if (_current->isOccupied(x, y)) {
-						gridView[_currentRow + y].set(_currentCol + x, _current->get(x, y));
-					}
-				}
-			}
-		}
+            for (size_t x = 0; x < tetroWidth; x++) {
+                for (size_t y = 0; y < tetroHeight; y++) {
+                    if (_current->isOccupied(x, y)) {
+                        gridView[_currentRow + y].set(_currentCol + x, _current->get(x, y));
+                    }
+                }
+            }
+        }
         return gridView;
     }
 
-    size_t Grid::removeFullLines(){
-        auto lines {getFullLines()};
-        for(auto line : lines){
+    size_t Grid::removeFullLines() {
+        auto lines{getFullLines()};
+        for (auto line: lines) {
             removeLine(line);
         }
         return lines.size();
