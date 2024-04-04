@@ -19,7 +19,8 @@ namespace tetris::model{
 		size_t _currentCol;
 		size_t _currentRow;
 
-        /** Attach the current Tetromino to the grid
+        /**
+         * Attaches the current Tetromino to the grid
          */
         void placeCurrent();
 
@@ -52,6 +53,14 @@ namespace tetris::model{
 		 * It corresponds to the number of lines
 		 */
 		const size_t height;
+
+		/**
+		 * Alias of vector of Lines
+		 * Represents an overview of the current state of the grid
+		 * @sa tetris::model::Grid::getGridView()
+		 * @sa tetris::model::Line
+		 */
+		using GridView_type = const std::vector<Line>;
 
 		/**
 		 * Constructs a grid
@@ -113,10 +122,10 @@ namespace tetris::model{
 		int dropCurrent();
 
         /**
-         * Gives the grid of the game with the current tetromino
-         * @return the grid
+         * Gives an overview of the current state of the grid
+         * @return an overview of the current state of the grid
          */
-        std::vector<Line> getGridView() const;
+        GridView_type getGridView() const;
 
 		/**
 		 * Gives the Line at the given position

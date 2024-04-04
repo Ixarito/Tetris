@@ -196,7 +196,7 @@ namespace tetris::model {
         _lines.push_front(target);
     }
 
-    std::vector<Line> Grid::getGridView() const {
+    Grid::GridView_type Grid::getGridView() const {
         std::vector<Line> gridView;
         for (auto &line: _lines) {
             gridView.push_back(*line);

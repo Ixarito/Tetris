@@ -33,8 +33,10 @@ namespace tetris::controller::console{
 	GameType ask4GameType(){
         view::console::displayMessage("Veuillez choisir un mode de jeu.\n\t1. Classique\n\t2. Contre la montre\n\t3. Victoire en fonction du score\n\t4. Victoire en fonction du nombre de lignes\n");
         int input{};
-        while(input != 1 && input != 2 && input != 3 && input != 4){
-            input =  getInput<int>("Votre choix");
+        while(input < 1 || input > 4){
+            input = getInput<int>("Votre choix");
+
+			if(input < 1 || input > 4) view::console::displayMessage("Choix non valide");
         }
         return static_cast<GameType>(input-1);
     }

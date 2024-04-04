@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 #include <optional>
-#include "../../model/Game.h"
-#include "../../model/Color.h"
+#include "Game.h"
+#include "Color.h"
 
 
 namespace tetris::view::console{

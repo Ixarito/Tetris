@@ -1,7 +1,6 @@
 //MADE COLORS WORKS ON WINDOWS
 #ifdef _WIN32
 #include <windows.h>
-#include <stdexcept>
 
 #endif
 
@@ -35,6 +34,8 @@ void enableVirtualTerminalProcessing() {
 #include "BasicDisplay.h"
 #include "Interactions.h"
 #include "Games.h"
+#include <stdexcept>
+#include <iostream>
 
 // ↓↓↓ define to avoid debugger error ↓↓↓
 //#define NDEBUG
@@ -45,7 +46,6 @@ namespace tetris::controller::console{
 	 * Runs the game
 	 * @param game the Game to run
 	 * @param type the type of the played games
-	 *
 	 * @sa tetris::model::Game
 	 * @sa tetris::model::GameTypeLine
 	 * @sa tetris::model::GameTypeScore
@@ -53,9 +53,12 @@ namespace tetris::controller::console{
 	 */
 	void run(model::Game & game, GameType & type){
 
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // remove what might remain in stdin
+
+		view::console::displayMessage(std::string(30, '\n'));
+		view::console::displayGame(game);
+
 		while(game.isGameActive() && !game.isWon()){
-            view::console::displayMessage(std::string(30, '\n'));
-            view::console::displayGame(game);
 			auto input = getNextChar();
 			switch (input) {
 				case 's':
@@ -81,8 +84,8 @@ namespace tetris::controller::console{
 					break;
 			}
 
+			view::console::displayMessage(std::string(30, '\n'));
 			view::console::displayGame(game);
-
 		}
 
 		view::console::displayMessage(std::string(30, '\n'));

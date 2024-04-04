@@ -2,8 +2,6 @@
 #define GRAY "\033[90m"
 
 #include <iostream>
-#include <vector>
-#include <optional>
 #include "BasicDisplay.h"
 
 namespace tetris::view::console {
@@ -25,7 +23,12 @@ namespace tetris::view::console {
                 return "\033[96m";
             case tetris::model::Color::PURPLE:
                 return "\033[95m";
+
+			case tetris::model::Color::_count_:
+				throw std::domain_error("Cannot use _count_ literal");
         }
+
+		throw std::domain_error("Unknown Color used");
     }
 
     void displayMessage(const std::string &message) {

@@ -53,7 +53,7 @@ namespace tetris::model{
 		/**
 		 * The number of lines cleared since the start of the game
 		 */
-		int nbClearedLines;
+		unsigned int nbClearedLines;
 
 	public:
 
@@ -108,16 +108,17 @@ namespace tetris::model{
         const int & getLevel() const;
 
 		/**
-		 * Gives a view of the current state of the game Grid
+		 * Gives an overview of the current state of the game Grid
 		 * @return a view to the current state of the Grid
+		 * @sa tetris::model::Grid::getGridView
 		 */
-		std::vector<Line> getGridView() const;
+		Grid::GridView_type getGridView() const;
 
         /**
          * Gives the number of lines cleared since the start of the game
          * @return the number of line cleared
          */
-        const int & getNbClearedLines() const;
+        const unsigned int & getNbClearedLines() const;
 
 		/**
 		 * @}

@@ -32,11 +32,11 @@ namespace tetris::model{
 		return _level;
 	}
 
-    const int & Game::getNbClearedLines() const{
+    const unsigned int & Game::getNbClearedLines() const{
         return nbClearedLines;
     }
 
-    std::vector<Line> Game::getGridView() const {
+    Grid::GridView_type Game::getGridView() const {
         return _grid.getGridView();
     }
 
