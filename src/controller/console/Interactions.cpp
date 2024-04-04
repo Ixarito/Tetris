@@ -31,13 +31,21 @@ namespace tetris::controller::console{
 	}
 
 	GameType ask4GameType(){
-		// TODO
-
-		return GameType::TIME;
-	}
+        view::console::displayMessage("Veuillez choisir un mode de jeu.\n\t1. Classique\n\t2. Contre la montre\n\t3. Victoire en fonction du score\n\t4. Victoire en fonction du nombre de lignes\n");
+        int input{};
+        while(input != 1 && input != 2 && input != 3 && input != 4){
+            input =  getInput<int>("Votre choix");
+        }
+        return static_cast<GameType>(input-1);
+    }
 
 	const unsigned int ask4LinesToReach() {
-		return getInput<unsigned int>("Entrez l'objectif de lignes à atteindre");
+		auto lines = getInput<int>("Entrez l'objectif de lignes à atteindre");
+        if(lines < 0)
+        {
+            lines *= -1;
+        }
+        return lines;
 	}
 
 	const unsigned long long int ask4ScoreToReach() {

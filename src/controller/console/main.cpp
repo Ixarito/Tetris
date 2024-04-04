@@ -44,7 +44,8 @@ namespace tetris::controller::console{
 	/**
 	 * Runs the game
 	 * @param game the Game to run
-	 * @param type the type of the played game
+	 * @param type the type of the played games
+	 *
 	 * @sa tetris::model::Game
 	 * @sa tetris::model::GameTypeLine
 	 * @sa tetris::model::GameTypeScore
@@ -53,8 +54,9 @@ namespace tetris::controller::console{
 	void run(model::Game & game, GameType & type){
 
 		while(game.isGameActive() && !game.isWon()){
+            view::console::displayMessage(std::string(30, '\n'));
+            view::console::displayGame(game);
 			auto input = getNextChar();
-			view::console::displayMessage(std::string(30, '\n'));
 			switch (input) {
 				case 's':
 					game.drop();
