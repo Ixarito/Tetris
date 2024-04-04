@@ -32,6 +32,10 @@ namespace tetris::view::console {
         cout << message << endl;
     }
 
+	void displayPrompt(const std::string &message) {
+        cout << message << " :";
+    }
+
 
     void displayGame(const model::Game & game) {
         auto grid{game.getGridView()};

@@ -22,7 +22,7 @@ namespace tetris::controller::console{
 	 * Asks the user the number of line he wants reach
 	 * @return the number of lines to reach
 	 */
-	const int ask4LinesToReach();
+	const unsigned int ask4LinesToReach();
 
 	/**
 	 * Asks the user the score he wants reach

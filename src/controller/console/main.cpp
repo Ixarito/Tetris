@@ -166,6 +166,12 @@ namespace tetris::controller::console{
 } // namespace tetris::controller::console
 
 int main(){
+	#ifdef _WIN32
+		SetConsoleOutputCP(CP_UTF8);
+	#elif defined(__linux__) || defined(__APPLE__)
+		setlocale(LC_ALL, "en_US.UTF-8");
+	#endif
+
 	#ifndef NDEBUG
 		enableVirtualTerminalProcessing();
 	#endif

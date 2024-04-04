@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <optional>
+#include <stdexcept>
 #include "Block.h"
 #include "RotateDirection.h"
 
@@ -80,10 +81,6 @@ namespace tetris::model{
 		 * @return the current tetromino height
 		 */
 		size_t getHeight() const;
-
-
-        //test
-        void print() const;
 
     };
 

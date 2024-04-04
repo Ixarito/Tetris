@@ -6,7 +6,7 @@ namespace tetris::model{
 
 	// --- Type Line --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-	GameTypeLines::GameTypeLines(const GameParameters & gameParams, const int & linesToReach):
+	GameTypeLines::GameTypeLines(const GameParameters & gameParams, const unsigned int & linesToReach):
 		Game(gameParams), _linesToReach{linesToReach}
 	{}
 

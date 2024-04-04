@@ -9,7 +9,7 @@ namespace tetris::model{
 	 * Represents a specific type of Game, the game ends when a specific number of lines is reached
 	 */
 	class GameTypeLines: public Game{
-		const int _linesToReach;
+		const unsigned int _linesToReach;
 
 	public:
 
@@ -19,7 +19,7 @@ namespace tetris::model{
 		 * @param gameParams the parameters of the basic Game
 		 * @param linesToReach the number of lines to reach to declare the game won
 		 */
-		GameTypeLines(const GameParameters & gameParams, const int & linesToReach);
+		GameTypeLines(const GameParameters & gameParams, const unsigned int & linesToReach);
 
 		/**
 		 * Determines if the game is won

@@ -92,16 +92,5 @@ namespace tetris::model {
         return width;
     }
 
-    //Only a test - to delete after
-    void Tetromino::print() const {
-        for (const auto& row : _shape) {
-            for (const auto& block : row) {
-                std::cout << (block.has_value() ? 'X' : '_');
-            }
-            std::cout << '\n';
-        }
-    }
-
-
 } // namespace tetris::model
 
