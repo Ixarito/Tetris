@@ -43,7 +43,7 @@ namespace tetris::controller::console{
 	 * Runs the game
 	 * @param game the Game to run
 	 * @sa tetris::model::Game
-	 * @sa tetris::model::GameTypeLine
+	 * @sa tetris::model::GameTypeLines
 	 * @sa tetris::model::GameTypeScore
 	 * @sa tetris::model::GameTypeTime
 	 */

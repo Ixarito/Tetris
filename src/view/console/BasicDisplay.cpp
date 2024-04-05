@@ -7,6 +7,11 @@
 namespace tetris::view::console {
     using namespace std;
 
+	/**
+	 * Gives the color code associated to the enum literal
+	 * @param color an enum literal that represents a color
+	 * @return the color code
+	 */
     std::string getColorCode(tetris::model::Color color) {
         switch (color) {
             case tetris::model::Color::BLUE:

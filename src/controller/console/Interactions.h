@@ -6,10 +6,19 @@
 namespace tetris::controller::console{
 
 	/**
-	 * Gives the next char in the stdin
+	 * Gives the next string in the stdin
 	 * @return the next char in the stdin
 	 */
 	std::string getNextString();
+
+	/**
+	 * Extracts the given type of the stdin
+	 * @tparam T the type you want to get
+	 * @param prompt a message to explain what the user has to do
+	 * @return a value of the given type extracted from stdin
+	 */
+	template<typename T>
+	T getInput(const std::string & prompt);
 
 	/**
 	 * Asks the user the game type he wants
