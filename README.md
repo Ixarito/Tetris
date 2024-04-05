@@ -10,13 +10,17 @@
 
 Dans le cadre du cours de DEV4 organisé à L'[ESI](https://he2b.be/formations/?secteur=informatique) en 2024, il nous a été demandé de réaliser le jeu Tetris en utilisant le langage c++.
 
-2 vues différentes nous ont été demandées: une vue console et une vue graphique. Vous retrouverez ces 2 vues prochainement dans ce git.
+2 vues différentes nous ont été demandées: une vue console et une vue graphique.
 
-Les consignes de ce projet sont disponibles dans le fichier pdf suivant: [tetris.pdf](https://poesi.esi-bru.be/pluginfile.php/28049/mod_resource/content/3/tetris.pdf)
+Les fichiers sources de ce projet sont disponibles dans le répertoire [/src](./src/).
 
-### Modélisation Métier
+Les consignes de ce projet sont disponibles dans le fichier pdf suivant: [tetris.pdf](https://poesi.esi-bru.be/pluginfile.php/28049/mod_resource/content/3/tetris.pdf).
 
-La modélisation métier du jeu Tetris se trouve dans le répertoire [/model](./model/).
+### Remises
+
+La modélisation métier du jeu Tetris de la première remise se trouve dans le répertoire [/rapports/analyse/](./rapports/analyse/).
+
+Le rapport de la seconde remise se trouve dans le répertoire [/rapports/console/](./rapports/console/).
 
 ## Documentation
 
