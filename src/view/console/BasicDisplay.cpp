@@ -43,12 +43,12 @@ namespace tetris::view::console {
     void displayGame(const model::Game &game) {
         auto grid{game.getGridView()};
 // display commands
-        cout << "\t\t\t\t\t\t\t" << "\033[95m" << R"(
-                                                               Commandes :
-                                                                   ↑
-                                                           ↺ [A]  [Z]  [E] ↻
-                                                             [Q]  [S]  [D]
-                                                              ←    ↓    →
+        cout << "\t\t\t\t\t\t\t" << GRAY << R"(
+                                                                Commandes:
+                                                                    ↑
+                                                             ↺ [A] [Z] [E] ↻
+                                                               [Q] [S] [D]
+                                                                ←   ↓   →
 
             )" << RESET << endl;
 
