@@ -45,13 +45,12 @@ namespace tetris::controller::console{
 	/**
 	 * Runs the game
 	 * @param game the Game to run
-	 * @param type the type of the played games
 	 * @sa tetris::model::Game
 	 * @sa tetris::model::GameTypeLine
 	 * @sa tetris::model::GameTypeScore
 	 * @sa tetris::model::GameTypeTime
 	 */
-	void run(model::Game & game, GameType & type){
+	void run(model::Game & game){
 
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // remove what might remain in stdin
 
@@ -156,7 +155,7 @@ namespace tetris::controller::console{
 				break;
 		}
 
-		run(*game, gameType);
+		run(*game);
 
 		delete game;
 		game = nullptr;

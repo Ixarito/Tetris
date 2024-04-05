@@ -19,7 +19,7 @@ namespace tetris::model{
 		/**
 		 * If specified, the game will start at a higher level of difficulty
 		 */
-		int level = 0;
+		unsigned int level = 0;
 		/**
 		 * The width of the game Grid. Default is 10
 		 * @sa tetris::model::Grid::Grid()
@@ -43,7 +43,7 @@ namespace tetris::model{
 	class Game{
 		Grid _grid;
 		Bag & _bag;
-		int _level;
+		unsigned int _level;
 
 	protected:
 		/**
@@ -105,7 +105,7 @@ namespace tetris::model{
 		 * Gives the current level
 		 * @return the current level
 		 */
-        const int & getLevel() const;
+        const unsigned int & getLevel() const;
 
 		/**
 		 * Gives an overview of the current state of the game Grid

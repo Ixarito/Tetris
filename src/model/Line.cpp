@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <algorithm>
 #include "Line.h"
 #include "util/outOfRangeMessage.hpp"
 
@@ -32,21 +33,15 @@ namespace tetris::model {
 
 
 	bool Line::isFull() const {
-		for (auto block: _content) {
-			if (!block.has_value()) {
-				return false;
-			}
-		}
-		return true;
+		return std::ranges::all_of(_content, [](const auto & block) {
+			return block.has_value();
+		});
 	}
 
     bool Line::isEmpty() const{
-        for (auto block: _content) {
-            if (block.has_value()) {
-                return false;
-            }
-        }
-        return true;
+		return std::ranges::all_of(_content, [](const auto & block) {
+			return !block.has_value();
+		});
     }
 
 

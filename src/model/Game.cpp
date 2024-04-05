@@ -9,7 +9,7 @@ namespace tetris::model{
 		score{},
 		nbClearedLines{}
 	{
-		if(params.shapes.empty()) throw "Please specify tetrominoes to play";
+		if(params.shapes.empty()) throw std::invalid_argument("Please specify tetrominoes to play");
 
 		_bag.addAll(params.shapes);
 
@@ -28,7 +28,7 @@ namespace tetris::model{
 		return score;
 	}
 
-	const int & Game::getLevel() const{
+	const unsigned int & Game::getLevel() const{
 		return _level;
 	}
 

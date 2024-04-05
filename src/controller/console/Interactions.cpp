@@ -65,8 +65,7 @@ namespace tetris::controller::console{
 			}
 		}
 
-
-		return 1;
+		return duration;
 	}
 
 } // namespace tetris::controller::console

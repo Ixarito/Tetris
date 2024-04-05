@@ -15,7 +15,7 @@ namespace tetris::model{
 	void Bag::addAll(const std::vector<Tetromino::ConstructorComponents_type> & tetrominoes){
 
 		for(const auto & tetromino: tetrominoes){
-			_list.push_back(tetromino);
+			_list.emplace_back(tetromino);
 		}
 
 		std::random_device rd;
