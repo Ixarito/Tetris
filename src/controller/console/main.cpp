@@ -1,11 +1,8 @@
-//MADE COLORS WORKS ON WINDOWS
 #ifdef _WIN32
 #include <windows.h>
 
-#endif
-
+// MADE COLORS WORKS ON WINDOWS
 void enableVirtualTerminalProcessing() {
-#ifdef _WIN32
     // Get the handle to the standard output device.
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -26,8 +23,8 @@ void enableVirtualTerminalProcessing() {
     if (!SetConsoleMode(hOut, dwMode)) {
         exit(GetLastError());
     }
-#endif
 }
+#endif
 
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -166,12 +163,11 @@ namespace tetris::controller::console{
 int main(){
 	#ifdef _WIN32
 		SetConsoleOutputCP(CP_UTF8);
+		#ifndef NDEBUG
+			enableVirtualTerminalProcessing();
+		#endif
 	#elif defined(__linux__) || defined(__APPLE__)
 		setlocale(LC_ALL, "en_US.UTF-8");
-	#endif
-
-	#ifndef NDEBUG
-		enableVirtualTerminalProcessing();
 	#endif
 
 	tetris::controller::console::init();

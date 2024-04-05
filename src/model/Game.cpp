@@ -47,7 +47,7 @@ namespace tetris::model{
             auto fullLines {_grid.removeFullLines()};
             score += fullLines;
             nbClearedLines += fullLines;
-			_level = nbClearedLines%10;
+			_level = nbClearedLines/10;
         }
 	}
 
@@ -73,6 +73,7 @@ namespace tetris::model{
         auto fullLines {_grid.removeFullLines()};
         score += fullLines;
         nbClearedLines += fullLines;
+		_level = nbClearedLines/10;
 	}
 
 
