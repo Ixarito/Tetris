@@ -19,7 +19,7 @@ namespace tetris::model{
 		/**
 		 * If specified, the game will start at a higher level of difficulty
 		 */
-		int level = 1;
+		int level = 0;
 		/**
 		 * The width of the game Grid. Default is 10
 		 * @sa tetris::model::Grid::Grid()

@@ -59,30 +59,24 @@ namespace tetris::controller::console{
 		view::console::displayGame(game);
 
 		while(game.isGameActive() && !game.isWon()){
-			auto input = getNextChar();
-			switch (input) {
-				case 's':
-					game.drop();
-					break;
-				case 'q':
-					game.goLeft();
-					break;
-				case 'd':
-					game.goRight();
-					break;
-				case 'e':
-					game.rotateClockwise();
-					break;
-				case 'a':
-					game.rotateCounterclockwise();
-					break;
-
-				case '\n':
-					game.goDown();
-					break;
-				default:
-					break;
-			}
+			auto input = getNextString();
+            if (input == "s") {
+                game.drop();
+            } else if (input == "q") {
+                game.goLeft();
+                game.goDown();
+            } else if (input == "d") {
+                game.goRight();
+                game.goDown();
+            } else if (input == "e") {
+                game.rotateClockwise();
+                game.goDown();
+            } else if (input == "a") {
+                game.rotateCounterclockwise();
+                game.goDown();
+            } else {
+                game.goDown();
+            }
 
 			view::console::displayMessage(std::string(30, '\n'));
 			view::console::displayGame(game);

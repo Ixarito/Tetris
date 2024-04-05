@@ -24,27 +24,39 @@ namespace tetris::view::console {
             case tetris::model::Color::PURPLE:
                 return "\033[95m";
 
-			case tetris::model::Color::_count_:
-				throw std::domain_error("Cannot use _count_ literal");
+            case tetris::model::Color::_count_:
+                throw std::domain_error("Cannot use _count_ literal");
         }
 
-		throw std::domain_error("Unknown Color used");
+        throw std::domain_error("Unknown Color used");
     }
 
     void displayMessage(const std::string &message) {
         cout << message << endl;
     }
 
-	void displayPrompt(const std::string &message) {
+    void displayPrompt(const std::string &message) {
         cout << message << " :";
     }
 
 
-    void displayGame(const model::Game & game) {
+    void displayGame(const model::Game &game) {
         auto grid{game.getGridView()};
+// display commands
+        cout << "\t\t\t\t\t\t\t" << "\033[95m" << R"(
+                                                               Commandes :
+                                                                   ↑
+                                                           ↺ [A]  [Z]  [E] ↻
+                                                             [Q]  [S]  [D]
+                                                              ←    ↓    →
+
+            )" << RESET << endl;
+
 
 //        display the Full lines, level, score
-        cout << GRAY << "\t\t\t\t\t\t" << "\033[91mFull lines: " << RESET << game.getNbClearedLines() << "\033[92m\tLevel: " << RESET << game.getLevel()  << "\033[94m\tScore: " << RESET << game.getScore() << endl;
+        cout << GRAY << "\t\t\t\t\t\t" << "\033[91mFull lines: " << RESET << game.getNbClearedLines()
+             << "\033[92m\tLevel: " << RESET << game.getLevel() << "\033[94m\tScore: " << RESET << game.getScore()
+             << endl;
         for (auto line: grid) {
             std::cout << GRAY << "\t\t\t\t\t\t\t" << "<!" << RESET;
             for (size_t i = 0; i < line.length; i++) {
@@ -62,6 +74,7 @@ namespace tetris::view::console {
         cout << GRAY << "\t\t\t\t\t\t\t" << "<!====================!>" << RESET << endl;
         cout << GRAY << "\t\t\t\t\t\t\t" << "  \\/\\/\\/\\/\\/\\/\\/\\/\\/\\/" << RESET << endl;
     }
+
 
     void displayGameOver() {
         cout << "\033[91m" << R"(
@@ -83,7 +96,7 @@ namespace tetris::view::console {
             )" << RESET << endl;
     }
 
-	void displayWin() {
+    void displayWin() {
 //        text Style : 3D diagonal
         cout << "\033[96m" << R"(
                                                                               ,---,
@@ -102,6 +115,6 @@ namespace tetris::view::console {
       '---" |  ,   /  \   \  /   ---`-'           |  ,   /        \   \  / `-- -`, ;
              ---`-'    `----'                      ---`-'          `----'    '---`"
             )" << RESET << endl;
-	}
+    }
 
 } // namespace tetris::view::console

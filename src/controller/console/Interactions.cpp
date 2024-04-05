@@ -7,9 +7,9 @@
 
 namespace tetris::controller::console{
 
-	char getNextChar(){
-		char input;
-		std::cin.get(input);
+	std::string getNextString(){
+		std::string input;
+        getline (std::cin, input);
 		return input;
 	}
 

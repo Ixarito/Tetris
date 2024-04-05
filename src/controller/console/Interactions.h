@@ -9,7 +9,7 @@ namespace tetris::controller::console{
 	 * Gives the next char in the stdin
 	 * @return the next char in the stdin
 	 */
-	char getNextChar();
+	std::string getNextString();
 
 	/**
 	 * Asks the user the game type he wants
