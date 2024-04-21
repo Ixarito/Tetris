@@ -14,7 +14,6 @@ set(SOURCES
 		MoveDirection.h
 		Tetromino.h
 		Line.h
-		Bag.h
 		Grid.h
 		Game.h
 		GameTypeLines.h
@@ -24,7 +23,6 @@ set(SOURCES
 		Tetromino.cpp
 		Line.cpp
 		util/maxVectorSize.hpp
-		Bag.cpp
 		Game.cpp
 		GameTypes.cpp
 		Grid.cpp

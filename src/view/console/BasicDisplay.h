@@ -2,10 +2,7 @@
 #define TETRIS_BASICDISPLAY_H
 
 #include <string>
-#include <vector>
-#include <optional>
 #include "Game.h"
-#include "Color.h"
 
 
 namespace tetris::view::console{

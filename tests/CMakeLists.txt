@@ -21,7 +21,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 # Inclure le répertoire de la bibliothèque Tetris_model
 include_directories(../src/model)
 
-add_executable(tests main.cpp BagTest.cpp
+add_executable(tests main.cpp
         TetrominoTestUtils.hpp
         BlockTestUtils.hpp
         LineTest.cpp)

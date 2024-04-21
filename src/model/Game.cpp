@@ -1,19 +1,26 @@
 #include "Game.h"
+#include <random>
+#include <algorithm>
 
 namespace tetris::model{
 
 	Game::Game(const GameParameters & params):
 		_grid(params.gridWidth, params.gridHeight, params.nbAlreadyPlacedBlocks),
-		_bag{Bag::getInstance()},
+		_bag{},
+		_nextTetromino{},
 		_level{params.level},
 		score{},
 		nbClearedLines{}
 	{
 		if(params.shapes.empty()) throw std::invalid_argument("Please specify tetrominoes to play");
 
-		_bag.addAll(params.shapes);
+		for(const auto & tetromino: params.shapes){
+			_bag.emplace_back(tetromino);
+		}
+		shuffleBag();
 
-		_grid.insert(_bag.getNext());
+
+		_grid.insert(getNext());
 	}
 
 	bool Game::isGameActive() const{
@@ -22,6 +29,23 @@ namespace tetris::model{
 
 	bool Game::isWon() const{
 		return false;
+	}
+
+	Tetromino Game::getNext() {
+		auto next = _bag[_nextTetromino];
+		_nextTetromino = (_nextTetromino + 1) % _bag.size();
+		if(_nextTetromino == 0) shuffleBag();
+		return next;
+	}
+
+	const Tetromino & Game::peekNext() const {
+		return _bag[_nextTetromino];
+	}
+
+	void Game::shuffleBag(){
+		std::random_device rd;
+		std::mt19937 g(rd());
+		std::ranges::shuffle(_bag, g);
 	}
 
 	const unsigned long long int & Game::getScore() const{
@@ -43,7 +67,7 @@ namespace tetris::model{
 	void Game::goDown(){
 		_grid.moveCurrent(MoveDirection::DOWN);
         if (!_grid.canMove(MoveDirection::DOWN)){
-            _grid.insert(_bag.getNext());
+            _grid.insert(getNext());
             auto fullLines {_grid.removeFullLines()};
             score += fullLines;
             nbClearedLines += fullLines;
@@ -69,7 +93,7 @@ namespace tetris::model{
 
 	void Game::drop(){
 		score += _grid.dropCurrent();
-		_grid.insert(_bag.getNext());
+		_grid.insert(getNext());
         auto fullLines {_grid.removeFullLines()};
         score += fullLines;
         nbClearedLines += fullLines;

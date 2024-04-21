@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "Grid.h"
-#include "Bag.h"
 
 namespace tetris::model{
 
@@ -42,7 +41,8 @@ namespace tetris::model{
 	 */
 	class Game{
 		Grid _grid;
-		Bag & _bag;
+		std::vector<Tetromino> _bag;
+		size_t _nextTetromino;
 		unsigned int _level;
 
 	protected:
@@ -91,9 +91,37 @@ namespace tetris::model{
 		/**
 		 * @}
 		 *
+		 * @name Bag
+		 * @{
+		 */
+
+
+		/**
+		 * Gives an overview of the next tetromino in the bag
+		 * @return a constant reference to the next tetromino
+		 */
+		const Tetromino & peekNext() const;
+
+	private:
+
+		/**
+		 * Gives the next tetromino to play
+		 * @return a copy of the tetromino to play
+		 */
+		Tetromino getNext();
+
+		/**
+		 * Shuffles the bag
+		 */
+		void shuffleBag();
+
+		/**
+		 * @}
+		 *
 		 * @name Getters
 		 * @{
 		 */
+	public:
 
 		/**
 		 * Gives the current score
