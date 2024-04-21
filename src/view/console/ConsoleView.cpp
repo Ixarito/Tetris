@@ -1,8 +1,8 @@
-#define RESET   "\033[0m"
+#define RESET "\033[0m"
 #define GRAY "\033[90m"
 
 #include <iostream>
-#include "BasicDisplay.h"
+#include "ConsoleView.h"
 
 namespace tetris::view::console {
     using namespace std;
@@ -36,22 +36,17 @@ namespace tetris::view::console {
         throw std::domain_error("Unknown Color used");
     }
 
-    void displayMessage(const std::string &message) {
-        cout << message << endl;
-    }
 
-    void displayPrompt(const std::string &message) {
-        cout << message << " :";
-    }
+	ConsoleView::ConsoleView(const model::Game & game): game{game} {}
 
-
-    void displayGame(const model::Game &game) {
+    void ConsoleView::showGame() const{
         auto grid{game.getGridView()};
+
+		space(); // insert space between scenes
 // display commands
         cout << "\t\t\t\t\t\t\t" << GRAY << R"(
                                                                 Commandes:
-                                                                    ↑
-                                                             ↺ [A] [Z] [E] ↻
+                                                             ↺ [A]     [E] ↻
                                                                [Q] [S] [D]
                                                                 ←   ↓   →
 
@@ -81,7 +76,9 @@ namespace tetris::view::console {
     }
 
 
-    void displayGameOver() {
+    void ConsoleView::showGameOver() const{
+		space();
+
         cout << "\033[91m" << R"(
                                                             ,----..
   ,----..                         ____                     /   /   \
@@ -101,7 +98,9 @@ namespace tetris::view::console {
             )" << RESET << endl;
     }
 
-    void displayWin() {
+    void ConsoleView::showWin() const{
+		space();
+
 //        text Style : 3D diagonal
         cout << "\033[96m" << R"(
                                                                               ,---,
@@ -121,5 +120,9 @@ namespace tetris::view::console {
              ---`-'    `----'                      ---`-'          `----'    '---`"
             )" << RESET << endl;
     }
+
+	void ConsoleView::space() const {
+		cout << std::string(30, '\n');
+	}
 
 } // namespace tetris::view::console
