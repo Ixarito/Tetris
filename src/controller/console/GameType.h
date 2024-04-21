@@ -10,6 +10,6 @@ namespace tetris::controller {
 		GAMEOVER, TIME, SCORE, LINES
 	};
 
-#endif //TETRIS_GAMETYPE_H
-
 } // namespace tetris::controller
+
+#endif //TETRIS_GAMETYPE_H
