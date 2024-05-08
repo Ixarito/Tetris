@@ -10,8 +10,9 @@ include_directories(../../model)
 
 # Définir les fichiers sources
 set(SOURCES
-    BasicDisplay.h
-    BasicDisplay.cpp
+        ConsoleView.h
+        ConsoleView.cpp
+        Display.hpp
 )
 
 # Créer une bibliothèque statique

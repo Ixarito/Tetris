@@ -1,7 +1,8 @@
 #include <iostream>
 #include <limits>
 #include "Interactions.h"
-#include "BasicDisplay.h"
+#include "ConsoleView.h"
+#include "Display.hpp"
 
 #define MIN_DURATION 20
 

@@ -28,64 +28,16 @@ void enableVirtualTerminalProcessing() {
 
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
-#include "BasicDisplay.h"
+#include "ConsoleView.h"
 #include "Interactions.h"
 #include "Games.h"
+#include "Controller.h"
 #include <stdexcept>
-#include <iostream>
 
 // ↓↓↓ define to avoid debugger error ↓↓↓
 //#define NDEBUG
 
 namespace tetris::controller::console{
-
-	/**
-	 * Runs the game
-	 * @param game the Game to run
-	 * @sa tetris::model::Game
-	 * @sa tetris::model::GameTypeLines
-	 * @sa tetris::model::GameTypeScore
-	 * @sa tetris::model::GameTypeTime
-	 */
-	void run(model::Game & game){
-
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // remove what might remain in stdin
-
-		view::console::displayMessage(std::string(30, '\n'));
-		view::console::displayGame(game);
-
-		while(game.isGameActive() && !game.isWon()){
-			auto input = getNextString();
-            if (input == "s") {
-                game.drop();
-            } else if (input == "q") {
-                game.goLeft();
-                game.goDown();
-            } else if (input == "d") {
-                game.goRight();
-                game.goDown();
-            } else if (input == "e") {
-                game.rotateClockwise();
-                game.goDown();
-            } else if (input == "a") {
-                game.rotateCounterclockwise();
-                game.goDown();
-            } else {
-                game.goDown();
-            }
-
-			view::console::displayMessage(std::string(30, '\n'));
-			view::console::displayGame(game);
-		}
-
-		view::console::displayMessage(std::string(30, '\n'));
-
-		if(game.isWon()){
-			view::console::displayWin();
-		}else{
-			view::console::displayGameOver();
-		}
-	}
 
 	/**
 	 * Init the game
@@ -149,10 +101,9 @@ namespace tetris::controller::console{
 				break;
 			default:
 				throw std::domain_error("Unknown game type");
-				break;
 		}
 
-		run(*game);
+		Controller(*game).run();
 
 		delete game;
 		game = nullptr;
