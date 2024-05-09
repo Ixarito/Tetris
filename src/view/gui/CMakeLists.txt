@@ -10,6 +10,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+include_directories(../../model)
+include_directories(../../controller/gui)
+
 find_package(Qt6 COMPONENTS
 		Core
 		Gui
@@ -18,12 +21,16 @@ find_package(Qt6 COMPONENTS
 
 add_executable(Tetris_view_GUI
 		main.cpp
+		TetrisWindow.cpp
+		TetrisWindow.h
 )
 
 target_link_libraries(Tetris_view_GUI
+		Tetris_model
 		Qt::Core
 		Qt::Gui
 		Qt::Widgets
+		Tetris_controller_GUI
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

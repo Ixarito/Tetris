@@ -1,12 +1,58 @@
 #include <QApplication>
-#include <QPushButton>
+#include "TetrisWindow.h"
+#include "Game.h"
+
+using namespace tetris;
 
 int main(int argc, char *argv[]) {
-	QApplication a(argc, argv);
+    QApplication a(argc, argv);
 
-	QPushButton button("Hello world!", nullptr);
-	button.resize(200, 100);
-	button.show();
+    TetrisWindow window;
+    window.show();
 
-	return QApplication::exec();
+    struct model::GameParameters gp;
+
+    gp.shapes = {
+            // I-Tetromino
+            {{{{false, false, false, false},
+                      {true, true, true, true},
+                      {false, false, false, false},
+                      {false, false, false, false}}}, model::Color::CYAN},
+
+            // O-Tetromino
+            {{{{true, true},
+                      {true, true}}}, model::Color::YELLOW},
+
+            // T-Tetromino
+            {{{{false, true, false},
+                      {true, true, true},
+                      {false, false, false}}}, model::Color::PURPLE},
+
+            // S-Tetromino
+            {{{{false, true, true},
+                      {true, true, false},
+                      {false, false, false}}}, model::Color::GREEN},
+
+            // Z-Tetromino
+            {{{{true, true, false},
+                      {false, true, true},
+                      {false, false, false}}}, model::Color::RED},
+
+            // J-Tetromino
+            {{{{true, false, false},
+                      {true, true, true},
+                      {false, false, false}}}, model::Color::BLUE},
+
+            // L-Tetromino
+            {{{{false, false, true},
+                      {true, true, true},
+                      {false, false, false}}}, model::Color::ORANGE}
+    };
+
+    model::Game game = model::Game(gp);
+
+
+    window.updateGameBoard(game.getGridView());
+
+    return QApplication::exec();
 }

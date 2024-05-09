@@ -8,4 +8,4 @@ add_subdirectory(view/console)
 add_subdirectory(view/gui)
 
 add_subdirectory(controller/console)
-#add_subdirectory(controller/gui)
+add_subdirectory(controller/gui)
