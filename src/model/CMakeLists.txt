@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
+include_directories(../common)
+
 # Définir les fichiers sources
 set(SOURCES
 		Block.h

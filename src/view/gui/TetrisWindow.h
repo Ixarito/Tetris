@@ -4,26 +4,32 @@
 #include "Grid.h"
 #include "Color.h"
 
-class TetrisWindow : public QMainWindow
-{
-Q_OBJECT
+namespace tetris::view::gui {
 
-public:
-    TetrisWindow(QWidget *parent = nullptr);
+	class TetrisWindow : public QMainWindow {
+	Q_OBJECT
 
-    ~TetrisWindow();
+	public:
+		TetrisWindow(QWidget *parent = nullptr);
 
-    void updateGameBoard(const tetris::model::Grid::GridView_type& gridView);
+		~TetrisWindow();
 
-private:
-    QGraphicsView *gameBoard;
-    QLabel *scoreLabel;
-    QLabel *levelLabel;
+		void updateGameBoard(const model::Grid::GridView_type &gridView);
 
-    QColor getQtColor(tetris::model::Color color);
+	private:
+		QGraphicsView *gameBoard;
+		QLabel *scoreLabel;
+		QLabel *levelLabel;
 
-private slots:
-    void startGame();
-    void stopGame();
-    void movePiece();
-};
+		QColor getQtColor(tetris::model::Color color);
+
+	private slots:
+
+		void startGame();
+
+		void stopGame();
+
+		void movePiece();
+	};
+
+} // namespace tetris::view::gui

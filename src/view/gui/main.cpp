@@ -7,7 +7,7 @@ using namespace tetris;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    TetrisWindow window;
+    view::gui::TetrisWindow window;
     window.show();
 
     struct model::GameParameters gp;

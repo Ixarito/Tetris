@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project(Tetris_sources)
 
+add_subdirectory(common)
+
 add_subdirectory(model)
 
 add_subdirectory(view/console)

@@ -17,8 +17,6 @@ add_executable(Tetris_controller_console
         Interactions.h
         Controller.cpp
         Controller.h
-        ../gui/GameController.cpp
-        ../gui/GameController.h
 )
 
 # Lier les bibliothèques Tetris

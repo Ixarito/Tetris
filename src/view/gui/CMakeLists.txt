@@ -10,6 +10,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+# Inclure les répertoires des bibliothèques Tetris
+include_directories(../../common)
 include_directories(../../model)
 include_directories(../../controller/gui)
 
@@ -26,10 +28,11 @@ add_executable(Tetris_view_GUI
 )
 
 target_link_libraries(Tetris_view_GUI
-		Tetris_model
 		Qt::Core
 		Qt::Gui
 		Qt::Widgets
+		Tetris_COMMON
+		Tetris_model
 		Tetris_controller_GUI
 )
 
