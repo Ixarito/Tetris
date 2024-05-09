@@ -51,6 +51,12 @@ int main(int argc, char *argv[]) {
 
     model::Game game = model::Game(gp);
 
+    for (int i = 0; i < 100; i++) {
+        if(i % 5 == 0){
+            game.goLeft();
+        }
+        game.goDown();
+    }
 
     window.updateGameBoard(game.getGridView());
 

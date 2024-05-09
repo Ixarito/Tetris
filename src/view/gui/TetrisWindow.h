@@ -2,6 +2,7 @@
 #include <QGraphicsView>
 #include <QLabel>
 #include "Grid.h"
+#include "Color.h"
 
 class TetrisWindow : public QMainWindow
 {
@@ -18,6 +19,8 @@ private:
     QGraphicsView *gameBoard;
     QLabel *scoreLabel;
     QLabel *levelLabel;
+
+    QColor getQtColor(tetris::model::Color color);
 
 private slots:
     void startGame();
