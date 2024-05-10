@@ -10,10 +10,10 @@ namespace tetris::controller::gui {
     GameController::GameController(model::Game &game) : _game(game) {
         timer = new QTimer();
 
-		_game.addObserver(this);
+        _game.addObserver(this);
 
-		updateTimerInterval();
-        QObject::connect(timer, & QTimer::timeout, this, & GameController::tick);
+        updateTimerInterval();
+        QObject::connect(timer, &QTimer::timeout, this, &GameController::tick);
     }
 
     void GameController::startGame() {
@@ -24,30 +24,51 @@ namespace tetris::controller::gui {
         timer->stop();
     }
 
+    void GameController::goLeft() {
+        _game.goLeft();
+    }
+
+    void GameController::goRight() {
+        _game.goRight();
+    }
+
+    void GameController::drop() {
+        _game.drop();
+    }
+
+    void GameController::rotateClockwise() {
+        _game.rotateClockwise();
+    }
+
+    void GameController::rotateCounterclockwise() {
+        _game.rotateCounterclockwise();
+    }
+
+
     void GameController::tick() {
         _game.goDown();
     }
 
-	void GameController::updateTimerInterval() {
-		int interval = INITIAL_INTERVAL - _game.getLevel() * INTERVAL_DECREASE;
+    void GameController::updateTimerInterval() {
+        int interval = INITIAL_INTERVAL - _game.getLevel() * INTERVAL_DECREASE;
 
-		interval = std::max(interval, MIN_INTERVAL);
-		timer->setInterval(interval);
-	}
+        interval = std::max(interval, MIN_INTERVAL);
+        timer->setInterval(interval);
+    }
 
-	void GameController::update(ActionType action, void * subject){
-		auto game = static_cast<model::Game *>(subject);
-		if(game){
-			switch(action){
-				case ActionType::DATA_UPDATED:
-					updateTimerInterval();
-					break;
-				case ActionType::GAME_OVER:
-					stopGame();
-					qWarning() << "GameOver TODO"; // TODO
-					break;
-			}
-		}
-	}
+    void GameController::update(ActionType action, void *subject) {
+        auto game = static_cast<model::Game *>(subject);
+        if (game) {
+            switch (action) {
+                case ActionType::DATA_UPDATED:
+                    updateTimerInterval();
+                    break;
+                case ActionType::GAME_OVER:
+                    stopGame();
+                    qWarning() << "GameOver TODO"; // TODO
+                    break;
+            }
+        }
+    }
 
 } // namespace tetris::controller::gui

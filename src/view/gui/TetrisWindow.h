@@ -3,6 +3,7 @@
 #include <QLabel>
 #include "Observer.h"
 #include "Game.h"
+#include "GameController.h"
 
 namespace tetris::view::gui {
 	using namespace common;
@@ -24,7 +25,7 @@ namespace tetris::view::gui {
 		 * @param game the game on which the view will be based
 		 * @param parent the parent of the window
 		 */
-		explicit TetrisWindow(model::Game & game, QWidget *parent = nullptr);
+		explicit TetrisWindow(model::Game & game, tetris::controller::gui::GameController & controller, QWidget *parent = nullptr);
 
 		/**
 		 * Destructor of the window
@@ -50,7 +51,12 @@ namespace tetris::view::gui {
 		// observer
 		void update(ActionType action, void* subject) override;
 
+    protected:
+        void keyPressEvent(QKeyEvent *event) override;
+
 	private:
+
+        tetris::controller::gui::GameController & controller;
 
 		/**
 		 * Inits the data container

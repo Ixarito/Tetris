@@ -2,6 +2,7 @@
 #include "TetrisWindow.h"
 #include "Game.h"
 #include "GameController.h"
+#include <iostream>
 
 using namespace tetris;
 
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
 
     tetris::controller::gui::GameController controller {game};
 
-	view::gui::TetrisWindow window {game};
+	view::gui::TetrisWindow window {game, controller};
 	window.show();
 
     controller.startGame();

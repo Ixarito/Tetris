@@ -34,6 +34,32 @@ namespace tetris::controller::gui {
 		 */
         void stopGame();
 
+        /**
+         * Moves the current Tetromino to the left
+         */
+        void goLeft();
+
+        /**
+         * Moves the current Tetromino to the right
+         */
+        void goRight();
+
+        /**
+         * Moves the current Tetromino down
+         */
+        void drop();
+
+        /**
+         * Rotates the current Tetromino clockwise
+         */
+        void rotateClockwise();
+
+        /**
+         * Rotates the current Tetromino counterclockwise
+         */
+        void rotateCounterclockwise();
+
+
     public slots:
 		/**
 		 * Contains the code of the game loop
