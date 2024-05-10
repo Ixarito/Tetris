@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "TetrisWindow.h"
 #include "Game.h"
+#include "GameController.h"
 
 using namespace tetris;
 
@@ -48,16 +49,13 @@ int main(int argc, char *argv[]) {
 
     model::Game game = model::Game(gp);
 
+    tetris::controller::gui::GameController controller {game};
+
 	view::gui::TetrisWindow window {game};
 	window.show();
 
-	// TODO remove
-	for (int i = 0; i < 100; i++) {
-		if(i % 5 == 0){
-			game.goLeft();
-		}
-		game.goDown();
-	}
+    controller.startGame();
+
 
     return QApplication::exec();
 }
