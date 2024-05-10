@@ -4,10 +4,14 @@
 
 namespace tetris::model{
 
+	using common::ActionType;
+
 	Game::Game(const GameParameters & params):
 			_grid(params.gridWidth, params.gridHeight, params.nbAlreadyPlacedBlocks),
 			_bag{},
 			_nextTetromino{},
+			_currentPosition{},
+			_gameOver{false},
 			_startLevel{params.level},
 			_currentLevel{params.level},
 			score{},
@@ -24,8 +28,8 @@ namespace tetris::model{
 		insert(getNext());
 	}
 
-	bool Game::isGameActive() const{
-		return isOnTop(); // TODO useful?
+	bool Game::isGameOver() const{
+		return _gameOver;
 	}
 
 	bool Game::isWon() const{
@@ -92,20 +96,14 @@ namespace tetris::model{
 
 			updateData(nbLinesRemoved);
         }
-
-		endMovement();
 	}
 
 	void Game::goLeft(){
 		moveCurrent(MoveDirection::LEFT);
-
-		endMovement();
 	}
 
 	void Game::goRight(){
 		moveCurrent(MoveDirection::RIGHT);
-
-		endMovement();
 	}
 
 	void Game::rotateClockwise(){
@@ -118,6 +116,14 @@ namespace tetris::model{
 		rotateCurrent(RotateDirection::CCW);
 
 		endMovement();
+	}
+
+	void Game::checkGameOver() {
+		if(_currentPosition.row == 0 && isCurrentOverlap()){
+			_gameOver = true;
+
+			notifyObservers(ActionType::GAME_OVER, this);
+		}
 	}
 
 	void Game::drop(){
@@ -134,13 +140,14 @@ namespace tetris::model{
 		updateData(nbLinesRemoved, nbLinesCrossed);
 	}
 
-	bool Game::insert(Tetromino tetromino) { // TODO: bool ? + check if gameOver
+	void Game::insert(Tetromino tetromino) {
 		_current = tetromino;
 		_currentPosition.col = _grid.width / 2 - tetromino.getWidth() / 2;
 		_currentPosition.row = 0;
 
 		notifyObservers(common::ActionType::TETROMINO_INSERTED, this);
-		return true;
+
+		checkGameOver();
 	}
 
 	void Game::moveCurrent(const MoveDirection &direction) {
@@ -158,6 +165,8 @@ namespace tetris::model{
 					_currentPosition.row++;
 					break;
 			}
+
+			notifyObservers(ActionType::GRID_CHANGED, this);
 		}
 	}
 
@@ -193,7 +202,7 @@ namespace tetris::model{
 							if (_currentPosition.col + x <= 0) {
 								return false;
 							}
-							if (_grid[_currentPosition.row + y].isOccupied(_currentPosition.col + x - 1)) {
+							if (_grid.isOccupied(_currentPosition.row + y, _currentPosition.col + x - 1)) {
 								return false;
 							}
 							break;
@@ -201,7 +210,7 @@ namespace tetris::model{
 							if (_currentPosition.col + x >= _grid.width - 1) {
 								return false;
 							}
-							if (_grid[_currentPosition.row + y].isOccupied(_currentPosition.col + x + 1)) {
+							if (_grid.isOccupied(_currentPosition.row + y, _currentPosition.col + x + 1)) {
 								return false;
 							}
 							break;
@@ -210,7 +219,7 @@ namespace tetris::model{
 								placeCurrent(); // FIXME here??
 								return false;
 							}
-							if (_grid[_currentPosition.row + y + 1].isOccupied(_currentPosition.col + x)) {
+							if (_grid.isOccupied(_currentPosition.row + y + 1, _currentPosition.col + x)) {
 								placeCurrent();
 								return false;
 							}
@@ -228,7 +237,7 @@ namespace tetris::model{
 				if (_current->isOccupied(x, y)
 				&& (	_currentPosition.col + x >= _grid.width
 					||	_currentPosition.col + x < 0
-					|| _grid[_currentPosition.col + x].isOccupied(_currentPosition.row + y)))
+					|| _grid.isOccupied(_currentPosition.col + x, _currentPosition.row + y)))
 				{
 					return false;
 				}
@@ -237,11 +246,19 @@ namespace tetris::model{
 		return true;
 	}
 
-	bool Game::isOnTop() const { // FIXME
-		return _grid[0].isEmpty();
-	}
+	bool Game::isCurrentOverlap() const {
+		auto tetroWidth{_current->getWidth()};
+		auto tetroHeight{_current->getHeight()};
 
-	using namespace common;
+		for (size_t x = 0; x < tetroWidth; x++) {
+			for (size_t y = 0; y < tetroHeight; y++) {
+				if (_current->isOccupied(x, y) && _grid.isOccupied(_currentPosition.row + x, _currentPosition.col + y)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	void Game::updateData(size_t nbLinesRemoved, size_t nbLinesCrossed){
 		score += nbLinesRemoved + nbLinesCrossed;

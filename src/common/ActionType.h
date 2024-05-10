@@ -19,7 +19,15 @@ namespace tetris::common{
 		/**
 		 * Used to report that the game’s statistics data has been updated.
 		 */
-		DATA_UPDATED
+		DATA_UPDATED,
+		/**
+		 * Used to report that the game is over
+		 */
+		GAME_OVER,
+		/**
+		 * Used to report that the game is won
+		 */
+		GAME_WON
 	};
 
 } // namespace tetris::common

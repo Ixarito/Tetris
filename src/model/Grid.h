@@ -86,6 +86,15 @@ namespace tetris::model{
 		const Block & get(const size_t & row, const size_t & col) const;
 
 		/**
+		 * Determines if a position is occupied by a Block
+		 * @param row the row to check
+		 * @param col the column to check
+		 * @return true if the position is occupied, false otherwise
+		 * @sa tetris::model::Line::isOccupied()
+		 */
+		bool isOccupied(const size_t & row, const size_t & col) const;
+
+		/**
 		 * Gives the Line at the given position
 		 * @param position the position of the line to get
 		 * @return a constant reference to the line

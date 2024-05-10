@@ -44,6 +44,10 @@ namespace tetris::model {
         return (*_lines[row])[col];
     }
 
+	bool Grid::isOccupied(const size_t &row, const size_t &col) const {
+		return _lines[row]->isOccupied(col);
+	}
+
 	void Grid::insert(const Tetromino & tetromino, const size_t & row, const size_t & col) {
 		auto tetroWidth{tetromino.getWidth()};
 		auto tetroHeight{tetromino.getHeight()};

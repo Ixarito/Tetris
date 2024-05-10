@@ -2,11 +2,14 @@
 #define GAMECONTROLLER_H
 
 #include "Game.h"
+#include "Observer.h"
 #include <QTimer>
 
 namespace tetris::controller::gui {
 
-    class GameController : public QObject {
+	using namespace common;
+
+	class GameController : public QObject, Observer{
         Q_OBJECT
     public:
         GameController(model::Game & game);
@@ -14,6 +17,8 @@ namespace tetris::controller::gui {
         void startGame();
 
         void stopGame();
+
+		void update(ActionType action, void* subject);
 
     public slots:
         void movePiece();

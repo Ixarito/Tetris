@@ -13,7 +13,7 @@ namespace tetris::controller::console{
 
 		view.showGame();
 
-		while(game.isGameActive() && !game.isWon()){
+		while(!game.isGameOver() && !game.isWon()){
 			auto input = getNextString();
 			if (input == "s") {
 				game.drop();

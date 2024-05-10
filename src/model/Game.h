@@ -62,6 +62,7 @@ class Game : public common::Observable{
 		std::optional<Tetromino> _current; // the current Tetromino that can be moved
 		TetrominoPosition _currentPosition;
 
+		bool _gameOver;
 		const unsigned int _startLevel;
 		unsigned int _currentLevel;
 
@@ -104,9 +105,9 @@ class Game : public common::Observable{
 
 		/**
 		 * Determines if the game is over
-		 * @return true if the game is still active, false if the game is over
+		 * @return true if the game is over, false otherwise
 		 */
-		bool isGameActive() const;
+		bool isGameOver() const;
 
 
 		/**
@@ -218,14 +219,18 @@ class Game : public common::Observable{
 	 */
 
 	private:
+		/**
+		 * Verifies if the game is over and changes game state if so
+		 */
+		void checkGameOver();
+
 		// Current Tetromino related
 
 		/**
 		 * Inserts a Tetromino at the top of the grid mask
 		 * @param tetromino the tetromino to insert
-		 * @return true if tetromino could be inserted, false if there is no place to insert it
 		 */
-		bool insert(Tetromino tetromino); // FIXME bool?
+		void insert(Tetromino tetromino);
 
 		/**
 		 * Moves the current Tetromino in the given direction.
@@ -237,7 +242,7 @@ class Game : public common::Observable{
 		/**
 		 * Rotates the current Tetromino in the given direction in the grid mask.
 		 * Has no effect if the current tetromino cannot rotate without
-		 * supperposing with grid blocks or be outside the grid boundaries.
+		 * superposing with grid blocks or be outside the grid boundaries.
 		 * @param direction the direction to rotate the tetromino
 		 * @sa tetris::model::Tetromino::rotate()
 		 */
@@ -249,24 +254,23 @@ class Game : public common::Observable{
 		void placeCurrent();
 
 		/**
-		 * Check if the current tetromino can move in the given direction in the grid mask
+		 * Check if the current Tetromino can move in the given direction in the grid mask
 		 * @param direction the direction to check
-		 * @return true if the tetromino can move, false otherwise
+		 * @return true if the Tetromino can move, false otherwise
 		 */
 		bool canMove(const MoveDirection & direction) /*const*/;
 
 		/**
-		 * Check if the current tetromino can rotate in the grid mask
-		 * @return true if the tetromino can rotate, false otherwise
+		 * Check if the current Tetromino can rotate in the grid mask
+		 * @return true if the Tetromino can rotate, false otherwise
 		 */
 		bool canRotate() const;
 
 		/**
-		 * Verify if a tetromino touch the top of the grid
-		 * @return true if is a tetromino on the top of the grid
+		 * Check if the current Tetromino overlaps with a block of the Grid
+		 * @return true if the current Tetromino overlaps a block, false otherwise
 		 */
-		bool isOnTop() const; // FIXME useful?
-
+		bool isCurrentOverlap() const;
 
 		/**
 		 * Used at the end of a movement of a the current Tetromino
@@ -279,7 +283,6 @@ class Game : public common::Observable{
 		 * @param nbLinesCrossed the number of lines crossed by the last Tetromino before inserting
 		 */
 		void updateData(size_t nbLinesRemoved, size_t nbLinesCrossed = 0);
-
 
 	};
 
