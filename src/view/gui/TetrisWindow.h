@@ -16,9 +16,9 @@ namespace tetris::view::gui {
 		Q_OBJECT
 
 		QGraphicsView * gameBoard;
-		QLabel * scoreValue{};
-		QLabel * levelValue{};
-		QLabel * clearedLinesValue{};
+		QLabel * scoreValue;
+		QLabel * levelValue;
+		QLabel * clearedLinesValue;
 
 	public:
 		/**
@@ -26,12 +26,22 @@ namespace tetris::view::gui {
 		 * @param game the game on which the view will be based
 		 * @param parent the parent of the window
 		 */
-		TetrisWindow(model::Game & game, QWidget *parent = nullptr);
+		explicit TetrisWindow(model::Game & game, QWidget *parent = nullptr);
 
 		/**
 		 * Destructor of the window
 		 */
 		~TetrisWindow() override;
+
+		/**
+		 * No copy constructor
+		 */
+		TetrisWindow(TetrisWindow &) = delete;
+
+		/**
+		 * No copy assignment operator
+		 */
+		TetrisWindow & operator=(TetrisWindow &) = delete;
 
 		/**
 		 * Updates the board display

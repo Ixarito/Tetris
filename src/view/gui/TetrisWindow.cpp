@@ -27,7 +27,10 @@ TetrisWindow::TetrisWindow(model::Game & game, QWidget *parent) : QMainWindow(pa
 }
 
 TetrisWindow::~TetrisWindow(){
-
+	delete gameBoard;
+	delete scoreValue;
+	delete levelValue;
+	delete clearedLinesValue;
 }
 
 QLayout * TetrisWindow::initDataContainer(model::Game & game){

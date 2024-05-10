@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
                       {false, false, false}}}, model::Color::ORANGE}
     };
 
-    model::Game game = model::Game(gp);
+    model::Game game {gp};
 
     tetris::controller::gui::GameController controller {game};
 
