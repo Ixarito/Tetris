@@ -25,23 +25,35 @@ namespace tetris::controller::gui {
     }
 
     void GameController::goLeft() {
-        _game.goLeft();
+        try {
+            _game.goLeft();
+        } catch (std::logic_error &e) {}
     }
 
     void GameController::goRight() {
-        _game.goRight();
+        try {
+            _game.goRight();
+        } catch (std::logic_error &e) {}
     }
 
     void GameController::drop() {
-        _game.drop();
+        try {
+            _game.drop();
+        } catch (std::logic_error &e) {}
     }
 
     void GameController::rotateClockwise() {
-        _game.rotateClockwise();
+        try {
+            _game.rotateClockwise();
+        } catch (std::logic_error &e) {}
     }
 
     void GameController::rotateCounterclockwise() {
-        _game.rotateCounterclockwise();
+        try {
+            _game.rotateCounterclockwise();
+        } catch (std::logic_error &e) {}
+
+
     }
 
 
