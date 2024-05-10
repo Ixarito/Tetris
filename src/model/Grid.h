@@ -119,7 +119,7 @@ namespace tetris::model{
 		 * Drops the current Tetromino while possible
 		 * @return the number of lines crossed by the tetromino before coming to rest
 		 */
-		int dropCurrent();
+		size_t dropCurrent();
 
         /**
          * Gives an overview of the current state of the grid

@@ -1,37 +1,72 @@
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QGraphicsRectItem>
 #include <iostream>
 #include "TetrisWindow.h"
 
 namespace tetris::view::gui{
 
-TetrisWindow::TetrisWindow(QWidget *parent) : QMainWindow(parent) {
-    // Initialisez vos widgets ici
-    gameBoard = new QGraphicsView(this);
-    scoreLabel = new QLabel("Score: 0", this);
-    levelLabel = new QLabel("Level: 0", this);
+TetrisWindow::TetrisWindow(model::Game & game, QWidget *parent) : QMainWindow(parent){
+	game.addObserver(this);
 
-    // Configurez vos widgets ici
-    // Par exemple, vous pouvez définir la taille de gameBoard, définir le texte initial de scoreLabel et levelLabel, etc.
-    gameBoard->setFixedSize(330, 630); // Taille arbitraire, à ajuster en fonction de vos besoins
+    // initialize widgets
+	gameBoard = new QGraphicsView(this);
+	gameBoard->setFixedSize(330, 630);
 
-    // Ajoutez vos widgets à la fenêtre ici
-    // Vous pouvez utiliser un layout pour organiser vos widgets
-    // Par exemple, vous pouvez ajouter gameBoard, scoreLabel et levelLabel à un QVBoxLayout
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(gameBoard);
-    layout->addWidget(scoreLabel);
-    layout->addWidget(levelLabel);
+	auto dataContainer = initDataContainer(game);
 
-    QWidget *centralWidget = new QWidget(this);
-    centralWidget->setLayout(layout);
+    auto mainLayout = new QHBoxLayout;
+    mainLayout->addWidget(gameBoard);
+    mainLayout->addLayout(dataContainer);
+
+    auto centralWidget = new QWidget(this);
+    centralWidget->setLayout(mainLayout);
     setCentralWidget(centralWidget);
+
+	updateGameBoard(game.getGridView());
 }
 
-TetrisWindow::~TetrisWindow() {
-    delete gameBoard;
-    delete scoreLabel;
-    delete levelLabel;
+TetrisWindow::~TetrisWindow(){
+
+}
+
+QLayout * TetrisWindow::initDataContainer(model::Game & game){
+	auto datasLayout = new QVBoxLayout;
+
+	auto scoreLayout = new QHBoxLayout;
+	auto levelLayout = new QHBoxLayout;
+	auto clearedLinesLayout = new QHBoxLayout;
+
+	auto scoreLabel = new QLabel("Score:", this);
+	auto levelLabel = new QLabel("Level:", this);
+	auto clearedLinesLabel = new QLabel("Full Lines:", this);
+
+	scoreValue = new QLabel(this);
+	levelValue = new QLabel(this);
+	clearedLinesValue = new QLabel(this);
+
+	updateDatasValues(game);
+
+	scoreLayout->addWidget(scoreLabel);
+	scoreLayout->addWidget(scoreValue);
+
+	levelLayout->addWidget(levelLabel);
+	levelLayout->addWidget(levelValue);
+
+	clearedLinesLayout->addWidget(clearedLinesLabel);
+	clearedLinesLayout->addWidget(clearedLinesValue);
+
+	datasLayout->addLayout(scoreLayout);
+	datasLayout->addLayout(levelLayout);
+	datasLayout->addLayout(clearedLinesLayout);
+
+	return datasLayout;
+}
+
+void TetrisWindow::updateDatasValues(model::Game & game){
+	scoreValue->setText(QString::number(game.getScore()));
+	levelValue->setText(QString::number(game.getLevel()));
+	clearedLinesValue->setText(QString::number(game.getNbClearedLines()));
 }
 
 void TetrisWindow::updateGameBoard(const model::Grid::GridView_type& gridView) {
@@ -58,6 +93,23 @@ void TetrisWindow::updateGameBoard(const model::Grid::GridView_type& gridView) {
 
     // Mettez à jour le gameBoard avec la nouvelle scène
     gameBoard->setScene(scene);
+}
+
+void TetrisWindow::update(ActionType action, void * subject){
+	auto game = static_cast<model::Game *>(subject);
+	if(game){
+		switch(action){
+			case ActionType::DATA_UPDATED:
+				updateDatasValues(*game);
+				break;
+			case ActionType::TETROMINO_INSERTED:
+				// TODO update next Tetromino
+				/* game->peekNext(); */
+			case ActionType::GRID_CHANGED:
+				updateGameBoard(game->getGridView());
+				break;
+		}
+	}
 }
 
 QColor TetrisWindow::getQtColor(tetris::model::Color color){

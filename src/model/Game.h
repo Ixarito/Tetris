@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Grid.h"
+#include "Observable.h"
 
 namespace tetris::model{
 
@@ -39,7 +40,7 @@ namespace tetris::model{
 	/**
 	 * Represents a game part of the Tetris game
 	 */
-	class Game{
+class Game : public common::Observable{
 		Grid _grid;
 		std::vector<Tetromino> _bag;
 		size_t _nextTetromino;
@@ -186,11 +187,25 @@ namespace tetris::model{
 		void drop();
 
 
-		};
+	/**
+	 * @}
+	 */
+
+	private:
 
 		/**
-		 * @}
+		 * Used to update game datas like score, level or number of cleared lines
+		 * @param nbLinesRemoved the number of lines removed after a drop
+		 * @param nbLinesCrossed the number of lines crossed by the last Tetromino before inserting
 		 */
+		void updateData(size_t nbLinesRemoved, size_t nbLinesCrossed = 0);
+
+		/**
+		 * Used at the end of a movement of a tetromino
+		 */
+		void endMovement();
+
+	};
 
 } // namespace tetris::model
 

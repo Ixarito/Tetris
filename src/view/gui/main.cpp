@@ -7,9 +7,6 @@ using namespace tetris;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    view::gui::TetrisWindow window;
-    window.show();
-
     struct model::GameParameters gp;
 
     gp.shapes = {
@@ -51,14 +48,16 @@ int main(int argc, char *argv[]) {
 
     model::Game game = model::Game(gp);
 
-    for (int i = 0; i < 100; i++) {
-        if(i % 5 == 0){
-            game.goLeft();
-        }
-        game.goDown();
-    }
+	view::gui::TetrisWindow window {game};
+	window.show();
 
-    window.updateGameBoard(game.getGridView());
+	// TODO remove
+	for (int i = 0; i < 100; i++) {
+		if(i % 5 == 0){
+			game.goLeft();
+		}
+		game.goDown();
+	}
 
     return QApplication::exec();
 }

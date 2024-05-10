@@ -27,6 +27,7 @@ namespace tetris::common{
 		 */
 		virtual void removeObserver(Observer * observer);
 
+	protected:
 		/**
 		 * Notifies all observers with the specified action
 		 * @param action the action to notify

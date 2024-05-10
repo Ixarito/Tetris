@@ -66,38 +66,61 @@ namespace tetris::model{
 
 	void Game::goDown(){
 		_grid.moveCurrent(MoveDirection::DOWN);
-        if (!_grid.canMove(MoveDirection::DOWN)){
+        if (!_grid.canMove(MoveDirection::DOWN)){ // FIXME call to drop?
             _grid.insert(getNext());
-            auto fullLines {_grid.removeFullLines()};
-            score += fullLines;
-            nbClearedLines += fullLines;
-			_level = nbClearedLines/10;
+
+			auto nbLinesRemoved = _grid.removeFullLines();
+
+			updateData(nbLinesRemoved);
         }
+
+		endMovement();
 	}
 
 	void Game::goLeft(){
 		_grid.moveCurrent(MoveDirection::LEFT);
+
+		endMovement();
 	}
 
 	void Game::goRight(){
 		_grid.moveCurrent(MoveDirection::RIGHT);
+
+		endMovement();
 	}
 
 	void Game::rotateClockwise(){
 		_grid.rotateCurrent(RotateDirection::CW);
+
+		endMovement();
 	}
 
 	void Game::rotateCounterclockwise(){
 		_grid.rotateCurrent(RotateDirection::CCW);
+
+		endMovement();
 	}
 
 	void Game::drop(){
-		score += _grid.dropCurrent();
+		auto nbLinesCrossed =  _grid.dropCurrent();
+		auto nbLinesRemoved = _grid.removeFullLines();
 		_grid.insert(getNext());
-        auto fullLines {_grid.removeFullLines()};
-        score += fullLines;
-        nbClearedLines += fullLines;
+
+		updateData(nbLinesRemoved, nbLinesCrossed);
+	}
+
+	using namespace common;
+
+	void Game::updateData(size_t nbLinesRemoved, size_t nbLinesCrossed){
+		score += nbLinesRemoved + nbLinesCrossed;
+		nbClearedLines += nbLinesRemoved;
 		_level = nbClearedLines/10;
+
+		notifyObservers(ActionType::DATA_UPDATED, this);
+	}
+
+	void Game::endMovement(){
+		notifyObservers(ActionType::GRID_CHANGED, this);
 	}
 
 

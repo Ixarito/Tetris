@@ -20,4 +20,4 @@ add_executable(Tetris_controller_console
 )
 
 # Lier les bibliothèques Tetris
-target_link_libraries(Tetris_controller_console Tetris_model Tetris_view_console)
+target_link_libraries(Tetris_controller_console Tetris_model Tetris_view_console Tetris_COMMON)

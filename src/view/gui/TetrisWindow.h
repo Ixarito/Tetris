@@ -1,28 +1,70 @@
 #include <QMainWindow>
 #include <QGraphicsView>
 #include <QLabel>
+#include "Observer.h"
+#include "Game.h"
 #include "Grid.h"
 #include "Color.h"
 
 namespace tetris::view::gui {
+	using namespace common;
 
-	class TetrisWindow : public QMainWindow {
-	Q_OBJECT
+	/**
+	 * Represents the graphical window of the game Tetris
+	 */
+	class TetrisWindow : public QMainWindow, Observer{
+		Q_OBJECT
+
+		QGraphicsView * gameBoard;
+		QLabel * scoreValue{};
+		QLabel * levelValue{};
+		QLabel * clearedLinesValue{};
 
 	public:
-		TetrisWindow(QWidget *parent = nullptr);
+		/**
+		 * Creates a tetris game window
+		 * @param game the game on which the view will be based
+		 * @param parent the parent of the window
+		 */
+		TetrisWindow(model::Game & game, QWidget *parent = nullptr);
 
-		~TetrisWindow();
+		/**
+		 * Destructor of the window
+		 */
+		~TetrisWindow() override;
 
+		/**
+		 * Updates the board display
+		 * @param gridView the view on which to base the display
+		 */
 		void updateGameBoard(const model::Grid::GridView_type &gridView);
 
-	private:
-		QGraphicsView *gameBoard;
-		QLabel *scoreLabel;
-		QLabel *levelLabel;
+		// observer
+		void update(ActionType action, void* subject) override;
 
+	private:
+
+		/**
+		 * Inits the data container
+		 * @param game the game with which to recover the data's
+		 * @return the layout that contains data's
+		 */
+		QLayout * initDataContainer(model::Game & game);
+
+		/**
+		 * Sets the values of game statistics
+		 * @param game the game with which to recover the data's
+		 */
+		void updateDatasValues(model::Game & game);
+
+		/**
+		 * Gives the GUI color that corresponds to a model color
+		 * @param color a model color
+		 * @return a GUI color
+		 */
 		QColor getQtColor(tetris::model::Color color);
 
+		// FIXME
 	private slots:
 
 		void startGame();

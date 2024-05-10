@@ -125,6 +125,8 @@ namespace tetris::model {
         _currentCol = width / 2 - tetromino.getWidth() / 2;
         _currentRow = 0;
         return true;
+
+		// TODO notify TETROMINO_INSERTED
     }
 
     void Grid::moveCurrent(const MoveDirection &direction) {
@@ -159,8 +161,8 @@ namespace tetris::model {
 
     }
 
-    int Grid::dropCurrent() {
-        int count{}; // number of lines crossed
+    size_t Grid::dropCurrent() {
+        size_t count{}; // number of lines crossed
         while (canMove(MoveDirection::DOWN)) {
             moveCurrent(MoveDirection::DOWN);
             count++;
