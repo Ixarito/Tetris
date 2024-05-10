@@ -9,23 +9,46 @@ namespace tetris::controller::gui {
 
 	using namespace common;
 
+	/**
+	 * Controller of the GUI game Tetris
+	 */
 	class GameController : public QObject, Observer{
         Q_OBJECT
+
+		model::Game & _game;
+		QTimer *timer;
     public:
+		/**
+		 * Creates a controller for the game Tetris
+		 * @param game the game model
+		 */
         GameController(model::Game & game);
 
+		/**
+		 * Starts the game loop
+		 */
         void startGame();
 
+		/**
+		 * Stops the game loop
+		 */
         void stopGame();
 
-		void update(ActionType action, void* subject);
-
     public slots:
-        void movePiece();
+		/**
+		 * Contains the code of the game loop
+		 */
+        void tick();
 
-    private:
-        model::Game & _game;
-        QTimer *timer;
+	private:
+		/**
+		 * Updates the speed of the game
+		 */
+		void updateTimerInterval();
+
+	public:
+		// observer
+		void update(ActionType action, void* subject);
     };
 
 } // namespace tetris::controller::gui
