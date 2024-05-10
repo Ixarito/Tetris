@@ -4,7 +4,6 @@
 #include <deque>
 #include "Line.h"
 #include "Tetromino.h"
-#include "MoveDirection.h"
 
 namespace tetris::model{
 
@@ -15,14 +14,6 @@ namespace tetris::model{
 	 */
 	class Grid{
 		std::deque<Line *> _lines;
-		std::optional<Tetromino> _current; // curent is empty at the construct of Grid
-		size_t _currentCol;
-		size_t _currentRow;
-
-        /**
-         * Attaches the current Tetromino to the grid
-         */
-        void placeCurrent();
 
         /**
 		 * Gives the Line numbers that are full of blocks
@@ -55,14 +46,6 @@ namespace tetris::model{
 		const size_t height;
 
 		/**
-		 * Alias of vector of Lines
-		 * Represents an overview of the current state of the grid
-		 * @sa tetris::model::Grid::getGridView()
-		 * @sa tetris::model::Line
-		 */
-		using GridView_type = const std::vector<Line>;
-
-		/**
 		 * Constructs a grid
 		 * @param width the width of the grid (the length of line)
 		 * @param height the height of the grid (the number of lines)
@@ -86,46 +69,21 @@ namespace tetris::model{
 		Grid & operator=(Grid &) = delete;
 
 		/**
+		 * Inserts a Tetromino at the given position in the grid.
+		 * The position is relative to the top left corner of the Tetromino
+		 * @param tetromino the Tetromino to insert
+		 * @param row the row where insert the Tetromino
+		 * @param col the column where insert the Tetromino
+		 */
+		void insert(const Tetromino & tetromino, const size_t & row, const size_t & col);
+
+		/**
 		 * Gives the Block at the given position
 		 * @param row the row of the block to get
 		 * @param col the column of the block to get
 		 * @return a constant reference to the block
 		 */
 		const Block & get(const size_t & row, const size_t & col) const;
-
-		/**
-		 * Inserts a Tetromino at the top of the grid
-		 * @param tetromino the tetromino to insert
-		 * @return true if tetromino could be inserted, false if there is no place to insert it
-		 */
-		bool insert(Tetromino tetromino);
-
-		/**
-		 * Move the current Tetromino in the given direction.
-		 * Has no effect if there is no current tetromino currently in the grid
-		 * @param direction the direction to move the tetromino
-		 */
-		void moveCurrent(const MoveDirection & direction);
-
-		/**
-		 * Rotate the current Tetromino in the given direction.
-		 * Has no effect if there is no current tetromino currently in the grid
-		 * @param direction the direction to rotate the tetromino
-		 * @sa tetris::model::Tetromino::rotate()
-		 */
-		void rotateCurrent(const RotateDirection & direction);
-
-		/**
-		 * Drops the current Tetromino while possible
-		 * @return the number of lines crossed by the tetromino before coming to rest
-		 */
-		size_t dropCurrent();
-
-        /**
-         * Gives an overview of the current state of the grid
-         * @return an overview of the current state of the grid
-         */
-        GridView_type getGridView() const;
 
 		/**
 		 * Gives the Line at the given position
@@ -136,30 +94,12 @@ namespace tetris::model{
 		 */
 		const Line & operator[](const size_t & position) const;
 
-        /**
-         * Check if the current tetromino can move in the given direction
-         * @param direction the direction to check
-         * @return true if the tetromino can move, false otherwise
-         */
-        bool canMove(const MoveDirection & direction);
-
-        /**
-         * Check if the current tetromino can rotate
-         * @return true if the tetromino can rotate, false otherwise
-         */
-        bool canRotate();
 
         /**
          * Remove all full lines
-         * @return the nuber of lines removed
+         * @return the number of lines removed
          **/
         size_t removeFullLines();
-
-        /**
-         * Verify if a tetromino touch the top of the grid
-         * @return true if is a tetromino on the top of the grid
-         */
-        bool isOnTop() const;
 
 		/**
 		 * @name Iterators

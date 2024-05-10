@@ -5,12 +5,13 @@
 namespace tetris::model{
 
 	Game::Game(const GameParameters & params):
-		_grid(params.gridWidth, params.gridHeight, params.nbAlreadyPlacedBlocks),
-		_bag{},
-		_nextTetromino{},
-		_level{params.level},
-		score{},
-		nbClearedLines{}
+			_grid(params.gridWidth, params.gridHeight, params.nbAlreadyPlacedBlocks),
+			_bag{},
+			_nextTetromino{},
+			_startLevel{params.level},
+			_currentLevel{params.level},
+			score{},
+			nbClearedLines{}
 	{
 		if(params.shapes.empty()) throw std::invalid_argument("Please specify tetrominoes to play");
 
@@ -20,11 +21,11 @@ namespace tetris::model{
 		shuffleBag();
 
 
-		_grid.insert(getNext());
+		insert(getNext());
 	}
 
 	bool Game::isGameActive() const{
-		return _grid.isOnTop();
+		return isOnTop(); // TODO useful?
 	}
 
 	bool Game::isWon() const{
@@ -53,21 +54,39 @@ namespace tetris::model{
 	}
 
 	const unsigned int & Game::getLevel() const{
-		return _level;
+		return _currentLevel;
 	}
 
     const unsigned int & Game::getNbClearedLines() const{
         return nbClearedLines;
     }
 
-    Grid::GridView_type Game::getGridView() const {
-        return _grid.getGridView();
+    Game::GridView_type Game::getGridView() const {
+        std::vector<Line> gridView;
+		for (auto &line: _grid) {
+			gridView.push_back(*line);
+		}
+
+		if (_current.has_value()) {
+			// getWidth and getHeight are long methods so declare before
+			auto tetroWidth{_current->getWidth()};
+			auto tetroHeight{_current->getHeight()};
+
+			for (size_t x = 0; x < tetroWidth; x++) {
+				for (size_t y = 0; y < tetroHeight; y++) {
+					if (_current->isOccupied(x, y)) {
+						gridView[_currentPosition.row + y].set(_currentPosition.col + x, _current->get(x, y));
+					}
+				}
+			}
+		}
+		return gridView;
     }
 
 	void Game::goDown(){
-		_grid.moveCurrent(MoveDirection::DOWN);
-        if (!_grid.canMove(MoveDirection::DOWN)){ // FIXME call to drop?
-            _grid.insert(getNext());
+		moveCurrent(MoveDirection::DOWN);
+        if (!canMove(MoveDirection::DOWN)){ // FIXME call to drop?
+            insert(getNext());
 
 			auto nbLinesRemoved = _grid.removeFullLines();
 
@@ -78,35 +97,148 @@ namespace tetris::model{
 	}
 
 	void Game::goLeft(){
-		_grid.moveCurrent(MoveDirection::LEFT);
+		moveCurrent(MoveDirection::LEFT);
 
 		endMovement();
 	}
 
 	void Game::goRight(){
-		_grid.moveCurrent(MoveDirection::RIGHT);
+		moveCurrent(MoveDirection::RIGHT);
 
 		endMovement();
 	}
 
 	void Game::rotateClockwise(){
-		_grid.rotateCurrent(RotateDirection::CW);
+		rotateCurrent(RotateDirection::CW);
 
 		endMovement();
 	}
 
 	void Game::rotateCounterclockwise(){
-		_grid.rotateCurrent(RotateDirection::CCW);
+		rotateCurrent(RotateDirection::CCW);
 
 		endMovement();
 	}
 
 	void Game::drop(){
-		auto nbLinesCrossed =  _grid.dropCurrent();
+		size_t nbLinesCrossed{};
+		while (canMove(MoveDirection::DOWN)) {
+			moveCurrent(MoveDirection::DOWN);
+			nbLinesCrossed++;
+		}
+		placeCurrent();
+
 		auto nbLinesRemoved = _grid.removeFullLines();
-		_grid.insert(getNext());
+		insert(getNext());
 
 		updateData(nbLinesRemoved, nbLinesCrossed);
+	}
+
+	bool Game::insert(Tetromino tetromino) { // TODO: bool ? + check if gameOver
+		_current = tetromino;
+		_currentPosition.col = _grid.width / 2 - tetromino.getWidth() / 2;
+		_currentPosition.row = 0;
+
+		notifyObservers(common::ActionType::TETROMINO_INSERTED, this);
+		return true;
+	}
+
+	void Game::moveCurrent(const MoveDirection &direction) {
+		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+
+		if (canMove(direction)) {
+			switch (direction) {
+				case MoveDirection::LEFT:
+					_currentPosition.col--;
+					break;
+				case MoveDirection::RIGHT:
+					_currentPosition.col++;
+					break;
+				case MoveDirection::DOWN:
+					_currentPosition.row++;
+					break;
+			}
+		}
+	}
+
+	void Game::rotateCurrent(const RotateDirection &direction) {
+		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+		_current->rotate(direction);
+		if (!canRotate()){ // FIXME
+			if (direction==RotateDirection::CCW){
+				_current->rotate(RotateDirection::CW);
+			} else {
+				_current->rotate(RotateDirection::CCW);
+			}
+
+		}
+
+	}
+
+	void Game::placeCurrent() {
+		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+
+		// insert current tetromino in the real grid
+		_grid.insert(_current.value(), _currentPosition.row, _currentPosition.col);
+	}
+
+	bool Game::canMove(const MoveDirection &direction) /*const*/{
+		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+
+		for (size_t x = 0; x < _current->getWidth(); x++) {
+			for (size_t y = 0; y < _current->getHeight(); y++) {
+				if (_current->isOccupied(x, y)) {
+					switch (direction) {
+						case MoveDirection::LEFT:
+							if (_currentPosition.col + x <= 0) {
+								return false;
+							}
+							if (_grid[_currentPosition.row + y].isOccupied(_currentPosition.col + x - 1)) {
+								return false;
+							}
+							break;
+						case MoveDirection::RIGHT:
+							if (_currentPosition.col + x >= _grid.width - 1) {
+								return false;
+							}
+							if (_grid[_currentPosition.row + y].isOccupied(_currentPosition.col + x + 1)) {
+								return false;
+							}
+							break;
+						case MoveDirection::DOWN:
+							if (_currentPosition.row + y >= _grid.height - 1) {
+								placeCurrent(); // FIXME here??
+								return false;
+							}
+							if (_grid[_currentPosition.row + y + 1].isOccupied(_currentPosition.col + x)) {
+								placeCurrent();
+								return false;
+							}
+							break;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	bool Game::canRotate() const{
+		for (size_t x = 0; x < _current->getWidth(); x++) {
+			for (size_t y = 0; y < _current->getHeight(); y++) {
+				if (_current->isOccupied(x, y)
+				&& (	_currentPosition.col + x >= _grid.width
+					||	_currentPosition.col + x < 0
+					|| _grid[_currentPosition.col + x].isOccupied(_currentPosition.row + y)))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	bool Game::isOnTop() const { // FIXME
+		return _grid[0].isEmpty();
 	}
 
 	using namespace common;
@@ -114,7 +246,7 @@ namespace tetris::model{
 	void Game::updateData(size_t nbLinesRemoved, size_t nbLinesCrossed){
 		score += nbLinesRemoved + nbLinesCrossed;
 		nbClearedLines += nbLinesRemoved;
-		_level = nbClearedLines/10;
+		_currentLevel = (nbClearedLines / 10) + _startLevel;
 
 		notifyObservers(ActionType::DATA_UPDATED, this);
 	}

@@ -72,9 +72,9 @@ void TetrisWindow::updateDatasValues(model::Game & game){
 	clearedLinesValue->setText(QString::number(game.getNbClearedLines()));
 }
 
-void TetrisWindow::updateGameBoard(const model::Grid::GridView_type& gridView) {
+void TetrisWindow::updateGameBoard(const model::Game::GridView_type & gridView) {
     // Crée une nouvelle scène
-    QGraphicsScene *scene = new QGraphicsScene(this);
+    auto scene = new QGraphicsScene(this);
 
     // taille de chaque bloc
     int blockSize = 30;

@@ -3,8 +3,6 @@
 #include <QLabel>
 #include "Observer.h"
 #include "Game.h"
-#include "Grid.h"
-#include "Color.h"
 
 namespace tetris::view::gui {
 	using namespace common;
@@ -47,7 +45,7 @@ namespace tetris::view::gui {
 		 * Updates the board display
 		 * @param gridView the view on which to base the display
 		 */
-		void updateGameBoard(const model::Grid::GridView_type &gridView);
+		void updateGameBoard(const model::Game::GridView_type &gridView);
 
 		// observer
 		void update(ActionType action, void* subject) override;
