@@ -139,18 +139,4 @@ QColor TetrisWindow::getQtColor(tetris::model::Color color){
 	throw std::domain_error("Unknown Color used");
 }
 
-
-
-void TetrisWindow::startGame() {
-    // Ajoutez le code pour démarrer le jeu ici
-}
-
-void TetrisWindow::stopGame() {
-    // Ajoutez le code pour arrêter le jeu ici
-}
-
-void TetrisWindow::movePiece() {
-    // Ajoutez le code pour déplacer la pièce de Tetris ici
-}
-
 } // namespace tetris::view::gui

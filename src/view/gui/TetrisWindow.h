@@ -72,14 +72,6 @@ namespace tetris::view::gui {
 		 */
 		QColor getQtColor(tetris::model::Color color);
 
-		// FIXME
-	private slots:
-
-		void startGame();
-
-		void stopGame();
-
-		void movePiece();
 	};
 
 } // namespace tetris::view::gui

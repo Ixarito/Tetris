@@ -23,9 +23,6 @@ namespace tetris::model{
 			_bag.emplace_back(tetromino);
 		}
 		shuffleBag();
-
-
-		insert(getNext());
 	}
 
 	bool Game::isGameOver() const{
@@ -89,13 +86,13 @@ namespace tetris::model{
 
 	void Game::goDown(){
 		moveCurrent(MoveDirection::DOWN);
-        if (!canMove(MoveDirection::DOWN)){ // FIXME call to drop?
-            insert(getNext());
+
+		if (!canMove(MoveDirection::DOWN)){
+			placeCurrent();
 
 			auto nbLinesRemoved = _grid.removeFullLines();
-
 			updateData(nbLinesRemoved);
-        }
+		}
 	}
 
 	void Game::goLeft(){
@@ -135,8 +132,6 @@ namespace tetris::model{
 		placeCurrent();
 
 		auto nbLinesRemoved = _grid.removeFullLines();
-		insert(getNext());
-
 		updateData(nbLinesRemoved, nbLinesCrossed);
 	}
 
@@ -151,9 +146,12 @@ namespace tetris::model{
 	}
 
 	void Game::moveCurrent(const MoveDirection &direction) {
-		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+		if(_gameOver) throw std::logic_error("Game::moveCurrent : cannot move current if game is over");
 
-		if (canMove(direction)) {
+		if(!_current.has_value()){
+			insert(getNext());
+		}
+		else if (canMove(direction)) {
 			switch (direction) {
 				case MoveDirection::LEFT:
 					_currentPosition.col--;
@@ -171,56 +169,52 @@ namespace tetris::model{
 	}
 
 	void Game::rotateCurrent(const RotateDirection &direction) {
-		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+		if (!_current.has_value()) throw std::logic_error("Game::rotateCurrent : _current is not initialized");
 		_current->rotate(direction);
-		if (!canRotate()){ // FIXME
+		if (!canRotate()){
+			// revert rotation
 			if (direction==RotateDirection::CCW){
 				_current->rotate(RotateDirection::CW);
 			} else {
 				_current->rotate(RotateDirection::CCW);
 			}
-
 		}
-
 	}
 
 	void Game::placeCurrent() {
-		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+		if (!_current.has_value()) throw std::logic_error("Game::placeCurrent : _current is not initialized");
 
 		// insert current tetromino in the real grid
 		_grid.insert(_current.value(), _currentPosition.row, _currentPosition.col);
+
+		_current.reset();
+
+		notifyObservers(ActionType::GRID_CHANGED, this);
 	}
 
 	bool Game::canMove(const MoveDirection &direction) /*const*/{
-		if (!_current.has_value()) throw std::logic_error("Game: _current is not initialized");
+		if (!_current.has_value()) throw std::logic_error("Game::canMove : _current is not initialized");
 
 		for (size_t x = 0; x < _current->getWidth(); x++) {
 			for (size_t y = 0; y < _current->getHeight(); y++) {
 				if (_current->isOccupied(x, y)) {
+					// reject if out of the grid or adjacent block
 					switch (direction) {
 						case MoveDirection::LEFT:
-							if (_currentPosition.col + x <= 0) {
-								return false;
-							}
-							if (_grid.isOccupied(_currentPosition.row + y, _currentPosition.col + x - 1)) {
+							if (_currentPosition.col + x <= 0
+							|| _grid.isOccupied(_currentPosition.row + y, _currentPosition.col + x - 1)) {
 								return false;
 							}
 							break;
 						case MoveDirection::RIGHT:
-							if (_currentPosition.col + x >= _grid.width - 1) {
-								return false;
-							}
-							if (_grid.isOccupied(_currentPosition.row + y, _currentPosition.col + x + 1)) {
+							if (_currentPosition.col + x >= _grid.width - 1
+							|| _grid.isOccupied(_currentPosition.row + y, _currentPosition.col + x + 1)) {
 								return false;
 							}
 							break;
 						case MoveDirection::DOWN:
-							if (_currentPosition.row + y >= _grid.height - 1) {
-								placeCurrent(); // FIXME here??
-								return false;
-							}
-							if (_grid.isOccupied(_currentPosition.row + y + 1, _currentPosition.col + x)) {
-								placeCurrent();
+							if (_currentPosition.row + y >= _grid.height - 1
+							|| _grid.isOccupied(_currentPosition.row + y + 1, _currentPosition.col + x)) {
 								return false;
 							}
 							break;
@@ -237,7 +231,7 @@ namespace tetris::model{
 				if (_current->isOccupied(x, y)
 				&& (	_currentPosition.col + x >= _grid.width
 					||	_currentPosition.col + x < 0
-					|| _grid.isOccupied(_currentPosition.col + x, _currentPosition.row + y)))
+					|| isCurrentOverlap()))
 				{
 					return false;
 				}

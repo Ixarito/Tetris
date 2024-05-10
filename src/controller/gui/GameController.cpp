@@ -1,19 +1,19 @@
-#include <iostream>
 #include "GameController.h"
 #include <QDebug>
 
 namespace tetris::controller::gui {
 
-    GameController::GameController(model::Game &game) : game(game) {
+    GameController::GameController(model::Game &game) : _game(game) {
         timer = new QTimer();
 
-		game.addObserver(this);
+		_game.addObserver(this);
 
         QObject::connect(timer, &QTimer::timeout, this, &GameController::movePiece);
     }
 
     void GameController::startGame() {
-        timer->start(100); //TODO : change this in function of the level
+		timer->setInterval(100);
+        timer->start(); //TODO : change this in function of the level
     }
 
     void GameController::stopGame() {
@@ -21,7 +21,7 @@ namespace tetris::controller::gui {
     }
 
     void GameController::movePiece() {
-        game.goDown();
+        _game.goDown();
     }
 
 	void GameController::update(ActionType action, void * subject){

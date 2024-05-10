@@ -24,7 +24,7 @@ namespace tetris::controller::gui {
         void movePiece();
 
     private:
-        model::Game & game;
+        model::Game & _game;
         QTimer *timer;
     };
 
