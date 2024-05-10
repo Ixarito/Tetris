@@ -1,3 +1,6 @@
+#ifndef GAMECONTROLLER_H
+#define GAMECONTROLLER_H
+
 #include "Game.h"
 #include <QTimer>
 
@@ -21,3 +24,5 @@ namespace tetris::controller::gui {
     };
 
 } // namespace tetris::controller::gui
+
+#endif //GAMECONTROLLER_H

@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
 # Inclure les répertoires des bibliothèques Tetris
+include_directories(../../common)
 include_directories(../../model)
 include_directories(../../view/console)
 

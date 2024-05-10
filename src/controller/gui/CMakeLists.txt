@@ -34,6 +34,4 @@ target_link_libraries(Tetris_controller_GUI
         Qt::Core
         Qt::Gui
         Qt::Widgets
-        Tetris_COMMON
-        Tetris_model
 )

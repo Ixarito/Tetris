@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
+include_directories(../../common)
 include_directories(../../model)
 
 # Définir les fichiers sources
