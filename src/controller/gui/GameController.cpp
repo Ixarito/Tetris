@@ -69,7 +69,7 @@ namespace tetris::controller::gui {
                     break;
                 case ActionType::GAME_OVER:
                     stopGame();
-                    qWarning() << "GameOver TODO"; // TODO
+                    _view.displayGameOver(false);
                     break;
             }
         }

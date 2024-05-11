@@ -90,7 +90,8 @@ namespace tetris::view::gui {
 					scene->addItem(block);
 				} else {
 					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
-					block->setBrush(QBrush(Qt::gray));
+					block->setPen(QPen{{20,20,20}});
+					block->setBrush(QBrush{Qt::black});
 					scene->addItem(block);
 				}
 			}
