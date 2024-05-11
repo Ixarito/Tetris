@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     };
 
     model::Game game {gp};
-	view::gui::TetrisWidget window {game};
+	view::gui::TetrisScene window {game};
 	tetris::controller::gui::GameController controller {game, window};
 
 //TODO REMOVE ME!

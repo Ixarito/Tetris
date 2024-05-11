@@ -9,7 +9,7 @@ namespace tetris::view::gui {
 	/**
 	 * Represents the graphical window of the game Tetris
 	 */
-	class TetrisWidget : public QWidget, Observer{
+	class TetrisScene : public QWidget, Observer{
 		Q_OBJECT
 
 		QGraphicsView * gameBoard;
@@ -23,22 +23,22 @@ namespace tetris::view::gui {
 		 * @param game the game on which the view will be based
 		 * @param parent the parent of the window
 		 */
-		explicit TetrisWidget(model::Game & game, QWidget *parent = nullptr);
+		explicit TetrisScene(model::Game & game, QWidget *parent = nullptr);
 
 		/**
 		 * Destructor of the window
 		 */
-		~TetrisWidget() override;
+		~TetrisScene() override;
 
 		/**
 		 * No copy constructor
 		 */
-		TetrisWidget(TetrisWidget &) = delete;
+		TetrisScene(TetrisScene &) = delete;
 
 		/**
 		 * No copy assignment operator
 		 */
-		TetrisWidget & operator=(TetrisWidget &) = delete;
+		TetrisScene & operator=(TetrisScene &) = delete;
 
 		/**
 		 * Updates the board display

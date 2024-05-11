@@ -2,12 +2,11 @@
 #include <QGraphicsRectItem>
 #include <QKeyEvent>
 #include "TetrisScene.h"
-#include <iostream>
 #include <QMessageBox>
 
 namespace tetris::view::gui {
 
-	TetrisWidget::TetrisWidget(model::Game &game, QWidget *parent)
+	TetrisScene::TetrisScene(model::Game &game, QWidget *parent)
 			: QWidget(parent) {
 
 		game.addObserver(this);
@@ -28,14 +27,14 @@ namespace tetris::view::gui {
 		updateGameBoard(game.getGridView());
 	}
 
-	TetrisWidget::~TetrisWidget() {
+	TetrisScene::~TetrisScene() {
 		delete gameBoard;
 		delete scoreValue;
 		delete levelValue;
 		delete clearedLinesValue;
 	}
 
-	QLayout *TetrisWidget::initDataContainer(model::Game &game) {
+	QLayout *TetrisScene::initDataContainer(model::Game &game) {
 		auto datasLayout = new QVBoxLayout;
 
 		auto scoreLayout = new QHBoxLayout;
@@ -68,13 +67,13 @@ namespace tetris::view::gui {
 		return datasLayout;
 	}
 
-	void TetrisWidget::updateDatasValues(model::Game &game) {
+	void TetrisScene::updateDatasValues(model::Game &game) {
 		scoreValue->setText(QString::number(game.getScore()));
 		levelValue->setText(QString::number(game.getLevel()));
 		clearedLinesValue->setText(QString::number(game.getNbClearedLines()));
 	}
 
-	void TetrisWidget::updateGameBoard(const model::Game::GridView_type &gridView) {
+	void TetrisScene::updateGameBoard(const model::Game::GridView_type &gridView) {
 		// Crée une nouvelle scène
 		auto scene = new QGraphicsScene(this);
 
@@ -102,7 +101,7 @@ namespace tetris::view::gui {
 	}
 
 
-	void TetrisWidget::update(ActionType action, void *subject) {
+	void TetrisScene::update(ActionType action, void *subject) {
 		auto game = static_cast<model::Game *>(subject);
 		if (game) {
 			switch (action) {
@@ -120,16 +119,16 @@ namespace tetris::view::gui {
 		}
 	}
 
-	void TetrisWidget::displayGameOver(bool isWon) {
+	void TetrisScene::displayGameOver(bool isWon) {
 		auto message = isWon ? "You won!" : "Game Over!";
 		QMessageBox::information(this, "Game Over", message);
 	}
 
-	void TetrisWidget::keyPressEvent(QKeyEvent *event) {
+	void TetrisScene::keyPressEvent(QKeyEvent *event) {
 		emit keyboardInput(event->key());
 	}
 
-	QColor TetrisWidget::getQtColor(tetris::model::Color color) {
+	QColor TetrisScene::getQtColor(tetris::model::Color color) {
 		switch (color) {
 			case model::Color::BLUE:
 				return {Qt::blue};

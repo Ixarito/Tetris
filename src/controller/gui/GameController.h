@@ -17,7 +17,7 @@ namespace tetris::controller::gui {
         Q_OBJECT
 
 		model::Game & _game;
-		view::gui::TetrisWidget & _view;
+		view::gui::TetrisScene & _view;
 		QTimer *timer;
     public:
 		/**
@@ -25,7 +25,7 @@ namespace tetris::controller::gui {
 		 * @param game the game model
 		 * @param view the view that displays the game
 		 */
-        GameController(model::Game & game, view::gui::TetrisWidget & view);
+        GameController(model::Game & game, view::gui::TetrisScene & view);
 
 		/**
 		 * Starts the game loop
