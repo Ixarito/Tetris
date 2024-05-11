@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QMainWindow>
 #include "Game.h"
 #include "GameController.h"
 
@@ -47,10 +48,14 @@ int main(int argc, char *argv[]) {
     };
 
     model::Game game {gp};
-	view::gui::TetrisWindow window {game};
+	view::gui::TetrisWidget window {game};
 	tetris::controller::gui::GameController controller {game, window};
 
-	window.show();
+//TODO REMOVE ME!
+	QMainWindow mainWindow;
+	mainWindow.setCentralWidget(&window);
+//
+	mainWindow.show();
 
     controller.startGame();
 

@@ -7,7 +7,7 @@
 
 namespace tetris::controller::gui {
 
-    GameController::GameController(model::Game &game, view::gui::TetrisWindow & view) : _game(game), _view{view} {
+    GameController::GameController(model::Game &game, view::gui::TetrisWidget & view) : _game(game), _view{view} {
         timer = new QTimer();
 
         _game.addObserver(this);
@@ -16,7 +16,7 @@ namespace tetris::controller::gui {
 		// link timer tick to handler
         QObject::connect(timer, &QTimer::timeout, this, &GameController::tick);
 		// link view input to handler
-        QObject::connect(&_view, &view::gui::TetrisWindow::keyboardInput, this, &GameController::onInput);
+        QObject::connect(&_view, &view::gui::TetrisWidget::keyboardInput, this, &GameController::onInput);
     }
 
     void GameController::startGame() {

@@ -24,8 +24,10 @@ find_package(Qt6 COMPONENTS
 
 add_executable(Tetris_view_GUI
 		main.cpp
-		TetrisWindow.cpp
-		TetrisWindow.h
+		TetrisScene.cpp
+		TetrisScene.h
+        MainWindow.cpp
+        MainWindow.h
 )
 
 target_link_libraries(Tetris_view_GUI

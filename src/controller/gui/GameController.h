@@ -3,7 +3,7 @@
 
 #include "Game.h"
 #include "Observer.h"
-#include "TetrisWindow.h"
+#include "TetrisScene.h"
 #include <QTimer>
 
 namespace tetris::controller::gui {
@@ -17,7 +17,7 @@ namespace tetris::controller::gui {
         Q_OBJECT
 
 		model::Game & _game;
-		view::gui::TetrisWindow & _view;
+		view::gui::TetrisWidget & _view;
 		QTimer *timer;
     public:
 		/**
@@ -25,7 +25,7 @@ namespace tetris::controller::gui {
 		 * @param game the game model
 		 * @param view the view that displays the game
 		 */
-        GameController(model::Game & game, view::gui::TetrisWindow & view);
+        GameController(model::Game & game, view::gui::TetrisWidget & view);
 
 		/**
 		 * Starts the game loop

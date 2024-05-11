@@ -1,4 +1,3 @@
-#include <QMainWindow>
 #include <QGraphicsView>
 #include <QLabel>
 #include "Observer.h"
@@ -10,7 +9,7 @@ namespace tetris::view::gui {
 	/**
 	 * Represents the graphical window of the game Tetris
 	 */
-	class TetrisWindow : public QMainWindow, Observer{
+	class TetrisWidget : public QWidget, Observer{
 		Q_OBJECT
 
 		QGraphicsView * gameBoard;
@@ -24,22 +23,22 @@ namespace tetris::view::gui {
 		 * @param game the game on which the view will be based
 		 * @param parent the parent of the window
 		 */
-		explicit TetrisWindow(model::Game & game, QWidget *parent = nullptr);
+		explicit TetrisWidget(model::Game & game, QWidget *parent = nullptr);
 
 		/**
 		 * Destructor of the window
 		 */
-		~TetrisWindow() override;
+		~TetrisWidget() override;
 
 		/**
 		 * No copy constructor
 		 */
-		TetrisWindow(TetrisWindow &) = delete;
+		TetrisWidget(TetrisWidget &) = delete;
 
 		/**
 		 * No copy assignment operator
 		 */
-		TetrisWindow & operator=(TetrisWindow &) = delete;
+		TetrisWidget & operator=(TetrisWidget &) = delete;
 
 		/**
 		 * Updates the board display
@@ -50,13 +49,19 @@ namespace tetris::view::gui {
 		// observer
 		void update(ActionType action, void* subject) override;
 
+		/**
+		 * Displays the game over message
+		 * @param isWon true if the game is won, false otherwise
+		 */
+		void displayGameOver(bool isWon);
 	signals:
+
 		/**
 		 * Signal sent after keyboard input
 		 */
 		void keyboardInput(const int & key);
+	protected:
 
-    protected:
         void keyPressEvent(QKeyEvent *event) override;
 
 	private:
