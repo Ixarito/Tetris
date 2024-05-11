@@ -28,6 +28,8 @@ add_executable(Tetris_view_GUI
 		TetrisScene.h
         MainWindow.cpp
         MainWindow.h
+        MenuScene.cpp
+        MenuScene.h
 )
 
 target_link_libraries(Tetris_view_GUI

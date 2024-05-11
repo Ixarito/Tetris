@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include "Game.h"
 #include "GameController.h"
+#include "MenuScene.h"
 
 using namespace tetris;
 
@@ -51,9 +52,11 @@ int main(int argc, char *argv[]) {
 	view::gui::TetrisScene window {game};
 	tetris::controller::gui::GameController controller {game, window};
 
+	view::gui::MenuScene menuScene;
+
 //TODO REMOVE ME!
 	QMainWindow mainWindow;
-	mainWindow.setCentralWidget(&window);
+	mainWindow.setCentralWidget(&menuScene);
 //
 	mainWindow.show();
 
