@@ -33,6 +33,10 @@ namespace tetris::model{
 		return false;
 	}
 
+	bool Game::hasFallingTetromino() const{
+		return _current.has_value();
+	}
+
 	Tetromino Game::getNext() {
 		auto next = _bag[_nextTetromino];
 		_nextTetromino = (_nextTetromino + 1) % _bag.size();
@@ -84,14 +88,28 @@ namespace tetris::model{
 		return gridView;
     }
 
-	void Game::goDown(){
-		moveCurrent(MoveDirection::DOWN);
+	void Game::time(){
+		checkGameWin();
+		if(!_current.has_value()){
+			insert(getNext());
 
-		if (!canMove(MoveDirection::DOWN)){
+			checkGameOver();
+		}
+		else if(!canMove(MoveDirection::DOWN)){
 			placeCurrent();
 
 			auto nbLinesRemoved = _grid.removeFullLines();
 			updateData(nbLinesRemoved);
+		}else{
+			moveCurrent(MoveDirection::DOWN);
+		}
+	}
+
+	void Game::goDown(){
+		if(moveCurrent(MoveDirection::DOWN)){
+			incrementScore();
+
+			notifyObservers(ActionType::REQUEST_RESET_TIME_UNIT, this);
 		}
 	}
 
@@ -105,17 +123,13 @@ namespace tetris::model{
 
 	void Game::rotateClockwise(){
 		rotateCurrent(RotateDirection::CW);
-
-		endMovement();
 	}
 
 	void Game::rotateCounterclockwise(){
 		rotateCurrent(RotateDirection::CCW);
-
-		endMovement();
 	}
 
-	void Game::checkGameOver() {
+	void Game::checkGameOver(){
 		if(_currentPosition.row == 0 && isCurrentOverlap()){
 			_gameOver = true;
 
@@ -123,7 +137,13 @@ namespace tetris::model{
 		}
 	}
 
+	void Game::checkGameWin(){
+		if(isWon()) notifyObservers(ActionType::GAME_WON, this);
+	}
+
 	void Game::drop(){
+		if(!_current.has_value()) return;
+
 		size_t nbLinesCrossed{};
 		while (canMove(MoveDirection::DOWN)) {
 			moveCurrent(MoveDirection::DOWN);
@@ -133,25 +153,22 @@ namespace tetris::model{
 
 		auto nbLinesRemoved = _grid.removeFullLines();
 		updateData(nbLinesRemoved, nbLinesCrossed);
+
+		notifyObservers(ActionType::REQUEST_RESET_TIME_UNIT, this);
 	}
 
-	void Game::insert(Tetromino tetromino) {
+	void Game::insert(Tetromino tetromino){
 		_current = tetromino;
 		_currentPosition.col = _grid.width / 2 - tetromino.getWidth() / 2;
 		_currentPosition.row = 0;
 
 		notifyObservers(common::ActionType::TETROMINO_INSERTED, this);
-
-		checkGameOver();
 	}
 
-	void Game::moveCurrent(const MoveDirection &direction) {
+	bool Game::moveCurrent(const MoveDirection &direction){
 		if(_gameOver) throw std::logic_error("Game::moveCurrent : cannot move current if game is over");
 
-		if(!_current.has_value()){
-			insert(getNext());
-		}
-		else if (canMove(direction)) {
+		if(_current.has_value() && canMove(direction)){
 			switch (direction) {
 				case MoveDirection::LEFT:
 					_currentPosition.col--;
@@ -165,11 +182,15 @@ namespace tetris::model{
 			}
 
 			notifyObservers(ActionType::GRID_CHANGED, this);
+
+			return true;
 		}
+		return false;
 	}
 
 	void Game::rotateCurrent(const RotateDirection &direction) {
-		if (!_current.has_value()) throw std::logic_error("Game::rotateCurrent : _current is not initialized");
+		if (!_current.has_value()) return;
+
 		_current->rotate(direction);
 		if (!canRotate()){
 			// revert rotation
@@ -178,6 +199,8 @@ namespace tetris::model{
 			} else {
 				_current->rotate(RotateDirection::CCW);
 			}
+		}else{
+			notifyObservers(ActionType::GRID_CHANGED, this);
 		}
 	}
 
@@ -262,10 +285,11 @@ namespace tetris::model{
 		notifyObservers(ActionType::DATA_UPDATED, this);
 	}
 
-	void Game::endMovement(){
-		notifyObservers(ActionType::GRID_CHANGED, this);
-	}
+	void Game::incrementScore(){
+		score++;
 
+		notifyObservers(ActionType::DATA_UPDATED, this);
+	}
 
 } // namespace tetris::model
 

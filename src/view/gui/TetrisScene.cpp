@@ -115,6 +115,7 @@ namespace tetris::view::gui {
 				case ActionType::GRID_CHANGED:
 					updateGameBoard(game->getGridView());
 					break;
+				default:;
 			}
 		}
 	}

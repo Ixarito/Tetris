@@ -15,19 +15,26 @@ namespace tetris::controller::gui {
         updateTimerInterval();
 		// link timer tick to handler
         QObject::connect(timer, &QTimer::timeout, this, &GameController::tick);
-		// link view input to handler
-        QObject::connect(&_view, &view::gui::TetrisWidget::keyboardInput, this, &GameController::onInput);
+
     }
 
     void GameController::startGame() {
         timer->start();
+		// link view input to handler
+		QObject::connect(&_view, &view::gui::TetrisWidget::keyboardInput, this, &GameController::onInput);
     }
 
     void GameController::stopGame() {
         timer->stop();
+		// remove link between view input and the handler
+		QObject::disconnect(&_view, &view::gui::TetrisWidget::keyboardInput, this, &GameController::onInput);
     }
 
 	void GameController::onInput(const int &key){
+		if(!_game.hasFallingTetromino()){
+			_game.time(); // force reinsertion for more dynamic game
+		}
+
 		try {
 			switch (key) {
 				case Qt::Key_Q:
@@ -37,7 +44,7 @@ namespace tetris::controller::gui {
 					_game.goRight();
 					break;
 				case Qt::Key_S:
-					_game.drop();
+					_game.goDown();
 					break;
 				case Qt::Key_A:
 					_game.rotateCounterclockwise();
@@ -45,12 +52,19 @@ namespace tetris::controller::gui {
 				case Qt::Key_E:
 					_game.rotateClockwise();
 					break;
+				case Qt::Key_Space:
+				case Qt::Key_Enter:
+				case Qt::Key_Return:
+					_game.drop();
+					break;
 			}
-		}catch(std::logic_error &e){qWarning() << e.what();} // FIXME
+		}catch(std::logic_error & err){
+			qWarning() << err.what();
+		}
 	}
 
     void GameController::tick() {
-        _game.goDown();
+        _game.time();
     }
 
     void GameController::updateTimerInterval() {
@@ -68,9 +82,16 @@ namespace tetris::controller::gui {
                     updateTimerInterval();
                     break;
                 case ActionType::GAME_OVER:
+				case ActionType::GAME_WON:
                     stopGame();
-                    _view.displayGameOver(false);
+                    _view.displayGameOver(action == ActionType::GAME_WON);
                     break;
+				case ActionType::REQUEST_RESET_TIME_UNIT:
+					if(timer->isActive()){
+						timer->start(); // reset timer
+					}
+					break;
+				default:;
             }
         }
     }

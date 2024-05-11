@@ -118,6 +118,12 @@ class Game : public common::Observable{
 		virtual bool isWon() const;
 
 		/**
+		 * Determines if the game has a current falling Tetromino
+		 * @return true if there is a falling Tetromino, false otherwise
+		 */
+		bool hasFallingTetromino() const;
+
+		/**
 		 * @}
 		 *
 		 * @name Bag
@@ -213,6 +219,12 @@ class Game : public common::Observable{
 		 */
 		void drop();
 
+		/**
+		 * Method called at each unit of time that places a tetromino,
+		 * make it go down or place it if it can no longer go down.
+		 * This method should not be linked to any user action
+		 */
+		void time();
 
 	/**
 	 * @}
@@ -223,6 +235,12 @@ class Game : public common::Observable{
 		 * Verifies if the game is over and changes game state if so
 		 */
 		void checkGameOver();
+
+		/**
+		 * Verifies if the game is won and notifies if so
+		 * @sa tetris::model::Game::isWon()
+		 */
+		void checkGameWin();
 
 		// Current Tetromino related
 
@@ -236,8 +254,9 @@ class Game : public common::Observable{
 		 * Moves the current Tetromino in the given direction.
 		 * Has no effect if the current tetromino cannot move in this direction
 		 * @param direction the direction to move the tetromino
+		 * @return true if the movement could have been made, false otherwise
 		 */
-		void moveCurrent(const MoveDirection & direction);
+		bool moveCurrent(const MoveDirection & direction);
 
 		/**
 		 * Rotates the current Tetromino in the given direction in the grid mask.
@@ -273,17 +292,16 @@ class Game : public common::Observable{
 		bool isCurrentOverlap() const;
 
 		/**
-		 * Used at the end of a movement of a the current Tetromino
-		 */
-		void endMovement(); // FIXME useful?
-
-		/**
 		 * Used to update game datas like score, level or number of cleared lines
 		 * @param nbLinesRemoved the number of lines removed after a drop
 		 * @param nbLinesCrossed the number of lines crossed by the last Tetromino before inserting
 		 */
 		void updateData(size_t nbLinesRemoved, size_t nbLinesCrossed = 0);
 
+		/**
+		 * Increments the score by 1
+		 */
+		void incrementScore();
 	};
 
 } // namespace tetris::model

@@ -27,7 +27,11 @@ namespace tetris::common{
 		/**
 		 * Used to report that the game is won
 		 */
-		GAME_WON
+		GAME_WON,
+		/**
+		 * Used to request to reset the time unit
+		 */
+		REQUEST_RESET_TIME_UNIT
 	};
 
 } // namespace tetris::common
