@@ -7,13 +7,16 @@
 
 namespace tetris::controller::gui {
 
-    GameController::GameController(model::Game &game) : _game(game) {
+    GameController::GameController(model::Game &game, view::gui::TetrisWindow & view) : _game(game), _view{view} {
         timer = new QTimer();
 
         _game.addObserver(this);
 
         updateTimerInterval();
+		// link timer tick to handler
         QObject::connect(timer, &QTimer::timeout, this, &GameController::tick);
+		// link view input to handler
+        QObject::connect(&_view, &view::gui::TetrisWindow::keyboardInput, this, &GameController::onInput);
     }
 
     void GameController::startGame() {
@@ -24,38 +27,27 @@ namespace tetris::controller::gui {
         timer->stop();
     }
 
-    void GameController::goLeft() {
-        try {
-            _game.goLeft();
-        } catch (std::logic_error &e) {}
-    }
-
-    void GameController::goRight() {
-        try {
-            _game.goRight();
-        } catch (std::logic_error &e) {}
-    }
-
-    void GameController::drop() {
-        try {
-            _game.drop();
-        } catch (std::logic_error &e) {}
-    }
-
-    void GameController::rotateClockwise() {
-        try {
-            _game.rotateClockwise();
-        } catch (std::logic_error &e) {}
-    }
-
-    void GameController::rotateCounterclockwise() {
-        try {
-            _game.rotateCounterclockwise();
-        } catch (std::logic_error &e) {}
-
-
-    }
-
+	void GameController::onInput(const int &key){
+		try {
+			switch (key) {
+				case Qt::Key_Q:
+					_game.goLeft();
+					break;
+				case Qt::Key_D:
+					_game.goRight();
+					break;
+				case Qt::Key_S:
+					_game.drop();
+					break;
+				case Qt::Key_A:
+					_game.rotateCounterclockwise();
+					break;
+				case Qt::Key_E:
+					_game.rotateClockwise();
+					break;
+			}
+		}catch(std::logic_error &e){qWarning() << e.what();} // FIXME
+	}
 
     void GameController::tick() {
         _game.goDown();

@@ -3,6 +3,7 @@
 
 #include "Game.h"
 #include "Observer.h"
+#include "TetrisWindow.h"
 #include <QTimer>
 
 namespace tetris::controller::gui {
@@ -16,13 +17,15 @@ namespace tetris::controller::gui {
         Q_OBJECT
 
 		model::Game & _game;
+		view::gui::TetrisWindow & _view;
 		QTimer *timer;
     public:
 		/**
 		 * Creates a controller for the game Tetris
 		 * @param game the game model
+		 * @param view the view that displays the game
 		 */
-        GameController(model::Game & game);
+        GameController(model::Game & game, view::gui::TetrisWindow & view);
 
 		/**
 		 * Starts the game loop
@@ -65,6 +68,12 @@ namespace tetris::controller::gui {
 		 * Contains the code of the game loop
 		 */
         void tick();
+
+		/**
+		 * Executed when a keyboard input occurs
+		 * @param key the key typed;
+		 */
+		void onInput(const int & key);
 
 	private:
 		/**

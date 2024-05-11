@@ -7,8 +7,8 @@
 
 namespace tetris::view::gui {
 
-    TetrisWindow::TetrisWindow(model::Game &game, tetris::controller::gui::GameController & controller, QWidget *parent) :
-    QMainWindow(parent),  controller(controller)  {
+    TetrisWindow::TetrisWindow(model::Game &game, QWidget *parent) :
+    QMainWindow(parent) {
         game.addObserver(this);
 
         // initialize widgets
@@ -118,29 +118,9 @@ namespace tetris::view::gui {
         }
     }
 
-
     void TetrisWindow::keyPressEvent(QKeyEvent *event) {
-
-        switch (event->key()) {
-            case Qt::Key_Q:
-                controller.goLeft();
-                break;
-            case Qt::Key_D:
-                controller.goRight();
-                break;
-            case Qt::Key_S:
-                controller.drop();
-                break;
-            case Qt::Key_A:
-                controller.rotateCounterclockwise();
-                break;
-            case Qt::Key_E:
-                controller.rotateClockwise();
-                break;
-        }
-
+        emit keyboardInput(event->key());
     }
-
 
     QColor TetrisWindow::getQtColor(tetris::model::Color color) {
         switch (color) {

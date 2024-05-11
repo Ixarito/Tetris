@@ -14,6 +14,7 @@ set(CMAKE_AUTOUIC ON)
 include_directories(../../common)
 include_directories(../../model)
 include_directories(../../controller/gui)
+include_directories(.)
 
 find_package(Qt6 COMPONENTS
 		Core
