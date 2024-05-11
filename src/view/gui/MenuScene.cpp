@@ -28,7 +28,7 @@ namespace tetris::view::gui {
 
 		// Create the game type label
 		gameTypeLabel = new QLabel("Type de jeu", this);
-		gameTypeLabel->setStyleSheet("color: #FFFFFF;");
+		gameTypeLabel->setStyleSheet("color: #FFFFFF; padding-left: 5px;");
 		layout->addWidget(gameTypeLabel);
 		gameTypeLabel->hide();
 
@@ -53,7 +53,7 @@ namespace tetris::view::gui {
 
 		// Create the difficulty label
 		difficultyLabel = new QLabel("Vitesse initiale", this);
-		difficultyLabel->setStyleSheet("color: #FFFFFF;");
+		difficultyLabel->setStyleSheet("color: #FFFFFF; padding-left: 5px;");
 		layout->addWidget(difficultyLabel);
 		difficultyLabel->hide();
 
@@ -70,8 +70,26 @@ namespace tetris::view::gui {
 
 		// Create the blocks check box
 
-		blocksCheckBox = new QCheckBox("Activer les blocs spéciaux", this);
-		blocksCheckBox->setStyleSheet("color: #FFFFFF;");
+		blocksCheckBox = new QCheckBox("Commencer avec des blocs sur la grille", this);
+		blocksCheckBox->setStyleSheet(R"(
+			QCheckBox {
+				color: #FFFFFF;
+				padding: 5px;
+			}
+			QCheckBox::indicator {
+				background: transparent;
+				background-color: transparent;
+				color: white;
+				border: 1px solid #5A5A5A;
+				border-radius: 3px;
+			}
+			QCheckBox::indicator:checked {
+				background: #1c8dd9;
+				color: #1c8dd9;
+				border: 1px solid #1c8dd9;
+			}
+		)");
+		blocksCheckBox->setCursor(Qt::PointingHandCursor);
 		layout->addWidget(blocksCheckBox);
 		blocksCheckBox->hide();
 
@@ -123,6 +141,7 @@ namespace tetris::view::gui {
 		quitButton->show();
 		playButton->show();
 		gameTypeLabel->hide();
+		additionalParameterInput->hide();
 		gameTypeComboBox->hide();
 		difficultyLabel->hide();
 		difficultyComboBox->hide();
