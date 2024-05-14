@@ -1,15 +1,28 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
 #include <QMainWindow>
-#include "Game.h"
+#include "MenuScene.h"
+#include "TetrisScene.h"
 
 namespace tetris::view::gui {
 
-	class MainWindow : QMainWindow {
+class MainWindow : public QMainWindow {
+    Q_OBJECT
 
-		MainWindow(QWidget *parent);
+private:
+    MenuScene& menuScene;
+    TetrisScene& tetrisScene;
+    int currentSceneIndex;
 
-		void setHomeScene(QWidget * homeScene);
+public:
+    explicit MainWindow(MenuScene &menuScene, TetrisScene& tetrisScene, QWidget *parent = nullptr);
 
-		void setTetrisScene(QWidget * tetrisScene);
-	};
+    void setGameScene();
 
-}// namespace tetris::view::gui
+    void setMenuScene();
+};
+
+} // namespace tetris::view::gui
+
+#endif //MAINWINDOW_H

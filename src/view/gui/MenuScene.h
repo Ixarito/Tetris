@@ -1,3 +1,6 @@
+#ifndef MENUSCENE_H
+#define MENUSCENE_H
+
 #include <QGraphicsView>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -29,12 +32,12 @@ namespace tetris::view::gui {
 		QPushButton *confirmButton;
 
 
-
 		void showGameSettings();
 
 		void closeGameSettings();
 
 		void updateAdditionalParameterInputDisplay(int index);
+
 	public:
 
 		explicit MenuScene(QWidget *parent = nullptr);
@@ -43,3 +46,5 @@ namespace tetris::view::gui {
 	};
 
 } // namespace tetris::view::gui
+
+#endif //MENUSCENE_H

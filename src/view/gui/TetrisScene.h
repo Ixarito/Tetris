@@ -1,3 +1,6 @@
+#ifndef TETRISSCENE_H
+#define TETRISSCENE_H
+
 #include <QGraphicsView>
 #include <QLabel>
 #include "Observer.h"
@@ -9,13 +12,13 @@ namespace tetris::view::gui {
 	/**
 	 * Represents the graphical window of the game Tetris
 	 */
-	class TetrisScene : public QWidget, Observer{
-		Q_OBJECT
+	class TetrisScene : public QWidget, Observer {
+	Q_OBJECT
 
-		QGraphicsView * gameBoard;
-		QLabel * scoreValue;
-		QLabel * levelValue;
-		QLabel * clearedLinesValue;
+		QGraphicsView *gameBoard;
+		QLabel *scoreValue;
+		QLabel *levelValue;
+		QLabel *clearedLinesValue;
 
 	public:
 		/**
@@ -23,7 +26,7 @@ namespace tetris::view::gui {
 		 * @param game the game on which the view will be based
 		 * @param parent the parent of the window
 		 */
-		explicit TetrisScene(model::Game & game, QWidget *parent = nullptr);
+		explicit TetrisScene(model::Game &game, QWidget *parent = nullptr);
 
 		/**
 		 * Destructor of the window
@@ -38,7 +41,7 @@ namespace tetris::view::gui {
 		/**
 		 * No copy assignment operator
 		 */
-		TetrisScene & operator=(TetrisScene &) = delete;
+		TetrisScene &operator=(TetrisScene &) = delete;
 
 		/**
 		 * Updates the board display
@@ -47,22 +50,24 @@ namespace tetris::view::gui {
 		void updateGameBoard(const model::Game::GridView_type &gridView);
 
 		// observer
-		void update(ActionType action, void* subject) override;
+		void update(ActionType action, void *subject) override;
 
 		/**
 		 * Displays the game over message
 		 * @param isWon true if the game is won, false otherwise
 		 */
 		void displayGameOver(bool isWon);
+
 	signals:
 
 		/**
 		 * Signal sent after keyboard input
 		 */
-		void keyboardInput(const int & key);
+		void keyboardInput(const int &key);
+
 	protected:
 
-        void keyPressEvent(QKeyEvent *event) override;
+		void keyPressEvent(QKeyEvent *event) override;
 
 	private:
 
@@ -71,13 +76,13 @@ namespace tetris::view::gui {
 		 * @param game the game with which to recover the data's
 		 * @return the layout that contains data's
 		 */
-		QLayout * initDataContainer(model::Game & game);
+		QLayout *initDataContainer(model::Game &game);
 
 		/**
 		 * Sets the values of game statistics
 		 * @param game the game with which to recover the data's
 		 */
-		void updateDatasValues(model::Game & game);
+		void updateDatasValues(model::Game &game);
 
 		/**
 		 * Gives the GUI color that corresponds to a model color
@@ -89,3 +94,5 @@ namespace tetris::view::gui {
 	};
 
 } // namespace tetris::view::gui
+
+#endif // TETRISSCENE_H
