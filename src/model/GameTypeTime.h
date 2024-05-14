@@ -21,6 +21,7 @@ namespace tetris::model{
 		 * With this type, the game ends after a certain time
 		 * @param gameParams the parameters of the basic Game
 		 * @param duration the time in seconds that the game will last
+		 * @throws std::invalid_argument if no Tetrominoes where specified in the game parameters
 		 */
 		GameTypeTime(const GameParameters & gameParams, const long long & duration);
 

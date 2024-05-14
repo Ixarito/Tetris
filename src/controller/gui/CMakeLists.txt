@@ -11,6 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Inclure les répertoires des bibliothèques Tetris
+include_directories(../)
 include_directories(../../common)
 include_directories(../../model)
 include_directories(../../view/gui)
@@ -25,6 +26,10 @@ find_package(Qt6 COMPONENTS
 set(SOURCES
         GameController.cpp
         GameController.h
+		MenuController.cpp
+		MenuController.h
+		../GameType.h
+		../ValueToReach.h
 )
 
 # Créer une bibliothèque statique

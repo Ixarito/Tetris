@@ -10,10 +10,11 @@ set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 include_directories(../../common)
 include_directories(../../model)
 include_directories(../../view/console)
+include_directories(../)
 
 add_executable(Tetris_controller_console
         main.cpp
-        GameType.h
+		../GameType.h
         Interactions.cpp
         Interactions.h
         Controller.cpp

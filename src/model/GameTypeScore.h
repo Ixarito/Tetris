@@ -18,6 +18,7 @@ namespace tetris::model{
 		 * With this type, the game ends when a specific score is reached
 		 * @param gameParams the parameters of the basic Game
 		 * @param scoreToReach the score to reach to declare the game won
+		 * @throws std::invalid_argument if no Tetrominoes where specified in the game parameters
 		 */
 		GameTypeScore(const GameParameters & gameParams, const unsigned long long int & scoreToReach);
 

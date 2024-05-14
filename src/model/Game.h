@@ -89,6 +89,7 @@ class Game : public common::Observable{
 		/**
 		 * Creates a game part of the Tetris game
 		 * @param params the parameters of the Game
+		 * @throws std::invalid_argument if no Tetrominoes where specified in the game parameters
 		 * @sa tetris::model::GameParameters
 		 */
 		explicit Game(const GameParameters & params);
