@@ -31,7 +31,7 @@ namespace tetris::view::gui {
 		 * @param game the game on which the view will be based
 		 * @param parent the parent of the window
 		 */
-		explicit TetrisScene(model::Game &game, QWidget *parent = nullptr);
+		explicit TetrisScene(QWidget *parent = nullptr);
 
 		/**
 		 * Destructor of the window
@@ -47,6 +47,8 @@ namespace tetris::view::gui {
 		 * No copy assignment operator
 		 */
 		TetrisScene &operator=(TetrisScene &) = delete;
+
+		void setGame(model::Game & game);
 
 		/**
 		 * Updates the board display

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "MenuController.h"
 #include "MenuScene.h"
 #include "TetrisScene.h"
 

@@ -28,7 +28,17 @@ namespace tetris::controller::gui {
 
 	signals:
 
-//		void requestGameStart();
+		/**
+		 * Signal for request to launch a Tetris Game
+		 * @param menuController the controller that contains the game settings
+		 */
+		void requestGameStart(const MenuController & menuController);
+
+		/**
+		 * Request to display the view
+		 * @param view the Game view
+		 */
+		void requestDisplay(const QWidget * view);
 
 	public slots:
 

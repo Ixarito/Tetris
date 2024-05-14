@@ -50,6 +50,8 @@ namespace tetris::controller::gui{
 		connect(&view, &view::gui::MenuScene::difficultyChanged, this, &MenuController::setLevel);
 		connect(&view, &view::gui::MenuScene::nbBlocksChanged, this, &MenuController::setAlreadyPlacedBlock);
 		connect(&view, &view::gui::MenuScene::confirmButtonClicked, this, &MenuController::startGame);
+
+		emit requestDisplay(&view);
 	}
 
 	void MenuController::setGameType(const int& value) {
@@ -96,7 +98,7 @@ namespace tetris::controller::gui{
 	}
 
 	void MenuController::startGame(){
-//		emit requestGameStart();
+		emit requestGameStart(*this);
 	}
 
 	const model::GameParameters & MenuController::getGameParameters() const{

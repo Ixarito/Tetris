@@ -7,10 +7,8 @@
 
 namespace tetris::view::gui {
 
-	TetrisScene::TetrisScene(model::Game &game, QWidget *parent)
+	TetrisScene::TetrisScene(QWidget *parent)
 			: QWidget(parent) {
-
-		game.addObserver(this);
 
 		// initialize widgets
 		gameBoard = new QGraphicsView(this);
@@ -18,7 +16,6 @@ namespace tetris::view::gui {
 		gameBoard->setBackgroundBrush(QBrush{{20,21,23}});
 
 		scoreBoard = new ScoreBoard(this);
-		scoreBoard->updateScore(game);
 		scoreBoard->setFixedSize(150, 150);
 		scoreBoardShadow = new QGraphicsDropShadowEffect(this);
 		scoreBoardShadow->setColor({0, 0, 0, 150});
@@ -45,12 +42,17 @@ namespace tetris::view::gui {
 		mainLayout->addStretch(1);  // Ajoute un espace flexible à droite des widgets
 
 		this->setLayout(mainLayout);
-
-		updateGameBoard(game.getGridView());
 	}
 
 	TetrisScene::~TetrisScene() {
 		delete gameBoard;
+	}
+
+	void TetrisScene::setGame(model::Game &game) {
+		game.addObserver(this);
+
+		scoreBoard->updateScore(game);
+		updateGameBoard(game.getGridView());
 	}
 
 	void TetrisScene::updateGameBoard(const model::Game::GridView_type &gridView) {
