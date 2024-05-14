@@ -137,6 +137,7 @@ namespace tetris::view::gui {
 	}
 
 	MenuScene::~MenuScene() {
+		delete IntValidator;
 		delete layout;
 		delete title;
 		delete playButton;

@@ -96,4 +96,30 @@ namespace tetris::controller::gui {
         }
     }
 
+	/*
+	 * try{
+			model::Game * game;
+
+			switch(_gameType){
+				case GameType::GAMEOVER:
+					game = new model::Game(_gameParams);
+					break;
+				case GameType::LINES:
+					game = new model::GameTypeLines(_gameParams, _valueToReach.line);
+					break;
+				case GameType::SCORE:
+					game = new model::GameTypeScore(_gameParams, _valueToReach.score);
+					break;
+				case GameType::TIME:
+					game = new model::GameTypeTime(_gameParams, _valueToReach.duration);
+					break;
+				default:
+					throw std::domain_error("Unknown game type");
+			}
+
+		}catch(std::invalid_argument & ex){ // no Tetrominoes specified
+			qWarning() << ex.what();
+		}
+	 */
+
 } // namespace tetris::controller::gui

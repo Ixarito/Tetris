@@ -30,9 +30,11 @@ add_executable(Tetris_view_GUI
         MainWindow.h
         MenuScene.cpp
         MenuScene.h
-        NextTetromino.cpp
-        NextTetromino.h
+		NextTetrominoDisplay.cpp
+		NextTetrominoDisplay.h
 		util/QtColors.hpp
+		ScoreBoard.cpp
+		ScoreBoard.h
 )
 
 target_link_libraries(Tetris_view_GUI

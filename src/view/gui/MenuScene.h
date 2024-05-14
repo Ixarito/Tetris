@@ -84,7 +84,7 @@ namespace tetris::view::gui {
 		void updateAdditionalParameterInputDisplay(int index);
 
 		/**
-		 * Chenges the visibility of the input that contains the number of blocks already placed before the game starts
+		 * Changes the visibility of the input that contains the number of blocks already placed before the game starts
 		 * @param checked the state of the related checkbox
 		 */
 		void updateNbBlocksInput(bool checked);

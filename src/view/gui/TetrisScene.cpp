@@ -17,6 +17,10 @@ namespace tetris::view::gui {
 		gameBoard = new QGraphicsView(this);
 		gameBoard->setFixedSize(385, 735);
 		gameBoard->setBackgroundBrush(QBrush{Qt::black});
+
+		scoreBoard = new ScoreBoard(this);
+		scoreBoard->updateScore(game);
+
 		// Créez une nouvelle instance de QGraphicsDropShadowEffect
 		auto shadowEffect = new QGraphicsDropShadowEffect(this);
 
@@ -30,21 +34,14 @@ namespace tetris::view::gui {
 		// Appliquez l'effet d'ombre au gameBoard
 		gameBoard->setGraphicsEffect(shadowEffect);
 
-		nextTetromino = new NextTetromino(this);
-
-
-
-
-
-
-		auto dataContainer = initDataContainer(game);
+		nextTetromino = new NextTetrominoDisplay(this);
 
 		auto mainLayout = new QHBoxLayout;
 		mainLayout->setSpacing(40);
 		mainLayout->setContentsMargins(40,40,40,40);
 		mainLayout->addWidget(nextTetromino);
 		mainLayout->addWidget(gameBoard);
-		mainLayout->addLayout(dataContainer);
+		mainLayout->addWidget(scoreBoard);
 
 		this->setLayout(mainLayout);
 
@@ -53,49 +50,6 @@ namespace tetris::view::gui {
 
 	TetrisScene::~TetrisScene() {
 		delete gameBoard;
-		delete scoreValue;
-		delete levelValue;
-		delete clearedLinesValue;
-	}
-
-	QLayout *TetrisScene::initDataContainer(model::Game &game) {
-		auto datasLayout = new QVBoxLayout;
-
-		auto scoreLayout = new QHBoxLayout;
-		auto levelLayout = new QHBoxLayout;
-		auto clearedLinesLayout = new QHBoxLayout;
-
-		auto scoreLabel = new QLabel("Score:", this);
-		auto levelLabel = new QLabel("Level:", this);
-		auto clearedLinesLabel = new QLabel("Full Lines:", this);
-
-		scoreValue = new QLabel(this);
-		levelValue = new QLabel(this);
-		clearedLinesValue = new QLabel(this);
-
-
-		updateDatasValues(game);
-
-		scoreLayout->addWidget(scoreLabel);
-		scoreLayout->addWidget(scoreValue);
-
-		levelLayout->addWidget(levelLabel);
-		levelLayout->addWidget(levelValue);
-
-		clearedLinesLayout->addWidget(clearedLinesLabel);
-		clearedLinesLayout->addWidget(clearedLinesValue);
-
-		datasLayout->addLayout(scoreLayout);
-		datasLayout->addLayout(levelLayout);
-		datasLayout->addLayout(clearedLinesLayout);
-
-		return datasLayout;
-	}
-
-	void TetrisScene::updateDatasValues(model::Game &game) {
-		scoreValue->setText(QString::number(game.getScore()));
-		levelValue->setText(QString::number(game.getLevel()));
-		clearedLinesValue->setText(QString::number(game.getNbClearedLines()));
 	}
 
 	void TetrisScene::updateGameBoard(const model::Game::GridView_type &gridView) {
@@ -131,7 +85,7 @@ namespace tetris::view::gui {
 		if (game) {
 			switch (action) {
 				case ActionType::DATA_UPDATED:
-					updateDatasValues(*game);
+					scoreBoard->updateScore(*game);
 					break;
 				case ActionType::TETROMINO_INSERTED:
 					nextTetromino->updateNextTetromino(game->peekNext());

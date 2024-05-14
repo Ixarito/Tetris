@@ -1,15 +1,14 @@
-#include "NextTetromino.h"
+#include "NextTetrominoDisplay.h"
 #include <QGraphicsRectItem>
 #include "util/QtColors.hpp"
 
 namespace tetris::view::gui {
-	NextTetromino::NextTetromino(QWidget *parent) : QGraphicsView(parent) {
+	NextTetrominoDisplay::NextTetrominoDisplay(QWidget *parent) : QGraphicsView(parent) {
 		setBackgroundBrush(QBrush{Qt::black});
 		setFixedSize(35, 35);
 	}
 
-
-	void NextTetromino::updateNextTetromino(const model::Tetromino &tetromino) {
+	void NextTetrominoDisplay::updateNextTetromino(const model::Tetromino &tetromino) {
 		auto scene = new QGraphicsScene(this);
 
 		int blockSize = 35;
@@ -35,7 +34,5 @@ namespace tetris::view::gui {
 		setScene(scene);
 		setFixedSize(newWidth+35, newHeight+35);
 	}
-
-
 
 } // namespace tetris::view::gui

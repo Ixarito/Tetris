@@ -5,7 +5,8 @@
 #include <QLabel>
 #include "Observer.h"
 #include "Game.h"
-#include "NextTetromino.h"
+#include "NextTetrominoDisplay.h"
+#include "ScoreBoard.h"
 
 namespace tetris::view::gui {
 	using namespace common;
@@ -17,10 +18,8 @@ namespace tetris::view::gui {
 	Q_OBJECT
 
 		QGraphicsView *gameBoard;
-		QLabel *scoreValue;
-		QLabel *levelValue;
-		QLabel *clearedLinesValue;
-		NextTetromino *nextTetromino;
+		ScoreBoard * scoreBoard;
+		NextTetrominoDisplay *nextTetromino;
 
 	public:
 		/**
@@ -70,22 +69,6 @@ namespace tetris::view::gui {
 	protected:
 
 		void keyPressEvent(QKeyEvent *event) override;
-
-	private:
-
-		/**
-		 * Inits the data container
-		 * @param game the game with which to recover the data's
-		 * @return the layout that contains data's
-		 */
-		QLayout *initDataContainer(model::Game &game);
-
-		/**
-		 * Sets the values of game statistics
-		 * @param game the game with which to recover the data's
-		 */
-		void updateDatasValues(model::Game &game);
-
 
 	};
 
