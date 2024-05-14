@@ -4,7 +4,6 @@
 
 namespace tetris::view::gui {
 	NextTetrominoDisplay::NextTetrominoDisplay(QWidget *parent) : QGraphicsView(parent) {
-		setBackgroundBrush(QBrush{Qt::black});
 		setFixedSize(35*5, 35*5);
 	}
 
@@ -22,10 +21,12 @@ namespace tetris::view::gui {
 				if (tetromino.isOccupied(j, i)) {
 					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
 					block->setBrush(QBrush(getQtColor(tetromino.get(j, i).getColor())));
+					block->setPen(QPen{{30, 31, 34}});
 					scene->addItem(block);
 				} else {
 					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
-					block->setBrush(QBrush{Qt::black});
+					block->setPen(QPen{{30, 31, 34}});
+					block->setBrush(QBrush{{30, 31, 34}});
 					scene->addItem(block);
 				}
 			}

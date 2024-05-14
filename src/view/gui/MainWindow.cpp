@@ -11,6 +11,7 @@ namespace tetris::view::gui {
 		setCentralWidget(stackedWidget);
 		currentSceneIndex = 0;
 		setStyleSheet("background-color: #1e1f22;");
+		setWindowTitle("Tetris");
 		this->show();
 	}
 

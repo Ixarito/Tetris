@@ -3,7 +3,6 @@
 #include <QKeyEvent>
 #include "TetrisScene.h"
 #include <QMessageBox>
-#include <QGraphicsDropShadowEffect>
 #include "util/QtColors.hpp"
 
 namespace tetris::view::gui {
@@ -15,21 +14,25 @@ namespace tetris::view::gui {
 
 		// initialize widgets
 		gameBoard = new QGraphicsView(this);
-		gameBoard->setFixedSize(385, 735);
-		gameBoard->setBackgroundBrush(QBrush{Qt::black});
+		gameBoard->setFixedSize(365, 715);
+		gameBoard->setBackgroundBrush(QBrush{{20,21,23}});
 
 		scoreBoard = new ScoreBoard(this);
 		scoreBoard->updateScore(game);
 		scoreBoard->setFixedSize(150, 150);
-
-		auto shadowEffect = new QGraphicsDropShadowEffect(this);
-		shadowEffect->setColor({255, 255, 255, 30});
-		shadowEffect->setOffset(0, 0);
-		shadowEffect->setBlurRadius(100);
-		gameBoard->setGraphicsEffect(shadowEffect);
+		scoreBoardShadow = new QGraphicsDropShadowEffect(this);
+		scoreBoardShadow->setColor({0, 0, 0, 150});
+		scoreBoardShadow->setOffset(0, 0);
+		scoreBoardShadow->setBlurRadius(200);
+		gameBoard->setGraphicsEffect(scoreBoardShadow);
 
 		nextTetromino = new NextTetrominoDisplay(this);
 		nextTetromino->setFixedSize(150, 150);
+		nextTetrominoShadow = new QGraphicsDropShadowEffect(this);
+		nextTetrominoShadow->setColor({0, 0, 0, 150});
+		nextTetrominoShadow->setOffset(0, 0);
+		nextTetrominoShadow->setBlurRadius(200);
+		nextTetromino->setGraphicsEffect(nextTetrominoShadow);
 
 		auto mainLayout = new QHBoxLayout;
 		mainLayout->setSpacing(40);
@@ -61,11 +64,12 @@ namespace tetris::view::gui {
 				if (gridView[i].isOccupied(j)) {
 					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
 					block->setBrush(QBrush(getQtColor(gridView[i][j].getColor())));
+					block->setPen(QPen{{20,21,23}});
 					scene->addItem(block);
 				} else {
 					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
-					block->setPen(QPen{{20,20,20}});
-					block->setBrush(QBrush{Qt::black});
+					block->setPen(QPen{{20,21,23}});
+					block->setBrush(QBrush{{30, 31, 34}});
 					scene->addItem(block);
 				}
 			}

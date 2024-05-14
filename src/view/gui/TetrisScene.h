@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "NextTetrominoDisplay.h"
 #include "ScoreBoard.h"
+#include <QGraphicsDropShadowEffect>
 
 namespace tetris::view::gui {
 	using namespace common;
@@ -20,6 +21,9 @@ namespace tetris::view::gui {
 		QGraphicsView *gameBoard;
 		ScoreBoard * scoreBoard;
 		NextTetrominoDisplay *nextTetromino;
+		QGraphicsDropShadowEffect *scoreBoardShadow;
+		QGraphicsDropShadowEffect *nextTetrominoShadow;
+
 
 	public:
 		/**

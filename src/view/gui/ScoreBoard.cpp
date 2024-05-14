@@ -5,7 +5,6 @@
 namespace tetris::view::gui {
 
 	ScoreBoard::ScoreBoard(QWidget *parent): QWidget(parent) {
-		QString style = "font-weight: bold; font-size: 16pt; color: #f5f5f5;";
 
 		auto datasLayout = new QVBoxLayout(this);
 
@@ -21,12 +20,12 @@ namespace tetris::view::gui {
 		levelValue = new QLabel(this);
 		clearedLinesValue = new QLabel(this);
 
-		scoreLabel->setStyleSheet(style);
-		levelLabel->setStyleSheet(style);
-		clearedLinesLabel->setStyleSheet(style);
-		scoreValue->setStyleSheet(style);
-		levelValue->setStyleSheet(style);
-		clearedLinesValue->setStyleSheet(style);
+		scoreLabel->setStyleSheet("font-weight: bold; font-size: 16pt; color: #00ffff;");
+		levelLabel->setStyleSheet("font-weight: bold; font-size: 16pt; color: #00ff00;");
+		clearedLinesLabel->setStyleSheet("font-weight: bold; font-size: 16pt; color: #ffa500;");
+		scoreValue->setStyleSheet("font-weight: bold; font-size: 16pt; color: #f5f5f5;");
+		levelValue->setStyleSheet("font-weight: bold; font-size: 16pt; color: #f5f5f5;");
+		clearedLinesValue->setStyleSheet("font-weight: bold; font-size: 16pt; color: #f5f5f5;");
 
 		scoreLayout->addWidget(scoreLabel);
 		scoreLayout->addWidget(scoreValue);
