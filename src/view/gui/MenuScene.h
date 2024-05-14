@@ -10,6 +10,7 @@
 #include <QCheckBox>
 #include "Observer.h"
 #include "Game.h"
+#include <QIntValidator>
 
 namespace tetris::view::gui {
 	using namespace common;
@@ -21,6 +22,7 @@ namespace tetris::view::gui {
 	Q_OBJECT
 
 	private:
+		QValidator *IntValidator;
 		QVBoxLayout *layout;
 		QLabel *title;
 		QPushButton *playButton;

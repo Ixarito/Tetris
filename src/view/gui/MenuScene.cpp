@@ -4,6 +4,11 @@
 namespace tetris::view::gui {
 
 	MenuScene::MenuScene(QWidget *parent) : QWidget(parent) {
+
+		//Create the validator
+		IntValidator = new QIntValidator(this);
+
+
 		// Create the layout
 		layout = new QVBoxLayout(this);
 		layout->setSpacing(10);
@@ -125,6 +130,10 @@ namespace tetris::view::gui {
 		//connect the checkBox
 		connect(blocksCheckBox, &QCheckBox::toggled, this, &MenuScene::updateNbBlocksInput);
 
+
+		//connect the validator
+		additionalParameterInput->setValidator(IntValidator);
+		nbBlocksInput->setValidator(IntValidator);
 	}
 
 	MenuScene::~MenuScene() {
