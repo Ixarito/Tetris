@@ -5,7 +5,7 @@
 namespace tetris::view::gui {
 	NextTetrominoDisplay::NextTetrominoDisplay(QWidget *parent) : QGraphicsView(parent) {
 		setBackgroundBrush(QBrush{Qt::black});
-		setFixedSize(35, 35);
+		setFixedSize(35*5, 35*5);
 	}
 
 	void NextTetrominoDisplay::updateNextTetromino(const model::Tetromino &tetromino) {
@@ -32,7 +32,6 @@ namespace tetris::view::gui {
 		}
 
 		setScene(scene);
-		setFixedSize(newWidth+35, newHeight+35);
 	}
 
 } // namespace tetris::view::gui

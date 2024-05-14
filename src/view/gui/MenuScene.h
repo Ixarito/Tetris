@@ -53,7 +53,7 @@ namespace tetris::view::gui {
 
 	signals:
 
-		void gameTypeChanged(const int vaule);
+		void gameTypeChanged(const int value);
 
 		void additionalParameterChanged(const int vaule);
 

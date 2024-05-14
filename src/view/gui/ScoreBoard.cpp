@@ -5,7 +5,7 @@
 namespace tetris::view::gui {
 
 	ScoreBoard::ScoreBoard(QWidget *parent): QWidget(parent) {
-		QString style = "font-weight: bold; color: #f5f5f5;";
+		QString style = "font-weight: bold; font-size: 16pt; color: #f5f5f5;";
 
 		auto datasLayout = new QVBoxLayout(this);
 

@@ -20,28 +20,26 @@ namespace tetris::view::gui {
 
 		scoreBoard = new ScoreBoard(this);
 		scoreBoard->updateScore(game);
+		scoreBoard->setFixedSize(150, 150);
 
-		// Créez une nouvelle instance de QGraphicsDropShadowEffect
 		auto shadowEffect = new QGraphicsDropShadowEffect(this);
-
-		// Définissez la couleur de l'ombre à blanc
 		shadowEffect->setColor({255, 255, 255, 30});
-
-		// Définissez le décalage de l'ombre
 		shadowEffect->setOffset(0, 0);
 		shadowEffect->setBlurRadius(100);
-
-		// Appliquez l'effet d'ombre au gameBoard
 		gameBoard->setGraphicsEffect(shadowEffect);
 
 		nextTetromino = new NextTetrominoDisplay(this);
+		nextTetromino->setFixedSize(150, 150);
 
 		auto mainLayout = new QHBoxLayout;
 		mainLayout->setSpacing(40);
 		mainLayout->setContentsMargins(40,40,40,40);
+
+		mainLayout->addStretch(1);  // Ajoute un espace flexible à gauche des widgets
 		mainLayout->addWidget(nextTetromino);
 		mainLayout->addWidget(gameBoard);
 		mainLayout->addWidget(scoreBoard);
+		mainLayout->addStretch(1);  // Ajoute un espace flexible à droite des widgets
 
 		this->setLayout(mainLayout);
 
@@ -53,10 +51,8 @@ namespace tetris::view::gui {
 	}
 
 	void TetrisScene::updateGameBoard(const model::Game::GridView_type &gridView) {
-		// Crée une nouvelle scène
 		auto scene = new QGraphicsScene(this);
 
-		// taille de chaque bloc
 		int blockSize = 35;
 
 		for (size_t i = 0; i < gridView.size(); i++) {
@@ -75,7 +71,6 @@ namespace tetris::view::gui {
 			}
 		}
 
-		// Mettez à jour le gameBoard avec la nouvelle scène
 		gameBoard->setScene(scene);
 	}
 

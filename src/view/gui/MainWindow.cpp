@@ -10,7 +10,7 @@ namespace tetris::view::gui {
 		stackedWidget->addWidget(&menuScene);
 		setCentralWidget(stackedWidget);
 		currentSceneIndex = 0;
-		setStyleSheet("background-color: black;");
+		setStyleSheet("background-color: #1e1f22;");
 		this->show();
 	}
 
