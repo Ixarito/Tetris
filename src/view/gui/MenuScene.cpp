@@ -92,6 +92,12 @@ namespace tetris::view::gui {
 		blocksCheckBox->setCursor(Qt::PointingHandCursor);
 		layout->addWidget(blocksCheckBox);
 		blocksCheckBox->hide();
+		nbBlocksInput = new QLineEdit(this);
+		nbBlocksInput->setStyleSheet("background-color: #FFFFFF; color: #000000; border-radius: 10px; padding: 5px 10px;");
+		nbBlocksInput->setFixedWidth(250);
+		layout->addWidget(nbBlocksInput);
+		nbBlocksInput->hide();
+
 
 		// Create the settings return button
 		settingsReturnButton = new QPushButton("Retour", this);
@@ -114,6 +120,9 @@ namespace tetris::view::gui {
 		connect(playButton, &QPushButton::clicked, this, &MenuScene::showGameSettings);
 		//TODO QUIT BUTTON
 		connect(settingsReturnButton, &QPushButton::clicked, this, &MenuScene::closeGameSettings);
+
+		//connect the checkBox
+		connect(blocksCheckBox, &QCheckBox::toggled, this, &MenuScene::updateCheckBoxParameters);
 
 	}
 
@@ -148,6 +157,18 @@ namespace tetris::view::gui {
 		blocksCheckBox->hide();
 		settingsReturnButton->hide();
 		confirmButton->hide();
+		nbBlocksInput->hide();
+	}
+
+	void MenuScene::updateCheckBoxParameters(bool checked) {
+		// If the selected game type is not "Classique", show the additional parameter input
+		if (checked) {
+			nbBlocksInput->setPlaceholderText("Entrez le nombre de blocs à ajouter");
+			nbBlocksInput->show();
+
+		} else {
+			nbBlocksInput->hide();
+		}
 	}
 
 	void MenuScene::updateAdditionalParameterInputDisplay(int index) {

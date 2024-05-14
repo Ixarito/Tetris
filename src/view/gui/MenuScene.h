@@ -28,6 +28,7 @@ namespace tetris::view::gui {
 		QLabel *difficultyLabel;
 		QComboBox *difficultyComboBox;
 		QCheckBox *blocksCheckBox;
+		QLineEdit *nbBlocksInput;
 		QPushButton *settingsReturnButton;
 		QPushButton *confirmButton;
 
@@ -36,13 +37,15 @@ namespace tetris::view::gui {
 
 		void closeGameSettings();
 
-		void updateAdditionalParameterInputDisplay(int index);
-
 	public:
 
 		explicit MenuScene(QWidget *parent = nullptr);
 
 		~MenuScene() override;
+
+		void updateCheckBoxParameters(bool checked);
+
+		void updateAdditionalParameterInputDisplay(int index);
 	};
 
 } // namespace tetris::view::gui

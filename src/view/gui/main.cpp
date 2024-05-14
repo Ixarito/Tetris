@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 	view::gui::MenuScene menuScene;
 	tetris::controller::gui::GameController controller {game, tetrisScene};
 	view::gui::MainWindow mainWindow {menuScene, tetrisScene};
-
+	mainWindow.setMenuScene();
 
     controller.startGame();
 
