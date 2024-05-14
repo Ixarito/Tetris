@@ -134,8 +134,6 @@ namespace tetris::view::gui {
 					updateDatasValues(*game);
 					break;
 				case ActionType::TETROMINO_INSERTED:
-					// TODO update next Tetromino
-					/* game->peekNext(); */
 					nextTetromino->updateNextTetromino(game->peekNext());
 				case ActionType::GRID_CHANGED:
 					updateGameBoard(game->getGridView());

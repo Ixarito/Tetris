@@ -14,6 +14,9 @@
 namespace tetris::view::gui {
 	using namespace common;
 
+	/**
+	 * Represents the main menu of the application
+	 */
 	class MenuScene : public QWidget {
 	Q_OBJECT
 
@@ -33,19 +36,68 @@ namespace tetris::view::gui {
 		QPushButton *confirmButton;
 
 
-		void showGameSettings();
-
-		void closeGameSettings();
-
 	public:
 
+		/**
+		 * Creates a Menu scene view
+		 * @param parent the parent widget
+		 */
 		explicit MenuScene(QWidget *parent = nullptr);
 
+		/**
+		 * Destructor of Menu Scene
+		 */
 		~MenuScene() override;
 
-		void updateCheckBoxParameters(bool checked);
+	private slots:
 
+		/**
+		 * Displays the game settings
+		 */
+		void showGameSettings();
+
+		/**
+		 * Closes the game settings
+		 */
+		void closeGameSettings();
+
+		/**
+		 * Changes the placeholder of the additional input parameter
+		 * @param index the index of the chosen game type
+		 */
 		void updateAdditionalParameterInputDisplay(int index);
+
+		/**
+		 * Chenges the visibility of the input that contains the number of blocks already placed before the game starts
+		 * @param checked the state of the related checkbox
+		 */
+		void updateNbBlocksInput(bool checked);
+
+		/**
+		 * Called when the game type changes
+		 */
+		void onGameTypeChange();
+
+		/**
+		 * Called when the value to reach for the specified game type change
+		 */
+		void onGameAdditionalParameterChange();
+
+		/**
+		 * Called when the difficulty change
+		 */
+		void onDifficultyChange();
+
+		/**
+		 * Called when the number of already placed blocks change
+		 */
+		void onAlreadyPlacedValueChange();
+
+		/**
+		 * Called when the confirm button is clicked
+		 */
+		void onConfirmButtonClicked();
+
 	};
 
 } // namespace tetris::view::gui
