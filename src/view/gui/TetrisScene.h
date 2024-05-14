@@ -5,6 +5,7 @@
 #include <QLabel>
 #include "Observer.h"
 #include "Game.h"
+#include "NextTetromino.h"
 
 namespace tetris::view::gui {
 	using namespace common;
@@ -19,6 +20,7 @@ namespace tetris::view::gui {
 		QLabel *scoreValue;
 		QLabel *levelValue;
 		QLabel *clearedLinesValue;
+		NextTetromino *nextTetromino;
 
 	public:
 		/**
@@ -84,12 +86,6 @@ namespace tetris::view::gui {
 		 */
 		void updateDatasValues(model::Game &game);
 
-		/**
-		 * Gives the GUI color that corresponds to a model color
-		 * @param color a model color
-		 * @return a GUI color
-		 */
-		QColor getQtColor(tetris::model::Color color);
 
 	};
 

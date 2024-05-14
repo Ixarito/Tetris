@@ -3,6 +3,8 @@
 #include <QKeyEvent>
 #include "TetrisScene.h"
 #include <QMessageBox>
+#include <QGraphicsDropShadowEffect>
+#include "util/QtColors.hpp"
 
 namespace tetris::view::gui {
 
@@ -13,16 +15,38 @@ namespace tetris::view::gui {
 
 		// initialize widgets
 		gameBoard = new QGraphicsView(this);
-		gameBoard->setFixedSize(330, 630);
+		gameBoard->setFixedSize(385, 735);
+		gameBoard->setBackgroundBrush(QBrush{Qt::black});
+		// Créez une nouvelle instance de QGraphicsDropShadowEffect
+		auto shadowEffect = new QGraphicsDropShadowEffect(this);
+
+		// Définissez la couleur de l'ombre à blanc
+		shadowEffect->setColor({255, 255, 255, 30});
+
+		// Définissez le décalage de l'ombre
+		shadowEffect->setOffset(0, 0);
+		shadowEffect->setBlurRadius(100);
+
+		// Appliquez l'effet d'ombre au gameBoard
+		gameBoard->setGraphicsEffect(shadowEffect);
+
+		nextTetromino = new NextTetromino(this);
+
+
+
+
+
 
 		auto dataContainer = initDataContainer(game);
 
 		auto mainLayout = new QHBoxLayout;
+		mainLayout->setSpacing(40);
+		mainLayout->setContentsMargins(40,40,40,40);
+		mainLayout->addWidget(nextTetromino);
 		mainLayout->addWidget(gameBoard);
 		mainLayout->addLayout(dataContainer);
 
 		this->setLayout(mainLayout);
-
 
 		updateGameBoard(game.getGridView());
 	}
@@ -48,6 +72,7 @@ namespace tetris::view::gui {
 		scoreValue = new QLabel(this);
 		levelValue = new QLabel(this);
 		clearedLinesValue = new QLabel(this);
+
 
 		updateDatasValues(game);
 
@@ -78,7 +103,7 @@ namespace tetris::view::gui {
 		auto scene = new QGraphicsScene(this);
 
 		// taille de chaque bloc
-		int blockSize = 30;
+		int blockSize = 35;
 
 		for (size_t i = 0; i < gridView.size(); i++) {
 			for (size_t j = 0; j < gridView[i].length; j++) {
@@ -111,6 +136,7 @@ namespace tetris::view::gui {
 				case ActionType::TETROMINO_INSERTED:
 					// TODO update next Tetromino
 					/* game->peekNext(); */
+					nextTetromino->updateNextTetromino(game->peekNext());
 				case ActionType::GRID_CHANGED:
 					updateGameBoard(game->getGridView());
 					break;
@@ -126,30 +152,6 @@ namespace tetris::view::gui {
 
 	void TetrisScene::keyPressEvent(QKeyEvent *event) {
 		emit keyboardInput(event->key());
-	}
-
-	QColor TetrisScene::getQtColor(tetris::model::Color color) {
-		switch (color) {
-			case model::Color::BLUE:
-				return {Qt::blue};
-			case model::Color::GREEN:
-				return {Qt::green};
-			case model::Color::YELLOW:
-				return {Qt::yellow};
-			case model::Color::ORANGE:
-				return {255, 165, 0};
-			case model::Color::RED:
-				return {Qt::red};
-			case model::Color::CYAN:
-				return {Qt::cyan};
-			case model::Color::PURPLE:
-				return {128, 0, 128};
-
-			case model::Color::_count_:
-				throw std::domain_error("Cannot use _count_ literal");
-		}
-
-		throw std::domain_error("Unknown Color used");
 	}
 
 } // namespace tetris::view::gui
