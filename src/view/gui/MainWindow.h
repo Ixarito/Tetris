@@ -15,12 +15,11 @@ private:
     TetrisScene& tetrisScene;
     int currentSceneIndex;
 
+public slots:
+	void changeScene(QWidget* scene);
+
 public:
     explicit MainWindow(MenuScene &menuScene, TetrisScene& tetrisScene, QWidget *parent = nullptr);
-
-    void setGameScene();
-
-    void setMenuScene();
 };
 
 } // namespace tetris::view::gui

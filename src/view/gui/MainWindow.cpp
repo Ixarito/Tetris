@@ -15,17 +15,11 @@ namespace tetris::view::gui {
 		this->show();
 	}
 
-	void MainWindow::setGameScene() {
-		QStackedWidget *stackedWidget = qobject_cast<QStackedWidget *>(centralWidget());
-		if (stackedWidget) {
-			stackedWidget->setCurrentWidget(&tetrisScene);
-		}
-	}
 
-	void MainWindow::setMenuScene() {
+	void MainWindow::changeScene(QWidget* scene){
 		QStackedWidget *stackedWidget = qobject_cast<QStackedWidget *>(centralWidget());
 		if (stackedWidget) {
-			stackedWidget->setCurrentWidget(&menuScene);
+			stackedWidget->setCurrentWidget(scene);
 		}
 	}
 
