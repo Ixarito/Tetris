@@ -53,15 +53,13 @@ namespace tetris::view::gui {
 
 	signals:
 
-		void gameTypeChanged(const int value);
+		void gameTypeChanged(const int & value);
 
-		void additionalParameterChanged(const int vaule);
+		void additionalParameterChanged(const int & value);
 
-		void difficultyChanged(const int vaule);
+		void difficultyChanged(const int & value);
 
-		void blocksCheckedChanged(const bool vaule);
-
-		void nbBlocksChanged(const int vaule);
+		void nbBlocksChanged(const int & value);
 
 		void confirmButtonClicked();
 

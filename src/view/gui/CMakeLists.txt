@@ -13,6 +13,7 @@ set(CMAKE_AUTOUIC ON)
 # Inclure les répertoires des bibliothèques Tetris
 include_directories(../../common)
 include_directories(../../model)
+include_directories(../../controller)
 include_directories(../../controller/gui)
 include_directories(.)
 

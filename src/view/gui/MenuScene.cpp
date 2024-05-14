@@ -130,6 +130,13 @@ namespace tetris::view::gui {
 		//connect the checkBox
 		connect(blocksCheckBox, &QCheckBox::toggled, this, &MenuScene::updateNbBlocksInput);
 
+		// connect the handler who send a signal to the controller
+		connect(gameTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MenuScene::onGameTypeChange);
+		connect(additionalParameterInput, &QLineEdit::editingFinished, this, &MenuScene::onGameAdditionalParameterChange);
+		connect(difficultyComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MenuScene::onDifficultyChange);
+		connect(blocksCheckBox, &QCheckBox::toggled, this, &MenuScene::onAlreadyPlacedValueChange);
+		connect(nbBlocksInput, &QLineEdit::editingFinished, this, &MenuScene::onAlreadyPlacedValueChange);
+		connect(confirmButton, &QPushButton::clicked, this, &MenuScene::onConfirmButtonClicked);
 
 		//connect the validator
 		additionalParameterInput->setValidator(IntValidator);
@@ -154,7 +161,8 @@ namespace tetris::view::gui {
 		blocksCheckBox->show();
 		settingsReturnButton->show();
 		confirmButton->show();
-
+		if(blocksCheckBox->isChecked())
+			nbBlocksInput->show();
 	}
 
 	void MenuScene::closeGameSettings() {
@@ -205,12 +213,15 @@ namespace tetris::view::gui {
 	}
 
 	void MenuScene::onDifficultyChange() {
-		emit difficultyChanged(difficultyComboBox->currentIndex());
+		emit difficultyChanged(difficultyComboBox->currentIndex() * 3);
 	}
 
 	void MenuScene::onAlreadyPlacedValueChange() {
-		emit blocksCheckedChanged(blocksCheckBox->isChecked());
-		emit nbBlocksChanged(nbBlocksInput->text().toInt());
+		if(blocksCheckBox->isChecked()){
+			emit nbBlocksChanged(nbBlocksInput->text().toInt());
+		}else{
+			emit nbBlocksChanged(0);
+		}
 	}
 
 	void MenuScene::onConfirmButtonClicked() {

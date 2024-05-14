@@ -1,7 +1,7 @@
 #ifndef TETRIS_MENUCONTROLLER_H
 #define TETRIS_MENUCONTROLLER_H
 
-#include <qobject.h>
+#include <QObject>
 #include "MenuScene.h"
 #include "Games.h"
 #include "GameType.h"
@@ -25,7 +25,12 @@ namespace tetris::controller::gui {
 		 */
 		MenuController(view::gui::MenuScene & view);
 
-//	public slots: // TODO
+
+	signals:
+
+//		void requestGameStart();
+
+	public slots:
 
 		/**
 		 * Sets the game type
@@ -62,7 +67,7 @@ namespace tetris::controller::gui {
 		/**
 		 * Calls the GameController for start the game with the current saved configuration
 		 */
-		void startGame() const;
+		void startGame();
 
 	public:
 		/**

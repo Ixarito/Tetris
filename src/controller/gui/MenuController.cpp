@@ -47,29 +47,23 @@ namespace tetris::controller::gui{
 		connect(&view, &view::gui::MenuScene::gameTypeChanged, this, &MenuController::setGameType);
 		connect(&view, &view::gui::MenuScene::additionalParameterChanged, this, &MenuController::setValueToReach);
 		connect(&view, &view::gui::MenuScene::difficultyChanged, this, &MenuController::setLevel);
-		connect(&view, &view::gui::MenuScene::blocksCheckedChanged, this, &MenuController::setAlreadyPlacedBlock);
-		//TODO connect confirmButtonClicked to startGame
-
-
+		connect(&view, &view::gui::MenuScene::nbBlocksChanged, this, &MenuController::setAlreadyPlacedBlock);
+		connect(&view, &view::gui::MenuScene::confirmButtonClicked, this, &MenuController::startGame);
 	}
 
 	void MenuController::setGameType(const int& value) {
 		switch (value) {
-			case 0:
-				_gameType = GameType::GAMEOVER;
-				break;
 			case 1:
-				_gameType = GameType::LINES;
+				_gameType = GameType::TIME;
 				break;
 			case 2:
 				_gameType = GameType::SCORE;
 				break;
 			case 3:
-				_gameType = GameType::TIME;
+				_gameType = GameType::LINES;
 				break;
 			default:
 				_gameType = GameType::GAMEOVER;
-
 		}
 	}
 
@@ -100,8 +94,8 @@ namespace tetris::controller::gui{
 		_gameParams.shapes = tetrominoes;
 	}
 
-	void MenuController::startGame() const{
-		// TODO call GameController
+	void MenuController::startGame(){
+//		emit requestGameStart();
 	}
 
 	const model::GameParameters & MenuController::getGameParameters() const{
@@ -115,4 +109,5 @@ namespace tetris::controller::gui{
 	const ValueToReach & MenuController::getValueToReach() const {
 		return _valueToReach;
 	}
+
 } // namespace tetris::controller::gui

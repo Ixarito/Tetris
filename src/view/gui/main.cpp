@@ -4,6 +4,7 @@
 #include "GameController.h"
 #include "MenuScene.h"
 #include "MainWindow.h"
+#include "MenuController.h"
 
 using namespace tetris;
 
@@ -52,7 +53,8 @@ int main(int argc, char *argv[]) {
     model::Game game {gp};
 	view::gui::TetrisScene tetrisScene {game};
 	view::gui::MenuScene menuScene;
-	tetris::controller::gui::GameController controller {game, tetrisScene};
+	controller::gui::MenuController menuCtrl {menuScene};
+	controller::gui::GameController controller {game, tetrisScene};
 	view::gui::MainWindow mainWindow {menuScene, tetrisScene};
 	mainWindow.setGameScene();
 
