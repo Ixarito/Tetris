@@ -13,11 +13,13 @@ int main(int argc, char *argv[]) {
 	view::gui::TetrisScene tetrisScene;
 
 	controller::gui::MenuController menuCtrl {menuScene};
-	controller::gui::GameController controller {tetrisScene};
+	controller::gui::GameController gameCtrl {tetrisScene};
 
 	view::gui::MainWindow mainWindow {menuScene, tetrisScene};
 
+	QObject::connect(&menuCtrl, &tetris::controller::gui::MenuController::requestGameStart, &gameCtrl, &tetris::controller::gui::GameController::newGame);
 	QObject::connect(&menuCtrl, &tetris::controller::gui::MenuController::requestDisplay, &mainWindow, &tetris::view::gui::MainWindow::changeScene);
+	QObject::connect(&gameCtrl, &tetris::controller::gui::GameController::requestDisplay, &mainWindow, &tetris::view::gui::MainWindow::changeScene);
 
     return QApplication::exec();
 }

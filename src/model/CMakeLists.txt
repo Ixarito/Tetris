@@ -35,3 +35,7 @@ set(SOURCES
 
 # Créer une bibliothèque statique
 add_library(Tetris_model STATIC ${SOURCES})
+
+target_link_libraries(Tetris_model
+		Tetris_COMMON
+)

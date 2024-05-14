@@ -6,8 +6,8 @@ namespace tetris::view::gui {
 	MainWindow::MainWindow(MenuScene &menuScene, TetrisScene &tetrisScene, QWidget *parent)
 			: QMainWindow(parent), menuScene(menuScene), tetrisScene(tetrisScene) {
 		QStackedWidget *stackedWidget = new QStackedWidget(this);
-		stackedWidget->addWidget(&tetrisScene);
 		stackedWidget->addWidget(&menuScene);
+		stackedWidget->addWidget(&tetrisScene);
 		setCentralWidget(stackedWidget);
 		currentSceneIndex = 0;
 		setStyleSheet("background-color: #1e1f22;");

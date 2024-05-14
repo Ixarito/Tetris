@@ -1,7 +1,7 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
-#include "Game.h"
+#include "Games.h"
 #include "Observer.h"
 #include "TetrisScene.h"
 #include "MenuController.h"
@@ -26,7 +26,7 @@ namespace tetris::controller::gui {
 		 * @param view the view that displays the game
 		 * @param game the game model
 		 */
-        GameController(view::gui::TetrisScene & view, model::Game * game = nullptr);
+        explicit GameController(view::gui::TetrisScene & view, model::Game * game = nullptr);
 
 		/**
 		 * Starts the game loop
@@ -44,7 +44,7 @@ namespace tetris::controller::gui {
 		 * Request to display the view
 		 * @param view the Game view
 		 */
-		void requestDisplay(const QWidget * view);
+		void requestDisplay(QPointer<QWidget> view);
 
     public slots:
 		/**
