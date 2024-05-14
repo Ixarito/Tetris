@@ -62,7 +62,7 @@ namespace tetris::controller::gui {
 		 * Sets the tetrominoes to use during the game
 		 * @param tetrominoes a collection of Tetrominoes
 		 */
-		void setTetrominoes(const decltype(model::GameParameters::shapes) & tetrominoes);
+		void setTetrominoes(const std::vector<std::pair<std::vector<std::vector<bool>>, model::Color>> & tetrominoes);
 
 		/**
 		 * Calls the GameController for start the game with the current saved configuration

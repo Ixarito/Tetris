@@ -1,4 +1,5 @@
 #include "MenuController.h"
+#include "Color.h"
 
 namespace tetris::controller::gui{
 
@@ -90,7 +91,7 @@ namespace tetris::controller::gui{
 		_gameParams.nbAlreadyPlacedBlocks = value;
 	}
 
-	void MenuController::setTetrominoes(const decltype(model::GameParameters::shapes) & tetrominoes) {
+	void MenuController::setTetrominoes(const std::vector<std::pair<std::vector<std::vector<bool>>, model::Color>> & tetrominoes) {
 		_gameParams.shapes = tetrominoes;
 	}
 
