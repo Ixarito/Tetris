@@ -6,6 +6,7 @@
 #include "Games.h"
 #include "GameType.h"
 #include "ValueToReach.h"
+#include <QPointer>
 
 namespace tetris::controller::gui {
 
@@ -38,7 +39,7 @@ namespace tetris::controller::gui {
 		 * Request to display the view
 		 * @param view the Game view
 		 */
-		void requestDisplay(const QWidget * view);
+		void requestDisplay(QPointer<QWidget> view);
 
 	public slots:
 

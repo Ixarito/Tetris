@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
 	view::gui::MainWindow mainWindow {menuScene, tetrisScene};
 
-	QObject::connect(&menuScene, &controller::gui::MenuController::requestDisplay, &mainWindow, &view::gui::MainWindow::changeScene);
+	QObject::connect(&menuCtrl, &tetris::controller::gui::MenuController::requestDisplay, &mainWindow, &tetris::view::gui::MainWindow::changeScene);
 
     return QApplication::exec();
 }

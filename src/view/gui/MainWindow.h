@@ -5,6 +5,7 @@
 #include "MenuController.h"
 #include "MenuScene.h"
 #include "TetrisScene.h"
+#include <QPointer>
 
 namespace tetris::view::gui {
 
@@ -17,7 +18,7 @@ private:
     int currentSceneIndex;
 
 public slots:
-	void changeScene(QWidget* scene);
+	void changeScene(QPointer<QWidget> scene);
 
 public:
     explicit MainWindow(MenuScene &menuScene, TetrisScene& tetrisScene, QWidget *parent = nullptr);

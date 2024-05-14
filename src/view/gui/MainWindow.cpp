@@ -16,7 +16,7 @@ namespace tetris::view::gui {
 	}
 
 
-	void MainWindow::changeScene(QWidget* scene){
+	void MainWindow::changeScene(QPointer<QWidget> scene){
 		QStackedWidget *stackedWidget = qobject_cast<QStackedWidget *>(centralWidget());
 		if (stackedWidget) {
 			stackedWidget->setCurrentWidget(scene);
