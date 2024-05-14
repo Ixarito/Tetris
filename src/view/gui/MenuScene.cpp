@@ -196,23 +196,24 @@ namespace tetris::view::gui {
 	}
 
 	void MenuScene::onGameTypeChange(){
-
+		emit gameTypeChanged(gameTypeComboBox->currentIndex());
 	}
 
 	void MenuScene::onGameAdditionalParameterChange(){
-
+		emit additionalParameterChanged(additionalParameterInput->text().toInt());
 	}
 
-	void MenuScene::onDifficultyChange(){
-
+	void MenuScene::onDifficultyChange() {
+		emit difficultyChanged(difficultyComboBox->currentIndex());
 	}
 
 	void MenuScene::onAlreadyPlacedValueChange() {
-
+		emit blocksCheckedChanged(blocksCheckBox->isChecked());
+		emit nbBlocksChanged(nbBlocksInput->text().toInt());
 	}
 
 	void MenuScene::onConfirmButtonClicked() {
-
+		emit confirmButtonClicked();
 	}
 
 

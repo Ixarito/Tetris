@@ -31,27 +31,27 @@ namespace tetris::controller::gui {
 		 * Sets the game type
 		 * @param type the type of the game
 		 */
-		void setGameType(const GameType & type);
+		void setGameType(const int& value);
 
 		/**
 		 * Sets the value to reach according to the game type
 		 * @param value the value to reach
 		 */
-		void setValueToReach(const unsigned long long & value);
+		void setValueToReach(const int& value);
 
 		/**
 		 * Sets the start level of the game
 		 * @param level the start level
 		 * @sa tetris::model::Game::Game()
 		 */
-		void setLevel(const decltype(model::GameParameters::level) & level);
+		void setLevel(const int& value);
 
 		/**
 		 * Sets the number of blocks to place at the start of the game
 		 * @param value the number of blocks to place
 		 * @sa tetris::model::Game::Game()
 		 */
-		void setAlreadyPlacedBlock(const decltype(model::GameParameters::nbAlreadyPlacedBlocks) & value);
+		void setAlreadyPlacedBlock(const int& value);
 
 		/**
 		 * Sets the tetrominoes to use during the game

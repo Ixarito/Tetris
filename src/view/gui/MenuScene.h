@@ -51,6 +51,20 @@ namespace tetris::view::gui {
 		 */
 		~MenuScene() override;
 
+	signals:
+
+		void gameTypeChanged(const int vaule);
+
+		void additionalParameterChanged(const int vaule);
+
+		void difficultyChanged(const int vaule);
+
+		void blocksCheckedChanged(const bool vaule);
+
+		void nbBlocksChanged(const int vaule);
+
+		void confirmButtonClicked();
+
 	private slots:
 
 		/**

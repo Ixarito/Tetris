@@ -43,14 +43,37 @@ namespace tetris::controller::gui{
 						  {false, false, false}}}, model::Color::ORANGE}
 		});
 
-		// TODO Connect view signals to controller slots
+		// Connecting inputs to the controller
+		connect(&view, &view::gui::MenuScene::gameTypeChanged, this, &MenuController::setGameType);
+		connect(&view, &view::gui::MenuScene::additionalParameterChanged, this, &MenuController::setValueToReach);
+		connect(&view, &view::gui::MenuScene::difficultyChanged, this, &MenuController::setLevel);
+		connect(&view, &view::gui::MenuScene::blocksCheckedChanged, this, &MenuController::setAlreadyPlacedBlock);
+		//TODO connect confirmButtonClicked to startGame
+
+
 	}
 
-	void MenuController::setGameType(const GameType & type) {
-		_gameType = type;
+	void MenuController::setGameType(const int& value) {
+		switch (value) {
+			case 0:
+				_gameType = GameType::GAMEOVER;
+				break;
+			case 1:
+				_gameType = GameType::LINES;
+				break;
+			case 2:
+				_gameType = GameType::SCORE;
+				break;
+			case 3:
+				_gameType = GameType::TIME;
+				break;
+			default:
+				_gameType = GameType::GAMEOVER;
+
+		}
 	}
 
-	void MenuController::setValueToReach(const unsigned long long int & value) {
+	void MenuController::setValueToReach(const int& value) {
 		switch (_gameType){
 			case GameType::LINES :
 				_valueToReach.line = value;
@@ -65,11 +88,11 @@ namespace tetris::controller::gui{
 		}
 	}
 
-	void MenuController::setLevel(const decltype(model::GameParameters::level) & level) {
-		_gameParams.level = level;
+	void MenuController::setLevel(const int& value) {
+		_gameParams.level = value;
 	}
 
-	void MenuController::setAlreadyPlacedBlock(const decltype(model::GameParameters::nbAlreadyPlacedBlocks) & value) {
+	void MenuController::setAlreadyPlacedBlock(const int& value) {
 		_gameParams.nbAlreadyPlacedBlocks = value;
 	}
 
