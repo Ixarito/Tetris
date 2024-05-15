@@ -31,9 +31,11 @@ namespace tetris::controller::gui {
 
 		/**
 		 * Signal for request to launch a Tetris Game
-		 * @param menuController the controller that contains the game settings
+		 * @param params the game parameters
+		 * @param gameType the type chosen for the game
+		 * @param valueToReach the value to reach if a game type is chosen
 		 */
-		void requestGameStart(const MenuController & menuController);
+		void requestGameStart(const model::GameParameters & params, const GameType & gameType, const ValueToReach & valueToReach);
 
 		/**
 		 * Request to display the view
@@ -80,24 +82,11 @@ namespace tetris::controller::gui {
 		 */
 		void startGame();
 
-	public:
 		/**
-		 * Gives the parameters for the Game
-		 * @return the game parameters
+		 * Called to quit the application
 		 */
-		const model::GameParameters & getGameParameters() const;
+		void quit();
 
-		/**
-		 * Gives the selected type for the game
-		 * @return the type for the Game
-		 */
-		const GameType & getGameType() const;
-
-		/**
-		 * Gives the selected value to reach for the game type
-		 * @return the value to reach
-		 */
-		const ValueToReach & getValueToReach() const;
 	};
 
 } // namespace tetris::controller::gui

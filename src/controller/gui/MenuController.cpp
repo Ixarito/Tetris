@@ -1,3 +1,4 @@
+#include <QCoreApplication>
 #include "MenuController.h"
 #include "Color.h"
 
@@ -50,6 +51,7 @@ namespace tetris::controller::gui{
 		connect(&view, &view::gui::MenuScene::difficultyChanged, this, &MenuController::setLevel);
 		connect(&view, &view::gui::MenuScene::nbBlocksChanged, this, &MenuController::setAlreadyPlacedBlock);
 		connect(&view, &view::gui::MenuScene::confirmButtonClicked, this, &MenuController::startGame);
+		connect(&view, &view::gui::MenuScene::quitButtonClicked, this, &MenuController::quit);
 
 		emit requestDisplay(&view);
 	}
@@ -98,19 +100,11 @@ namespace tetris::controller::gui{
 	}
 
 	void MenuController::startGame(){
-		emit requestGameStart(*this);
+		emit requestGameStart(_gameParams, _gameType, _valueToReach);
 	}
 
-	const model::GameParameters & MenuController::getGameParameters() const{
-		return _gameParams;
-	}
-
-	const GameType & MenuController::getGameType() const {
-		return _gameType;
-	}
-
-	const ValueToReach & MenuController::getValueToReach() const {
-		return _valueToReach;
+	void MenuController::quit() {
+		QCoreApplication::quit();
 	}
 
 } // namespace tetris::controller::gui

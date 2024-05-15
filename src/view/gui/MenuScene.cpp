@@ -138,7 +138,7 @@ namespace tetris::view::gui {
 		connect(blocksCheckBox, &QCheckBox::toggled, this, &MenuScene::onAlreadyPlacedValueChange);
 		connect(nbBlocksInput, &QLineEdit::editingFinished, this, &MenuScene::onAlreadyPlacedValueChange);
 		connect(confirmButton, &QPushButton::clicked, this, &MenuScene::onConfirmButtonClicked);
-		connect(quitButton, &QPushButton::clicked, this, &QCoreApplication::quit);
+		connect(quitButton, &QPushButton::clicked, this, &MenuScene::onQuitButtonClicked);
 
 		//connect the validator
 		additionalParameterInput->setValidator(IntValidator);
@@ -228,6 +228,10 @@ namespace tetris::view::gui {
 
 	void MenuScene::onConfirmButtonClicked() {
 		emit confirmButtonClicked();
+	}
+
+	void MenuScene::onQuitButtonClicked() {
+		emit quitButtonClicked();
 	}
 
 

@@ -17,11 +17,13 @@ namespace tetris::controller::gui {
 
 		_view.setGame(*_game);
 
-        timer->start();
 		// link view input to handler
 		QObject::connect(&_view, &view::gui::TetrisScene::keyboardInput, this, &GameController::onInput);
 
 		emit requestDisplay(&_view);
+
+		timer->start();
+		tick();
     }
 
     void GameController::stopGame() {
@@ -104,12 +106,10 @@ namespace tetris::controller::gui {
         }
     }
 
-	void GameController::newGame(const MenuController &menuController) {
+	void GameController::newGame(const model::GameParameters & params, const GameType & gameType, const ValueToReach & valueToReach) {
 		try{
-			const model::GameParameters & params = menuController.getGameParameters();
-			const ValueToReach valueToReach = menuController.getValueToReach();
 
-			switch(menuController.getGameType()){
+			switch(gameType){
 				case GameType::GAMEOVER:
 					_game = new model::Game(params);
 					break;

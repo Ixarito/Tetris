@@ -53,15 +53,39 @@ namespace tetris::view::gui {
 
 	signals:
 
+		/**
+		 * Emit when the game type change
+		 * @param value the index of the game type chosen
+		 */
 		void gameTypeChanged(const int & value);
 
+		/**
+		 * Emit when the value to reach for a game type change
+		 * @param value the value to reach
+		 */
 		void additionalParameterChanged(const int & value);
 
+		/**
+		 * Emit when the difficulty level change
+		 * @param value the index of the difficulty chosen
+		 */
 		void difficultyChanged(const int & value);
 
+		/**
+		 * Emit when the number of already placed blocks change
+		 * @param value the value chosen
+		 */
 		void nbBlocksChanged(const int & value);
 
+		/**
+		 * Emit when the confirm button is clicked. Typically for start the game.
+		 */
 		void confirmButtonClicked();
+
+		/**
+		 * Emit when the quit button is clicked
+		 */
+		void quitButtonClicked();
 
 	private slots:
 
@@ -111,6 +135,11 @@ namespace tetris::view::gui {
 		 * Called when the confirm button is clicked
 		 */
 		void onConfirmButtonClicked();
+
+		/**
+		 * Called when the quit button is clicked
+		 */
+		void onQuitButtonClicked();
 
 	};
 

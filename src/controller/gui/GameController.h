@@ -60,9 +60,11 @@ namespace tetris::controller::gui {
 
 		/**
 		 * Creates a new Game an launches it
-		 * @param menuController the controller that contains the game settings
+		 * @param params the game parameters
+		 * @param gameType the type chosen for the game
+		 * @param valueToReach the value to reach if a game type is chosen
 		 */
-		void newGame(const MenuController & menuController);
+		void newGame(const model::GameParameters & params, const GameType & gameType, const ValueToReach & valueToReach);
 
 	private:
 		/**
