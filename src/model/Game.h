@@ -3,6 +3,9 @@
 
 #include <vector>
 #include "Grid.h"
+#include "MoveDirection.h"
+#include "Tetromino.h"
+#include "Observable.h"
 
 namespace tetris::model{
 
@@ -39,11 +42,29 @@ namespace tetris::model{
 	/**
 	 * Represents a game part of the Tetris game
 	 */
-	class Game{
+class Game : public common::Observable{
 		Grid _grid;
+
 		std::vector<Tetromino> _bag;
 		size_t _nextTetromino;
-		unsigned int _level;
+
+		/**
+		 * Position of a Tetromino in the grid
+		 */
+		struct TetrominoPosition{
+			size_t row;
+			size_t col;
+		};
+		/*
+		 	the current tetromino that falls is not yet in the grid,
+		 	it acts as a mask above the grid
+		 */
+		std::optional<Tetromino> _current; // the current Tetromino that can be moved
+		TetrominoPosition _currentPosition;
+
+		bool _gameOver;
+		const unsigned int _startLevel;
+		unsigned int _currentLevel;
 
 	protected:
 		/**
@@ -58,8 +79,17 @@ namespace tetris::model{
 	public:
 
 		/**
+		 * Alias of vector of Lines
+		 * Represents an overview of the current state of the grid
+		 * @sa tetris::model::Grid::getGridView()
+		 * @sa tetris::model::Line
+		 */
+		using GridView_type = const std::vector<Line>;
+
+		/**
 		 * Creates a game part of the Tetris game
 		 * @param params the parameters of the Game
+		 * @throws std::invalid_argument if no Tetrominoes where specified in the game parameters
 		 * @sa tetris::model::GameParameters
 		 */
 		explicit Game(const GameParameters & params);
@@ -76,9 +106,9 @@ namespace tetris::model{
 
 		/**
 		 * Determines if the game is over
-		 * @return true if the game is still active, false if the game is over
+		 * @return true if the game is over, false otherwise
 		 */
-		bool isGameActive() const;
+		bool isGameOver() const;
 
 
 		/**
@@ -87,6 +117,12 @@ namespace tetris::model{
 		 * @note The method does not really make sense if it is not override. With the simple Game class, it always returns false
 		 */
 		virtual bool isWon() const;
+
+		/**
+		 * Determines if the game has a current falling Tetromino
+		 * @return true if there is a falling Tetromino, false otherwise
+		 */
+		bool hasFallingTetromino() const;
 
 		/**
 		 * @}
@@ -138,9 +174,8 @@ namespace tetris::model{
 		/**
 		 * Gives an overview of the current state of the game Grid
 		 * @return a view to the current state of the Grid
-		 * @sa tetris::model::Grid::getGridView
 		 */
-		Grid::GridView_type getGridView() const;
+		GridView_type getGridView() const;
 
         /**
          * Gives the number of lines cleared since the start of the game
@@ -185,12 +220,90 @@ namespace tetris::model{
 		 */
 		void drop();
 
+		/**
+		 * Method called at each unit of time that places a tetromino,
+		 * make it go down or place it if it can no longer go down.
+		 * This method should not be linked to any user action
+		 */
+		void time();
 
-		};
+	/**
+	 * @}
+	 */
+
+	private:
+		/**
+		 * Verifies if the game is over and changes game state if so
+		 */
+		void checkGameOver();
 
 		/**
-		 * @}
+		 * Verifies if the game is won and notifies if so
+		 * @sa tetris::model::Game::isWon()
 		 */
+		void checkGameWin();
+
+		// Current Tetromino related
+
+		/**
+		 * Inserts a Tetromino at the top of the grid mask
+		 * @param tetromino the tetromino to insert
+		 */
+		void insert(Tetromino tetromino);
+
+		/**
+		 * Moves the current Tetromino in the given direction.
+		 * Has no effect if the current tetromino cannot move in this direction
+		 * @param direction the direction to move the tetromino
+		 * @return true if the movement could have been made, false otherwise
+		 */
+		bool moveCurrent(const MoveDirection & direction);
+
+		/**
+		 * Rotates the current Tetromino in the given direction in the grid mask.
+		 * Has no effect if the current tetromino cannot rotate without
+		 * superposing with grid blocks or be outside the grid boundaries.
+		 * @param direction the direction to rotate the tetromino
+		 * @sa tetris::model::Tetromino::rotate()
+		 */
+		void rotateCurrent(const RotateDirection & direction);
+
+		/**
+		 * Places the current Tetromino into the grid
+		 */
+		void placeCurrent();
+
+		/**
+		 * Check if the current Tetromino can move in the given direction in the grid mask
+		 * @param direction the direction to check
+		 * @return true if the Tetromino can move, false otherwise
+		 */
+		bool canMove(const MoveDirection & direction) /*const*/;
+
+		/**
+		 * Check if the current Tetromino can rotate in the grid mask
+		 * @return true if the Tetromino can rotate, false otherwise
+		 */
+		bool canRotate() const;
+
+		/**
+		 * Check if the current Tetromino overlaps with a block of the Grid
+		 * @return true if the current Tetromino overlaps a block, false otherwise
+		 */
+		bool isCurrentOverlap() const;
+
+		/**
+		 * Used to update game datas like score, level or number of cleared lines
+		 * @param nbLinesRemoved the number of lines removed after a drop
+		 * @param nbLinesCrossed the number of lines crossed by the last Tetromino before inserting
+		 */
+		void updateData(size_t nbLinesRemoved, size_t nbLinesCrossed = 0);
+
+		/**
+		 * Increments the score by 1
+		 */
+		void incrementScore();
+	};
 
 } // namespace tetris::model
 

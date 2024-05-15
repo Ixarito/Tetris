@@ -13,25 +13,20 @@ namespace tetris::controller::console{
 
 		view.showGame();
 
-		while(game.isGameActive() && !game.isWon()){
+		while(!game.isGameOver() && !game.isWon()){
 			auto input = getNextString();
 			if (input == "s") {
 				game.drop();
 			} else if (input == "q") {
 				game.goLeft();
-				game.goDown();
 			} else if (input == "d") {
 				game.goRight();
-				game.goDown();
 			} else if (input == "e") {
 				game.rotateClockwise();
-				game.goDown();
 			} else if (input == "a") {
 				game.rotateCounterclockwise();
-				game.goDown();
-			} else {
-				game.goDown();
 			}
+			game.time();
 
 			view.showGame();
 		}

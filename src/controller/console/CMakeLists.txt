@@ -7,12 +7,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
 # Inclure les répertoires des bibliothèques Tetris
+include_directories(../../common)
 include_directories(../../model)
 include_directories(../../view/console)
+include_directories(../)
 
 add_executable(Tetris_controller_console
         main.cpp
-        GameType.h
+		../GameType.h
         Interactions.cpp
         Interactions.h
         Controller.cpp
@@ -20,4 +22,4 @@ add_executable(Tetris_controller_console
 )
 
 # Lier les bibliothèques Tetris
-target_link_libraries(Tetris_controller_console Tetris_model Tetris_view_console)
+target_link_libraries(Tetris_controller_console Tetris_model Tetris_view_console Tetris_COMMON)
