@@ -12,9 +12,9 @@ namespace tetris::view::gui {
 		auto levelLayout = new QHBoxLayout();
 		auto clearedLinesLayout = new QHBoxLayout();
 
-		auto scoreLabel = new QLabel("Score:", this);
-		auto levelLabel = new QLabel("Level:", this);
-		auto clearedLinesLabel = new QLabel("Full Lines:", this);
+		auto scoreLabel = new QLabel("Score :", this);
+		auto levelLabel = new QLabel("Niveau :", this);
+		auto clearedLinesLabel = new QLabel("Lignes :", this);
 
 		scoreValue = new QLabel(this);
 		levelValue = new QLabel(this);

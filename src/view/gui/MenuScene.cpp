@@ -1,5 +1,6 @@
 #include <QGraphicsDropShadowEffect>
 #include <QCoreApplication>
+#include <QMessageBox>
 #include "MenuScene.h"
 
 namespace tetris::view::gui {
@@ -219,7 +220,15 @@ namespace tetris::view::gui {
 	}
 
 	void MenuScene::onConfirmButtonClicked() {
-		emit confirmButtonClicked();
+		bool additionalParameterValid =(!additionalParameterInput->text().isEmpty() && additionalParameterInput->text().toInt() > 0) || additionalParameterInput->isHidden();
+		bool nbBlocksValid = (!nbBlocksInput->text().isEmpty() && nbBlocksInput->text().toInt() > 0 ) || nbBlocksInput->isHidden();
+		if (additionalParameterValid && nbBlocksValid) {
+			emit confirmButtonClicked();
+		} else {
+			QMessageBox msgBox;
+			msgBox.setText("Veuillez remplir les champs correctement");
+			msgBox.exec();
+		}
 	}
 
 	void MenuScene::onQuitButtonClicked() {

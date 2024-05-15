@@ -70,7 +70,7 @@ namespace tetris::view::gui {
 	}
 
 	void TetrisScene::displayGameOver(bool isWon) {
-		auto message = isWon ? "You won!" : "Game Over!";
+		auto message = isWon ? "C'est gagné!" : "Game Over!";
 		QMessageBox msgBox;
 		msgBox.setText(message);
 		msgBox.setStandardButtons(QMessageBox::Ok);
