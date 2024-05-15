@@ -72,6 +72,11 @@ namespace tetris::view::gui {
 		 */
 		void keyboardInput(const int &key);
 
+		/**
+		 * Signal sent after the game over message is confirmed
+		 */
+		void gameOverConfirmed();
+
 	protected:
 
 		void keyPressEvent(QKeyEvent *event) override;

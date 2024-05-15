@@ -1,4 +1,5 @@
 #include <QGraphicsDropShadowEffect>
+#include <QCoreApplication>
 #include "MenuScene.h"
 
 namespace tetris::view::gui {
@@ -137,6 +138,7 @@ namespace tetris::view::gui {
 		connect(blocksCheckBox, &QCheckBox::toggled, this, &MenuScene::onAlreadyPlacedValueChange);
 		connect(nbBlocksInput, &QLineEdit::editingFinished, this, &MenuScene::onAlreadyPlacedValueChange);
 		connect(confirmButton, &QPushButton::clicked, this, &MenuScene::onConfirmButtonClicked);
+		connect(quitButton, &QPushButton::clicked, this, &QCoreApplication::quit);
 
 		//connect the validator
 		additionalParameterInput->setValidator(IntValidator);
