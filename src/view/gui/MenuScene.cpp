@@ -7,7 +7,7 @@ namespace tetris::view::gui {
 	MenuScene::MenuScene(QWidget *parent) : QWidget(parent) {
 
 		//Create the validator
-		IntValidator = new QIntValidator(this);
+		intValidator = new QIntValidator(this);
 
 
 		// Create the layout
@@ -125,7 +125,7 @@ namespace tetris::view::gui {
 
 		// Connect the buttons
 		connect(playButton, &QPushButton::clicked, this, &MenuScene::showGameSettings);
-		//TODO QUIT BUTTON
+
 		connect(settingsReturnButton, &QPushButton::clicked, this, &MenuScene::closeGameSettings);
 
 		//connect the checkBox
@@ -141,16 +141,8 @@ namespace tetris::view::gui {
 		connect(quitButton, &QPushButton::clicked, this, &MenuScene::onQuitButtonClicked);
 
 		//connect the validator
-		additionalParameterInput->setValidator(IntValidator);
-		nbBlocksInput->setValidator(IntValidator);
-	}
-
-	MenuScene::~MenuScene() {
-		delete IntValidator;
-		delete layout;
-		delete title;
-		delete playButton;
-		delete quitButton;
+		additionalParameterInput->setValidator(intValidator);
+		nbBlocksInput->setValidator(intValidator);
 	}
 
 	void MenuScene::showGameSettings() {

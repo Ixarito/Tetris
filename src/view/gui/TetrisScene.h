@@ -22,8 +22,6 @@ namespace tetris::view::gui {
 		GameGridDisplay * gameGrid;
 		ScoreBoard * scoreBoard;
 		NextTetrominoDisplay * nextTetromino;
-		QGraphicsDropShadowEffect * shadow;
-		QGraphicsDropShadowEffect * nextTetrominoShadow;
 
 
 	public:

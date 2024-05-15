@@ -22,7 +22,7 @@ namespace tetris::view::gui {
 	Q_OBJECT
 
 	private:
-		QValidator *IntValidator;
+		QValidator *intValidator;
 		QVBoxLayout *layout;
 		QLabel *title;
 		QPushButton *playButton;
@@ -45,11 +45,6 @@ namespace tetris::view::gui {
 		 * @param parent the parent widget
 		 */
 		explicit MenuScene(QWidget *parent = nullptr);
-
-		/**
-		 * Destructor of Menu Scene
-		 */
-		~MenuScene() override;
 
 	signals:
 

@@ -12,9 +12,10 @@ namespace tetris::view::gui {
 	 */
 	class NextTetrominoDisplay : public QGraphicsView {
 
-	Q_OBJECT
+		QGraphicsScene * _scene;
 
 	public:
+
 		/**
 		 * Creates a layout for displaying the next Tetromino to be inserted
 		 * @param parent

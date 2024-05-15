@@ -7,28 +7,32 @@ namespace tetris::view::gui {
 
 	TetrisScene::TetrisScene(QWidget *parent)
 		: QWidget(parent),
-		gameGrid {new GameGridDisplay(this)},
-		scoreBoard {new ScoreBoard(this)},
-		nextTetromino{new NextTetrominoDisplay(this)},
-		shadow {new QGraphicsDropShadowEffect(this)}
+		  gameGrid {new GameGridDisplay(this)},
+		  scoreBoard {new ScoreBoard(this)},
+		  nextTetromino{new NextTetrominoDisplay(this)}
 	{
-		shadow->setColor({0, 0, 0, 150});
-		shadow->setOffset(0, 0);
-		shadow->setBlurRadius(200);
+		// shadows
+		auto gridShadow = new QGraphicsDropShadowEffect(gameGrid);
+		auto nextTetrominoShadow = new QGraphicsDropShadowEffect(nextTetromino);
 
-		scoreBoard->setFixedSize(150, 150);
+		gridShadow->setColor({0, 0, 0, 150});
+		gridShadow->setOffset(0, 0);
+		gridShadow->setBlurRadius(200);
 
-		gameGrid->setGraphicsEffect(shadow);
-		gameGrid->setFixedSize(365, 715);
-
-		nextTetromino->setFixedSize(150, 150);
-		nextTetrominoShadow = new QGraphicsDropShadowEffect(this);
 		nextTetrominoShadow->setColor({0, 0, 0, 150});
 		nextTetrominoShadow->setOffset(0, 0);
 		nextTetrominoShadow->setBlurRadius(200);
+
+		gameGrid->setGraphicsEffect(gridShadow);
 		nextTetromino->setGraphicsEffect(nextTetrominoShadow);
 
-		auto mainLayout = new QHBoxLayout;
+		// sizes
+		scoreBoard->setFixedSize(150, 150);
+		gameGrid->setFixedSize(365, 715);
+		nextTetromino->setFixedSize(150, 150);
+
+		// layout
+		auto mainLayout = new QHBoxLayout(this);
 		mainLayout->setSpacing(40);
 		mainLayout->setContentsMargins(40,40,40,40);
 

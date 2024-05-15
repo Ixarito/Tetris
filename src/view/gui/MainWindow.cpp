@@ -1,26 +1,23 @@
 #include "MainWindow.h"
-#include <QStackedWidget>
 
 namespace tetris::view::gui {
 
 	MainWindow::MainWindow(MenuScene &menuScene, TetrisScene &tetrisScene, QWidget *parent)
-			: QMainWindow(parent), menuScene(menuScene), tetrisScene(tetrisScene) {
-		QStackedWidget *stackedWidget = new QStackedWidget(this);
+			: QMainWindow(parent),stackedWidget{new QStackedWidget(this)},
+			menuScene{menuScene}, tetrisScene{tetrisScene}
+  	{
 		stackedWidget->addWidget(&menuScene);
 		stackedWidget->addWidget(&tetrisScene);
 		setCentralWidget(stackedWidget);
-		currentSceneIndex = 0;
+
 		setStyleSheet("background-color: #1e1f22;");
 		setWindowTitle("Tetris");
+
 		this->show();
 	}
 
-
-	void MainWindow::changeScene(QPointer<QWidget> scene){
-		QStackedWidget *stackedWidget = qobject_cast<QStackedWidget *>(centralWidget());
-		if (stackedWidget) {
-			stackedWidget->setCurrentWidget(scene);
-		}
+	void MainWindow::changeScene(QPointer<QWidget> scene) {
+		stackedWidget->setCurrentWidget(scene);
 	}
 
 } // namespace tetris::view::gui

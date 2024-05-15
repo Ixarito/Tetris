@@ -2,37 +2,39 @@
 #include <QGraphicsRectItem>
 #include "util/QtColors.hpp"
 
+#define BLOCK_SIZE 35
+
 namespace tetris::view::gui {
-	NextTetrominoDisplay::NextTetrominoDisplay(QWidget *parent) : QGraphicsView(parent) {
-		setFixedSize(35*5, 35*5);
+	NextTetrominoDisplay::NextTetrominoDisplay(QWidget *parent):
+	QGraphicsView(parent),
+	_scene{new QGraphicsScene(this)}
+	{
+		this->setScene(_scene);
 	}
 
 	void NextTetrominoDisplay::updateNextTetromino(const model::Tetromino &tetromino) {
-		auto scene = new QGraphicsScene(this);
+		_scene->clear();
+		
+		int newWidth = tetromino.getWidth() * BLOCK_SIZE;
+		int newHeight = tetromino.getHeight() * BLOCK_SIZE;
 
-		int blockSize = 35;
-		int newWidth = tetromino.getWidth() * blockSize;
-		int newHeight = tetromino.getHeight() * blockSize;
-
-		scene->setSceneRect(0, 0, newWidth, newHeight);
+		_scene->setSceneRect(0, 0, newWidth, newHeight);
 
 		for (size_t i = 0; i < tetromino.getHeight(); i++) {
 			for (size_t j = 0; j < tetromino.getWidth(); j++) {
+				auto block = new QGraphicsRectItem(j * BLOCK_SIZE, i * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+				block->setPen(QPen{{30, 31, 34}});
+
+				// if position (i, j) occupied, add block of the color
 				if (tetromino.isOccupied(j, i)) {
-					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
 					block->setBrush(QBrush(getQtColor(tetromino.get(j, i).getColor())));
-					block->setPen(QPen{{30, 31, 34}});
-					scene->addItem(block);
 				} else {
-					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
-					block->setPen(QPen{{30, 31, 34}});
 					block->setBrush(QBrush{{30, 31, 34}});
-					scene->addItem(block);
 				}
+
+				_scene->addItem(block);
 			}
 		}
-
-		setScene(scene);
 	}
 
 } // namespace tetris::view::gui

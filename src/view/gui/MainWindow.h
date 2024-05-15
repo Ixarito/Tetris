@@ -6,23 +6,38 @@
 #include "MenuScene.h"
 #include "TetrisScene.h"
 #include <QPointer>
+#include <QStackedWidget>
 
 namespace tetris::view::gui {
 
-class MainWindow : public QMainWindow {
-    Q_OBJECT
+	/**
+	 * Represents the main window of the application
+	 */
+	class MainWindow : public QMainWindow {
+		Q_OBJECT
 
-private:
-    MenuScene& menuScene;
-    TetrisScene& tetrisScene;
-    int currentSceneIndex;
+		QStackedWidget *stackedWidget;
+		MenuScene& menuScene;
+		TetrisScene& tetrisScene;
 
-public slots:
-	void changeScene(QPointer<QWidget> scene);
+	public:
 
-public:
-    explicit MainWindow(MenuScene &menuScene, TetrisScene& tetrisScene, QWidget *parent = nullptr);
-};
+		/**
+		 * Initialize the main window
+		 * @param menuScene the scene that represents the menu
+		 * @param tetrisScene the scene that represents the game
+		 * @param parent the parent widget
+		 */
+		explicit MainWindow(MenuScene &menuScene, TetrisScene& tetrisScene, QWidget *parent = nullptr);
+
+	public slots:
+		/**
+		 * Change the scene to the given widget
+		 * @param scene the scene to display
+		 */
+		void changeScene(QPointer<QWidget> scene);
+
+	};
 
 } // namespace tetris::view::gui
 
