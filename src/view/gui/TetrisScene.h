@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "NextTetrominoDisplay.h"
 #include "ScoreBoard.h"
+#include "GameGridDisplay.h"
 #include <QGraphicsDropShadowEffect>
 
 namespace tetris::view::gui {
@@ -18,11 +19,11 @@ namespace tetris::view::gui {
 	class TetrisScene : public QWidget, Observer {
 	Q_OBJECT
 
-		QGraphicsView *gameBoard;
+		GameGridDisplay * gameGrid;
 		ScoreBoard * scoreBoard;
-		NextTetrominoDisplay *nextTetromino;
-		QGraphicsDropShadowEffect *scoreBoardShadow;
-		QGraphicsDropShadowEffect *nextTetrominoShadow;
+		NextTetrominoDisplay * nextTetromino;
+		QGraphicsDropShadowEffect * shadow;
+		QGraphicsDropShadowEffect * nextTetrominoShadow;
 
 
 	public:
@@ -32,11 +33,6 @@ namespace tetris::view::gui {
 		 * @param parent the parent of the window
 		 */
 		explicit TetrisScene(QWidget *parent = nullptr);
-
-		/**
-		 * Destructor of the window
-		 */
-		~TetrisScene() override;
 
 		/**
 		 * No copy constructor

@@ -36,6 +36,8 @@ add_executable(Tetris_view_GUI
 		util/QtColors.hpp
 		ScoreBoard.cpp
 		ScoreBoard.h
+		GameGridDisplay.cpp
+		GameGridDisplay.h
 )
 
 target_link_libraries(Tetris_view_GUI

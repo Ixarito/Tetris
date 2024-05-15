@@ -1,29 +1,26 @@
 #include <QVBoxLayout>
-#include <QGraphicsRectItem>
 #include <QKeyEvent>
 #include "TetrisScene.h"
 #include <QMessageBox>
-#include "util/QtColors.hpp"
 
 namespace tetris::view::gui {
 
 	TetrisScene::TetrisScene(QWidget *parent)
-			: QWidget(parent) {
+		: QWidget(parent),
+		gameGrid {new GameGridDisplay(this)},
+		scoreBoard {new ScoreBoard(this)},
+		nextTetromino{new NextTetrominoDisplay(this)},
+		shadow {new QGraphicsDropShadowEffect(this)}
+	{
+		shadow->setColor({0, 0, 0, 150});
+		shadow->setOffset(0, 0);
+		shadow->setBlurRadius(200);
 
-		// initialize widgets
-		gameBoard = new QGraphicsView(this);
-		gameBoard->setFixedSize(365, 715);
-		gameBoard->setBackgroundBrush(QBrush{{20,21,23}});
-
-		scoreBoard = new ScoreBoard(this);
 		scoreBoard->setFixedSize(150, 150);
-		scoreBoardShadow = new QGraphicsDropShadowEffect(this);
-		scoreBoardShadow->setColor({0, 0, 0, 150});
-		scoreBoardShadow->setOffset(0, 0);
-		scoreBoardShadow->setBlurRadius(200);
-		gameBoard->setGraphicsEffect(scoreBoardShadow);
 
-		nextTetromino = new NextTetrominoDisplay(this);
+		gameGrid->setGraphicsEffect(shadow);
+		gameGrid->setFixedSize(365, 715);
+
 		nextTetromino->setFixedSize(150, 150);
 		nextTetrominoShadow = new QGraphicsDropShadowEffect(this);
 		nextTetrominoShadow->setColor({0, 0, 0, 150});
@@ -37,49 +34,19 @@ namespace tetris::view::gui {
 
 		mainLayout->addStretch(1);  // Ajoute un espace flexible à gauche des widgets
 		mainLayout->addWidget(nextTetromino);
-		mainLayout->addWidget(gameBoard);
+		mainLayout->addWidget(gameGrid);
 		mainLayout->addWidget(scoreBoard);
 		mainLayout->addStretch(1);  // Ajoute un espace flexible à droite des widgets
 
 		this->setLayout(mainLayout);
 	}
 
-	TetrisScene::~TetrisScene() {
-		delete gameBoard;
-	}
-
 	void TetrisScene::setGame(model::Game &game) {
 		game.addObserver(this);
 
 		scoreBoard->updateScore(game);
-		updateGameBoard(game.getGridView());
+		gameGrid->update(game.getGridView());
 	}
-
-	void TetrisScene::updateGameBoard(const model::Game::GridView_type &gridView) {
-		auto scene = new QGraphicsScene(this);
-
-		int blockSize = 35;
-
-		for (size_t i = 0; i < gridView.size(); i++) {
-			for (size_t j = 0; j < gridView[i].length; j++) {
-				// Si le bloc à la position (i, j) est occupé, ajouter un QGraphicsRectItem à la scène
-				if (gridView[i].isOccupied(j)) {
-					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
-					block->setBrush(QBrush(getQtColor(gridView[i][j].getColor())));
-					block->setPen(QPen{{20,21,23}});
-					scene->addItem(block);
-				} else {
-					auto block = new QGraphicsRectItem(j * blockSize, i * blockSize, blockSize, blockSize);
-					block->setPen(QPen{{20,21,23}});
-					block->setBrush(QBrush{{30, 31, 34}});
-					scene->addItem(block);
-				}
-			}
-		}
-
-		gameBoard->setScene(scene);
-	}
-
 
 	void TetrisScene::update(ActionType action, void *subject) {
 		auto game = static_cast<model::Game *>(subject);
@@ -91,7 +58,7 @@ namespace tetris::view::gui {
 				case ActionType::TETROMINO_INSERTED:
 					nextTetromino->updateNextTetromino(game->peekNext());
 				case ActionType::GRID_CHANGED:
-					updateGameBoard(game->getGridView());
+					gameGrid->update(game->getGridView());
 					break;
 				default:;
 			}
